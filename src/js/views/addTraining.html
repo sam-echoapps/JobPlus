@@ -1,0 +1,179 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<div id="sampleDemo"  class="demo-container sampleDemo">
+  <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+    
+    <div id="moduleDemo"> 
+      <div id="listDBS">
+        <oj-list-view id="listviewtwo" aria-label="multicolumn with list item layout" data="[[dataProvider1]]"
+        class="oj-sm-padding-2x-vertical" selection-mode="multiple" selected="{{selectorSelectedItems}}">
+        <template slot="itemTemplate" data-oj-as="item">
+         <div
+         class="oj-panel  oj-sm-margin-2x-bottom oj-xl-margin-2x oj-xl-padding-2x oj-lg-margin-2x oj-lg-padding-2x oj-md-margin-2x oj-md-padding-2x oj-sm-margin-1x oj-sm-padding-1x contentStyle">
+         <li>
+           <oj-list-item-layout :aria-label="[['Details for ' +item.data.name]]">
+           
+             <div class="oj-typography-body-md">
+               <div class="oj-flex oj-sm-align-items-center">
+          
+                 <div class="oj-flex-item demo-list-item-layout ">
+                   <oj-list-item-layout class="oj-listitemlayout-padding-off"
+                     :aria-label="[['task ' +item.data.taskName]]">
+                     <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
+                       <oj-bind-text value="Name"></oj-bind-text>
+                     </div>
+                     <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.file_type]]">
+                       <oj-bind-text value="[[item.data.file_type]]"></oj-bind-text>
+                     </div>
+                     
+                   </oj-list-item-layout>
+                 </div>
+                 
+                 <div class="oj-flex-item demo-list-item-layout oj-md-padding-4x-end">
+                   <oj-list-item-layout class="oj-listitemlayout-padding-off"
+                     :aria-label="[['task ' +item.data.taskName]]">
+                     <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
+                       <oj-bind-text value="Expiry Date"></oj-bind-text>
+                     </div>
+                     <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.expiry_date]]">
+                       <oj-bind-text value="[[item.data.expiry_date]]"></oj-bind-text>
+                     </div>
+                     
+                   </oj-list-item-layout>
+                 </div>
+        
+                 <div class="oj-flex-item demo-list-item-layout oj-md-padding-4x-end">
+                   <oj-list-item-layout class="oj-listitemlayout-padding-off"
+                     :aria-label="[['task ' +item.data.taskName]]">
+                     <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
+                       <oj-bind-text value="Document Preview"></oj-bind-text>
+                     </div>
+                     <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.certificate]]">
+                       <oj-bind-if test="[[ item.data.certificate != 'Not Uploaded']]">
+                       <div class="oj-text-color-success"><a  :id = "[[ item.data.certificate ]]" on-click= "[[previewClick]]" target="_blank">Click here</a></div>
+                       </oj-bind-if>
+                       <oj-bind-if test="[[ item.data.certificate == 'Not Uploaded']]">
+                         <oj-bind-text value="Not Uploaded"></oj-bind-text>
+                       </oj-bind-if>
+                     </div>
+                     
+                   </oj-list-item-layout>
+                 </div>
+               </div>
+             </div>
+           
+           </oj-list-item-layout>
+         </li>
+        </div>
+        </template>
+        </oj-list-view>
+         
+        
+            </div>             
+          <div
+          class="oj-panel oj-flex oj-sm-margin-2x-bottom oj-xl-margin-3x oj-xl-padding-5x oj-lg-margin-3x oj-lg-padding-7x oj-md-margin-3x oj-md-padding-4x oj-sm-margin-1x oj-sm-padding-1x">
+          <div
+            class="oj-sm-margin-2x-bottom oj-xl-margin-3x oj-xl-padding-3x oj-lg-margin-3x oj-lg-padding-7x oj-md-margin-3x oj-md-padding-4x oj-sm-margin-1x oj-sm-padding-1x oj-sm-5">
+            <br>
+            <oj-input-date required label-hint="Moving and Handling Expiry Date" autocomplete="off" value="{{movingFile_expiry_date}}"></oj-input-date><br><br><br><br>
+            <oj-input-date required label-hint="Safeguarding Adults Expiry Date" autocomplete="off" value="{{safeguarding_expiry_date}}"></oj-input-date><br><br><br>
+            <oj-input-date required label-hint="Health and Safety Expiry Date" autocomplete="off" value="{{health_expiry_date}}"></oj-input-date><br><br><br>
+            <oj-input-date required label-hint="Food and Hygiene Expiry Date" autocomplete="off" value="{{food_expiry_date}}"></oj-input-date><br><br><br>
+            <oj-input-date required label-hint="First Aid/ Basic Life Support Expiry Date" autocomplete="off" value="{{support_expiry_date}}"></oj-input-date><br><br><br>
+            <oj-input-date required label-hint="COSHH Expiry Date" autocomplete="off" value="{{coshh_expiry_date}}"></oj-input-date><br><br><br>
+            <oj-input-date required label-hint="Fire Safety Expiry Date" autocomplete="off" value="{{safety_expiry_date}}"></oj-input-date><br><br><br>
+            <oj-input-date required label-hint="Challenging Behavior Expiry Date" autocomplete="off" value="{{behaviour_expiry_date}}"></oj-input-date><br><br><br>
+            <oj-input-date required label-hint="Epilepsy Expiry Date" autocomplete="off" value="{{epilepsy_expiry_date}}"></oj-input-date><br><br><br>
+            <oj-input-date required label-hint="Dementia Expiry Date" autocomplete="off" value="{{demantia_expiry_date}}"></oj-input-date><br><br><br><br>
+            <oj-input-date required label-hint="Mental Capacity Act Expiry Date" autocomplete="off" value="{{act_expiry_date}}"></oj-input-date><br><br><br>
+            <oj-input-date required label-hint="Infection Prevention Control Expiry Date" autocomplete="off" value="{{prevention_expiry_date}}"></oj-input-date><br><br><br>
+            <oj-input-date required label-hint="Learning Disabilities Expiry Date" autocomplete="off" value="{{disability_expiry_date}}"></oj-input-date><br><br><br>
+            <oj-input-date required label-hint="Care Certificate Expiry Date" autocomplete="off" value="{{care_expiry_date}}"></oj-input-date><br><br><br>
+
+          </div>
+          <div
+            class="oj-sm-margin-2x-bottom oj-xl-margin-3x oj-xl-padding-3x oj-lg-margin-3x oj-lg-padding-7x oj-md-margin-3x oj-md-padding-4x oj-sm-margin-1x oj-sm-padding-1x oj-sm-5">
+            <oj-file-picker  primary-text="[[movingFileText]]"
+            secondary-text="[[secondaryCustomText]]" on-oj-select="[[movingSubmit]]">
+            </oj-file-picker>
+            <div class="oj-text-color-success"><a id="moving" target="_blank"><oj-bind-text value='[[movingFile]]'></a></oj-bind-text></div></br>
+            <oj-file-picker  primary-text="[[safeguardingFileText]]"
+            secondary-text="[[secondaryCustomText]]" on-oj-select="[[safeguarding]]">
+            </oj-file-picker></br>
+            <oj-file-picker  primary-text="[[healthFileText]]"
+            secondary-text="[[secondaryCustomText]]" on-oj-select="[[healthSubmit]]">
+            </oj-file-picker></br>
+            <oj-file-picker  primary-text="[[foodFileText]]"
+            secondary-text="[[secondaryCustomText]]" on-oj-select="[[foodSubmit]]">
+            </oj-file-picker></br>
+            <oj-file-picker  primary-text="[[supportFileText]]"
+            secondary-text="[[secondaryCustomText]]" on-oj-select="[[supportSubmit]]">
+            </oj-file-picker></br>
+            <oj-file-picker  primary-text="[[coshhFileText]]"
+            secondary-text="[[secondaryCustomText]]" on-oj-select="[[coshhSubmit]]">
+            </oj-file-picker></br>
+            <oj-file-picker  primary-text="[[safetyFileText]]"
+            secondary-text="[[secondaryCustomText]]" on-oj-select="[[safetySubmit]]">
+            </oj-file-picker></br>
+            <oj-file-picker  primary-text="[[behaviourFileText]]"
+            secondary-text="[[secondaryCustomText]]" on-oj-select="[[behaviourSubmit]]">
+            </oj-file-picker></br>
+            <oj-file-picker  primary-text="[[epilepsyFileText]]"
+            secondary-text="[[secondaryCustomText]]" on-oj-select="[[epilepsySubmit]]">
+            </oj-file-picker></br>
+            <oj-file-picker  primary-text="[[demantiaFileText]]"
+            secondary-text="[[secondaryCustomText]]" on-oj-select="[[demantiaSubmit]]">
+            </oj-file-picker></br>
+            <oj-file-picker  primary-text="[[actFileText]]"
+            secondary-text="[[secondaryCustomText]]" on-oj-select="[[actSubmit]]">
+            </oj-file-picker></br>
+            <oj-file-picker  primary-text="[[preventionFileText]]"
+            secondary-text="[[secondaryCustomText]]" on-oj-select="[[preventionSubmit]]">
+            </oj-file-picker></br>
+            <oj-file-picker  primary-text="[[disabilityFileText]]"
+            secondary-text="[[secondaryCustomText]]" on-oj-select="[[disabilitySubmit]]">
+            </oj-file-picker></br>
+            <oj-file-picker  primary-text="[[careFileText]]"
+            secondary-text="[[secondaryCustomText]]" on-oj-select="[[careSubmit]]">
+            </oj-file-picker></br>
+          </div>
+        </div>
+    </div>
+    <div class="oj-panel">
+    <div class="oj-flex">
+      <oj-bind-if test="[[trainingStatus() === 'Pending']]">
+    <oj-button chroming="solid" class="oj-xl-margin-4x" on-oj-action="[[updateTrainingStatus]]">
+         <span slot="startIcon" class=""> Not Audited: Click to mark as audited</span>
+       </oj-button>
+      </oj-bind-if>
+     </div>
+     <div class="oj-flex">
+      <oj-bind-if test="[[trainingStatus() === 'Audited']]">
+    <oj-button chroming="solid" class="oj-xl-margin-4x" on-oj-action="[[updateTrainingStatus]]">
+         <span slot="startIcon" class=""> Audited: Click to mark as audit pending</span>
+       </oj-button>
+      </oj-bind-if>
+     </div>
+    </div>
+    <oj-dialog id="openAddUploadingProgress" dialog-title="Please wait!Uploading...." modality="modeless"
+    style="display:none;width:350px;min-width:240px;max-width:450px;">
+    <div slot="body">
+      <oj-progress-bar id="createbar" class="oj-progress-bar-embedded" value="-1">
+      </oj-progress-bar>
+    </div>
+  </oj-dialog>
+
+  <oj-dialog id="openFileUploadResult" dialog-title="Upload Document" modality="modeless"  style="display:none;width:350px;min-width:240px;max-width:450px;">
+    <div slot="body">
+      <oj-bind-text value='[[uploadDocumentMsg]]'></oj-bind-text>
+    </div>
+    <div  class="oj-flex-bar" slot="footer">
+      <oj-button id="okdelButton" class="oj-flex-bar-start oj-button-cancel" on-oj-action="[[DBErrorOKClose]]">
+        OK
+      </oj-button>
+    </div>
+  </oj-dialog> 
+
+    
+
+  
