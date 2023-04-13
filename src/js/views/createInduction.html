@@ -2,16 +2,17 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <div id="sampleDemo"  class="demo-container sampleDemo">
   <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
-  </br><div style="display: flex;justify-content: center;">
-    <h4>Office induction</h4>
+  </br><div >
+    <h4>Create new induction</h4>
   </div>
+ <div class="oj-panel">
 <div class="row" style="display: flex;justify-content: center;">
   <div class="col-md-3">
     <oj-validation-group id="inductionCheck" role="group" valid="{{groupValid}}"
     aria-labelledby="grouplabelid">
     <oj-input-date required label-hint="Induction Date" autocomplete="off" value="{{induction_date}}" ></oj-input-date></br></br>
     <oj-input-time id="time" value="{{induction_time}}" label-hint="Induction Time" required></oj-input-time></br></br></br>
-    <oj-input-text id="limit" label-hint="Number of Limit" value="{{limit}}" clear-icon="always" required>
+    <oj-input-number id="induction_limit" label-hint="Induction Limit" value="{{induction_limit}}" clear-icon="always" required></oj-input-number>
     </oj-validation-group>
   </div>
 </div>
@@ -24,11 +25,23 @@ class="oj-sm-margin-2x-bottom oj-xl-margin-2x oj-xl-padding-2x oj-lg-margin-2x o
 </div>
 </div>
 </div>
+</div>
 
-<oj-dialog id="openAddInductionInfo" dialog-title="[[progressDialog]]" modality="modeless"
+<oj-dialog id="openAddInductionInfoProgress" dialog-title="[[progressDialog]]" modality="modeless"
   style="display:none;width:350px;min-width:240px;max-width:450px;">
   <div slot="body">
     <oj-progress-bar id="createbar" class="oj-progress-bar-embedded" value="-1">
     </oj-progress-bar>
+  </div>
+</oj-dialog>
+
+<oj-dialog id="openAddInductionInfoResult" dialog-title="[[ResultTitle]]" modality="modeless"  style="display:none;width:350px;min-width:240px;max-width:450px;">
+  <div slot="body">
+    <oj-bind-text value='[[addInductionMsg]]'></oj-bind-text>
+  </div>
+  <div  class="oj-flex-bar" slot="footer">
+    <oj-button id="okdelButton" class="oj-flex-bar-start oj-button-cancel" on-oj-action="[[DBErrorOKClose]]">
+      OK
+    </oj-button>
   </div>
 </oj-dialog>

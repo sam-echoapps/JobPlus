@@ -7,7 +7,7 @@
                 <span style="color: black;display: flex; flex-direction: row;justify-content: space-between;">
                     <oj-bind-text value="[[item.data.label]]"></oj-bind-text>
                     <oj-bind-if test="[[item.data.status]] == 'Pending'">
-                        <i class="bi bi-circle-fill status-pending"></i>
+                        <i class="bi bi-check-circle-fill status-pending"></i>
                     </oj-bind-if> 
                     <oj-bind-if test="[[item.data.status]] == 'Audited'">
                         <i class="bi bi-check-circle-fill status-audit"></i>
@@ -24,7 +24,7 @@
             
             <br>
             <i class="bi bi-check-circle-fill status-audit"></i> Approved &nbsp;
-            <i class="bi bi-circle-fill status-pending"></i> under review/submitted
+            <i class="bi bi-check-circle-fill status-pending"></i> under review/submitted
         </div>
         <oj-module config="[[module.koObservableConfig]]"></oj-module>
     </div>

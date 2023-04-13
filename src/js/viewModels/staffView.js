@@ -1,5 +1,5 @@
 define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter-adapter", "ojs/ojarraydataprovider", 
-    "ojs/ojknockout", "ojs/ojlistview", "ojs/ojmodule-element"], 
+    "ojs/ojknockout", "ojs/ojlistview", "ojs/ojmodule-element","ojs/ojprogress-bar"], 
     function (oj, ko, $, app, ModuleRouterAdapter, ArrayDataProvider) {
     "use strict";
     class ViewModel {
@@ -19,6 +19,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
             self.healthStatus = ko.observable('');
             self.trainingStatus = ko.observable('');
             self.rightStatus = ko.observable('');
+            self.progressValue = ko.observable(30);
 
             self.router = args.parentRouter;
 
@@ -204,6 +205,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                     { "path" : "addDBS", "label" : "DBS", "status" : sessionStorage.getItem('dbs_status')},
                     { "path" : "addRightToWork", "label" : "Right To Work", "status" : sessionStorage.getItem('right_status')},
                     { "path" : "addTraining", "label" : "Training", "status" : sessionStorage.getItem('training_status')},
+                    { "path" : "bookInduction", "label" : "Book Induction", "status" :""},
                 ]
             }
 
@@ -243,7 +245,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                 { path: 'addDBS'},
                 { path: 'addHealth'},
                 { path: 'addTraining'},
-                { path: 'addRightToWork'}
+                { path: 'addRightToWork'},
+                { path: 'bookInduction'}
             ]);
 
             self.router.currentState.subscribe((args) => {

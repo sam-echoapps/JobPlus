@@ -45,7 +45,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                 self.contactNumber = ko.observable();
                 self.whatsappNumber = ko.observable();
                 self.primaryCustomText = ko.observable('Profile Photo');
-                self.secondaryCustomText = ko.observable('Please choose one');
+                self.secondaryCustomText = ko.observable();
                 self.username = ko.observable();
                 self.password = ko.observable();
                 self.subpost = ko.observableArray();
@@ -82,6 +82,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                     }
                 };
                 function getProfile(){
+                self.secondaryCustomText('Please choose one')
                 self.DepName = context.routerState.detail.dep_url;
                 console.log(sessionStorage.getItem("staffId"))
                 var BaseURL = sessionStorage.getItem("BaseURL")
@@ -117,7 +118,13 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                             self.profileStatus('Pending');
                         }else if(data[0][14] == "Audited") {
                             self.profileStatus('Audited');
-                        }                  
+                        } 
+                        if(data[0][15] == null) {
+                            self.profilePhoto(BaseURL + "/css/uploads/defaultUser.png")
+                        }else {
+                            self.profilePhoto(data[0][15]);                 
+
+                        }
                 }
                 })
             }
@@ -170,7 +177,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                 self.DBErrorOKClose = function (event) {
                     document.querySelector('#openStaffUpdateResult').close();
                     self.startOpened(false);
-                    self.router.go({path:'addStaff'})
+                    getProfile();
                 };
                /*  self.selectListener = function (event,data) {
                     const result = event.detail.files;
@@ -254,6 +261,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                         success: function (data) {
                             //console.log(data)
                             console.log("success")
+                            self.secondaryCustomText(fileName)
                             document.querySelector('#openAddUploadingProgress').close();
                             /* document.querySelector('#openFileUploadResult').open();
                             self.uploadDocumentMsg(data[0]); */

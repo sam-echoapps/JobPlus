@@ -8,9 +8,12 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
             self.DepName = context.routerState.detail.dep_url;
             self.induction_time = ko.observable(ojconverterutils_i18n_1.IntlConverterUtils.dateToLocalIso(new Date(2013, 0, 1)));
             self.induction_date = ko.observable();
-            self.limit = ko.observable();
+            self.induction_limit = ko.observable();
             self.progressDialog = ko.observable('Saving Induction Details');
             self.addInductionMsg = ko.observable();
+            self.ResultTitle = ko.observable();
+            self.groupValid = ko.observable();  
+            var BaseURL = sessionStorage.getItem("BaseURL")
 
             self.connected = function () {
                 if (sessionStorage.getItem("userName") == null) {
@@ -36,17 +39,18 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
             };
 
             self.inductionInfoSave = function (event,data) {
+                self.ResultTitle('Create Induction Details')
                 var validSec = self._checkValidationGroup("inductionCheck");  
                 if (validSec) {
                     document.querySelector('#openAddInductionInfoProgress').open();
                     self.addInductionMsg('');
                    $.ajax({
-                       url: BaseURL+ "/jpStaffRightToWorkAdd",
+                       url: BaseURL+ "/jpInductionInfoSave",
                        type: 'POST',
                        data: JSON.stringify({
                            induction_date : self.induction_date(),
                            induction_time : self.induction_time(),
-                           limit : self.limit()
+                           induction_limit : self.induction_limit()
                        }),
                        dataType: 'json',
                        timeout: sessionStorage.getItem("timeInetrval"),
@@ -66,6 +70,11 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                    })   
                 }
             }
+
+            self.DBErrorOKClose = function (event) {
+                document.querySelector('#openAddInductionInfoResult').close();
+                location.reload()
+            };
 
         }
     }

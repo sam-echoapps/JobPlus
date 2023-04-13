@@ -44,7 +44,9 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                 self.referenceStatus = ko.observable('');
 
                 self.userName = ko.observable();
-
+                self.referenceFileText = ko.observable('Reference');
+                self.referenceCustomText = ko.observable('Please choose one');
+                self.filePath = ko.observable();
 
 
                 self.selectorSelectedItems = new ojknockout_keyset_1.ObservableKeySet();
@@ -85,7 +87,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                             }
 
                                 for (var i = 0; i < data[0].length; i++) {
-                                self.ReferenceDet.push({'id': data[0][i][0], 'staff_id' : data[0][i][1], 'refer_name' : data[0][i][2] , 'refer_job' : data[0][i][3] , 'refer_address' :data[0][i][4], 'refer_company' : data[0][i][5] , 'refer_email' : data[0][i][6] , 'refer_contact' :data[0][i][7], 'referrer_status' :data[0][i][9]});   
+                                self.ReferenceDet.push({'id': data[0][i][0], 'staff_id' : data[0][i][1], 'refer_name' : data[0][i][2] , 'refer_job' : data[0][i][3] , 'refer_address' :data[0][i][4], 'refer_company' : data[0][i][5] , 'refer_email' : data[0][i][6] , 'refer_contact' :data[0][i][7], 'referrer_status' :data[0][i][9], 'document' :data[0][i][10]});   
                         } 
                         if(data[0][0][8] == "Pending") {
                             self.referenceStatus('Pending');
@@ -509,6 +511,75 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
             }
             
         }
+
+        self.UploadDocument = function (event,data) {
+            var clickedRowId = self.getDisplayValue(self.selectorSelectedItems())[0];
+            sessionStorage.setItem("referenceId", clickedRowId);
+            console.log(clickedRowId)
+            document.querySelector('#openFileUpload').open();
+        }
+
+        self.referenceDocUpload = function (event,data) {
+            var uploadURL = BaseURL + "/css/uploads/";
+            const result = event.detail.files;
+            const files = result[0];
+            var fileName= files.name;
+            var filePath= uploadURL+fileName;
+            self.filePath(filePath);
+
+            console.log(files)
+            var fileFormat =files.name.split(".");
+            var checkFormat =fileFormat[1];
+            
+            if(checkFormat == 'pdf' || checkFormat =="doc"){
+            self.progressText('Please wait!Uploading....')
+            document.querySelector('#openAddUploadingProgress').open();
+            self.typeError('')
+            const reader = new FileReader();
+            reader.readAsDataURL(files);
+            
+            reader.onload = ()=>{
+                $.ajax({
+                    url: BaseURL + "/jpStaffReferenceDocUplaod",
+                    type: 'POST',
+                    data: JSON.stringify({
+                        file : reader.result,
+                        file_name : fileName,
+                        referenceId : sessionStorage.getItem("referenceId"),
+                        file_path : filePath
+                    }),
+                    dataType: 'json',
+                    timeout: sessionStorage.getItem("timeInetrval"),
+                    context: self,
+                    error: function (xhr, textStatus, errorThrown) {
+                        if(textStatus == 'timeout'){
+                            document.querySelector('#openAddUploadingProgress').close();
+                            document.querySelector('#Timeout').open();
+                        }
+                    },
+                    success: function (data) {
+                        //console.log(data)
+                        console.log("success")
+                        document.querySelector('#openAddUploadingProgress').close();
+                        document.querySelector('#openFileUpload').close();
+                        getReference()
+
+                    }
+                })
+            }
+        }
+        else{
+            self.typeError('The certificate must be a file of type: pdf, doc')
+        }
+      }
+
+      self.previewClick = function (event) {
+        console.log(event.srcElement.id)  
+        var clickedId=event.srcElement.id
+        var file=clickedId.replace(/\s/g,'%20');
+        document.getElementById(clickedId).href = file;
+
+    }; 
             }
             
             

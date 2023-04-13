@@ -1,0 +1,12 @@
+<div id="induction" style="border: 1px solid #80808036; margin: 10px;padding: 10px; border-radius: 3px;">
+    <p style="font-weight: bold; font-size: 15px;">Office Induction</p>
+    <div class="induction-form">
+        <oj-label for="datepicker">Choose induction Date :</oj-label>
+        
+        <oj-input-date id="date" value="{{day}}" day-formatter="[[dayFormatter]]" autocomplete="off"
+            label-hint="Input Date No Visual Label" label-edge="none" on-value-changed="[[showDate]]"></oj-input-date>
+        <oj-select-single id="timeSlots" label-hint="Select your time slot" label-edge="inside" 
+            class="oj-form-control-max-width-md" data="[[timeSlots]]" value="{{timeSlot}}" style="display: none;"></oj-select-single>
+
+    </div>
+</div>

@@ -13,7 +13,7 @@
               <span slot="startIcon" class="demo-icon-sprite"> Add Reference</span>
             </oj-button></div>   
 
-     <div class="oj-panel oj-xl-margin-4x">
+     <div class="oj-panel">
      <oj-list-view id="listviewtwo" aria-label="multicolumn with list item layout" data="[[dataProvider1]]"
     class="oj-sm-padding-2x-vertical" selection-mode="multiple" selected="{{selectorSelectedItems}}">
     <template slot="itemTemplate" data-oj-as="item">
@@ -25,7 +25,7 @@
           <div class="oj-typography-body-md">
             <div class="oj-flex oj-sm-align-items-center">
        
-              <div class="oj-flex-item demo-list-item-layout ">
+              <div class="oj-flex-item  ">
                 <oj-list-item-layout class="oj-listitemlayout-padding-off"
                   :aria-label="[['task ' +item.data.taskName]]">
                   <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
@@ -38,7 +38,7 @@
                 </oj-list-item-layout>
               </div>
               
-              <div class="oj-flex-item demo-list-item-layout oj-md-padding-4x-end">
+              <div class="oj-flex-item  oj-md-padding-4x-end">
                 <oj-list-item-layout class="oj-listitemlayout-padding-off"
                   :aria-label="[['task ' +item.data.taskName]]">
                   <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
@@ -50,11 +50,49 @@
                   
                 </oj-list-item-layout>
               </div>
+              <oj-bind-if test="[[item.data.referrer_status === 'Uploaded']]">
+              <div class="oj-flex-item oj-md-padding-4x-end">
+                <oj-list-item-layout class="oj-listitemlayout-padding-off"
+                  :aria-label="[['task ' +item.data.taskName]]">
+                  <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
+                    <oj-bind-text value="Document Preview"></oj-bind-text>
+                  </div>
+                  <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.referrer_status]]">
+                    <div class="oj-text-color-success"><a  :id = "[[ item.data.document ]]" on-click= "[[previewClick]]" target="_blank">Click here</a></div>
+                  </div>
+                  
+                </oj-list-item-layout>
+              </div>
+            </oj-bind-if>
 
+            <oj-bind-if test="[[item.data.referrer_status != 'Uploaded']]">
+              <div class="oj-flex-item oj-md-padding-4x-end">
+                <oj-list-item-layout class="oj-listitemlayout-padding-off"
+                  :aria-label="[['task ' +item.data.taskName]]">
+                  <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
+                    <oj-bind-text value="Document Preview"></oj-bind-text>
+                  </div>
+                  <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.referrer_status]]">
+                    <oj-bind-text value="Not Uploaded"></oj-bind-text>
+                  </div>
+                  
+                </oj-list-item-layout>
+              </div>
+            </oj-bind-if>
                 <div class="oj-flex-item demo-list-item-layout oj-md-padding-4x-end">
                   <oj-list-item-layout class="oj-listitemlayout-padding-off"
                     :aria-label="[['task ' +item.data.taskName]]">
                     <oj-bind-if test="[[item.data.referrer_status === 'Pending']]">
+                    <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
+                      &nbsp; &nbsp; &nbsp; <oj-bind-text value="Actions"></oj-bind-text>
+                    </div>
+                  </oj-bind-if>
+                  <oj-bind-if test="[[item.data.referrer_status === 'Email Sent']]">
+                    <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
+                      &nbsp; &nbsp; &nbsp; <oj-bind-text value="Actions"></oj-bind-text>
+                    </div>
+                  </oj-bind-if>
+                  <oj-bind-if test="[[item.data.referrer_status === 'Uploaded']]">
                     <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
                       &nbsp; &nbsp; &nbsp; <oj-bind-text value="Actions"></oj-bind-text>
                     </div>
@@ -96,6 +134,14 @@
                 View
               </oj-button>
             </oj-bind-if>
+            <oj-button
+            chroming="borderless"
+            display="icons"
+            class="oj-button-sm uploadBtn"
+            on-oj-action="[[UploadDocument]]">
+            <span slot="startIcon"></span>
+            Upload
+          </oj-button>
                     <oj-button
                     chroming="borderless"
                     display="icons"
@@ -290,6 +336,15 @@ style="display:none;width:350px;min-width:240px;max-width:450px;">
     </oj-button>
   </div>
 </oj-dialog>
+
+<oj-dialog id="openFileUpload" dialog-title="Upload Reference Document" modality="modeless"  style="display:none;width:350px;min-width:240px;max-width:450px;" cancel-behavior="[[CancelBehaviorOpt]]">
+  <div slot="body">
+    <oj-file-picker  primary-text="[[referenceFileText]]"
+      secondary-text="[[referenceCustomText]]" on-oj-select="[[referenceDocUpload]]">
+    </oj-file-picker></br>
+  </div>
+</oj-dialog>
+
 
 
  

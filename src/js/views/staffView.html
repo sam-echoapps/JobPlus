@@ -1,7 +1,7 @@
 <div class="oj-flex  oj-sm-flex-items-1">
     <div style="width:250px; background-color: #e9ecef; height: 100vh; color: gray;padding: 20px;">
-        <h3><strong>YOUR PROGRESS</strong></h3>
-        <p>Please go through the following steps to complete your application.</p>
+        <h3><strong>USER PROGRESS</strong></h3>
+        <p>Please go through the following steps to complete the user's application.</p>
         <hr>
         <oj-list-view data="[[dataProvider]]" selection-mode="single" selection="{{selection}}">
             <template slot="itemTemplate" data-oj-as="item">
@@ -9,16 +9,25 @@
                     <oj-bind-text value="[[item.data.label]]"></oj-bind-text>
 
                     <oj-bind-if test="[[item.data.status]] == 'Pending'">
-                        <i class="bi bi-circle-fill status-pending"></i>
+                        <i class="bi bi-check-circle-fill status-pending"></i>
                     </oj-bind-if> 
                     <oj-bind-if test="[[item.data.status]] == 'Audited'">
-                        <i class="bi bi-circle-fill status-audit"></i>
+                        <i class="bi bi-check-circle-fill status-audit"></i>
                     </oj-bind-if>
                 </span>
             </template>
         </oj-list-view>
     </div>
     <div class="oj-flex-item oj-panel" style="margin: 0px;">
+        <div class="hint-div" style="border: 1px solid #80808036; margin: 10px;padding: 10px;">
+            <h2>USER APPLICATION</h2>
+            <p>Here you can see the progress of the user's application.</p>
+            <oj-progress-bar id="progressBar" value="{{progressValue}}" style="height: 20px;"></oj-progress-bar>
+            
+            <br>
+            <i class="bi bi-check-circle-fill status-audit"></i> Approved &nbsp;
+            <i class="bi bi-circle-fill status-pending"></i> Under review/Submitted
+        </div>
         <oj-module config="[[module.koObservableConfig]]"></oj-module>
     </div>
 </div>

@@ -20,6 +20,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
             self.workStatus = ko.observable('');
             self.dbsStatus = ko.observable('');
             self.healthStatus = ko.observable('');
+            self.trainingStatus = ko.observable('');
+            self.rightStatus = ko.observable('');
+            self.inductionStatus = ko.observable('');
                 
             self.router = args.parentRouter;
 
@@ -134,6 +137,42 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                     else{
                         self.workStatus('Pending');
                     } 
+                    if(data[6].length !=0) {
+                        if(data[6][0][0] == "Pending") {
+                            self.healthStatus('Pending');
+                        }else if(data[6][0][0] == "Audited") {
+                            self.healthStatus('Audited');
+                        }
+                    }else{
+                        self.healthStatus('Pending');
+                    } 
+                    if(data[7].length !=0) {
+                        if(data[7][0][0] == "Pending") {
+                            self.dbsStatus('Pending');
+                        }else if(data[7][0][0] == "Audited") {
+                            self.dbsStatus('Audited');
+                        }
+                    }else{
+                        self.dbsStatus('Pending');
+                    } 
+                    if(data[8].length !=0) {
+                        if(data[8][0][0] == "Pending") {
+                            self.trainingStatus('Pending');
+                        }else if(data[8][0][0] == "Audited") {
+                            self.trainingStatus('Audited');
+                        }
+                    }else{
+                        self.trainingStatus('Pending');
+                    } 
+                    if(data[9].length !=0) {
+                        if(data[9][0] == "Pending") {
+                            self.rightStatus('Pending');
+                        }else if(data[9][0] == "Audited") {
+                            self.rightStatus('Audited');
+                        }
+                    }else{
+                        self.rightStatus('Pending');
+                    }
                    
                     if(self.profileStatus() != sessionStorage.getItem('profile_status')){
                         location.reload()
@@ -152,7 +191,19 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                     }   
                     if(self.workStatus() != sessionStorage.getItem('work_status')){
                         location.reload()
-                    }                       
+                    }      
+                    if(self.healthStatus() != sessionStorage.getItem('health_status')){
+                        location.reload()
+                    }  
+                    if(self.dbsStatus() != sessionStorage.getItem('dbs_status')){
+                        location.reload()
+                    }     
+                    if(self.trainingStatus() != sessionStorage.getItem('training_status')){
+                        location.reload()
+                    }    
+                    if(self.rightStatus() != sessionStorage.getItem('right_status')){
+                        location.reload()
+                    }                    
 
                     sessionStorage.setItem('profile_status',self.profileStatus()); 
                     sessionStorage.setItem('reference_status',self.referenceStatus()); 
@@ -160,6 +211,10 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                     sessionStorage.setItem('relative_status',self.relativeStatus()); 
                     sessionStorage.setItem('education_status',self.educationStatus()); 
                     sessionStorage.setItem('work_status',self.workStatus()); 
+                    sessionStorage.setItem('health_status',self.healthStatus()); 
+                    sessionStorage.setItem('dbs_status',self.dbsStatus()); 
+                    sessionStorage.setItem('training_status',self.trainingStatus()); 
+                    sessionStorage.setItem('right_status',self.rightStatus()); 
                 }
             })
 
@@ -171,9 +226,11 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                     { "path" : "addNextOfKin", "label" : "Next of Kin", "status" : sessionStorage.getItem("relative_status")},
                     { "path" : "addEducation", "label" : "Education", "status" : sessionStorage.getItem('education_status')},
                     { "path" : "addWork", "label" : "Work History", "status" : sessionStorage.getItem('work_status')},
-                    { "path" : "addDBS", "label" : "DBS", "status" : ""},
-                    { "path" : "addHealth", "label" : "Health", "status" : ""},
-                    { "path" : "addTraining", "label" : "Training", "status" : ""},
+                    { "path" : "addHealth", "label" : "Health", "status" : sessionStorage.getItem('health_status')},
+                    { "path" : "addRightToWork", "label" : "Right To Work", "status" : sessionStorage.getItem('right_status')},
+                    { "path" : "addDBS", "label" : "DBS", "status" : sessionStorage.getItem('dbs_status')},
+                    { "path" : "addTraining", "label" : "Training", "status" : sessionStorage.getItem('training_status')},
+                    { "path" : "bookInduction", "label" : "Induction", "status" : "Pending"},
                 ]
             }
 
@@ -212,7 +269,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                 { path: 'addWork'},
                 { path: 'addDBS'},
                 { path: 'addHealth'},
-                { path: 'addTraining'}
+                { path: 'addRightToWork'},
+                { path: 'addTraining'},
+                { path: 'bookInduction'}
             ]);
 
             self.router.currentState.subscribe((args) => {

@@ -39,15 +39,79 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                 self.disabilityFileText = ko.observable('Learning Disabilities');
                 self.care_expiry_date = ko.observable();
                 self.careFileText = ko.observable('Care Certificate');
+                self.trainingStatus = ko.observable('');
+                self.TrainingDet = ko.observableArray([]);
+                self.movingFile = ko.observable('');
+                self.selectorSelectedItems = new ojknockout_keyset_1.ObservableKeySet();
+
                 self.connected = function () {
                     if (sessionStorage.getItem("userName") == null) {
                         self.router.go({ path: 'signin' });
                     }
                     else {
                        app.onAppSuccess();
+                       getTrainingData();
                     }
                 };
   
+
+                function getTrainingData(){
+                    self.TrainingDet([]);
+                    var BaseURL = sessionStorage.getItem("BaseURL")
+                    $.ajax({
+                        url: BaseURL + "/jpEditTrainingInfo",
+                        type: 'POST',
+                        data: JSON.stringify({
+                            staffId : sessionStorage.getItem("userId"),
+                        }),
+                        dataType: 'json',
+                        timeout: sessionStorage.getItem("timeInetrval"),
+                        context: self,
+                        error: function (xhr, textStatus, errorThrown) {
+                            if(textStatus == 'timeout' || textStatus == 'error'){
+                                document.querySelector('#TimeoutSup').open();
+                            }
+                        },
+                        success: function (result) {
+                            console.log(result)
+                            var data = JSON.parse(result);
+                            console.log(data)
+                             if(data.length !=0){
+                                document.getElementById('listDBS').style.display='block'; 
+                                if(data[0][7] == "Pending") {
+                                    self.trainingStatus('Pending');
+                                }else if(data[0][7] == "Audited") {
+                                    self.trainingStatus('Audited');
+                                }
+                               /*  self.movingFile(data[0][4])  
+                                document.getElementById("moving").href = data[0][5];
+                                self.movingFile_expiry_date(data[0][6]) */
+                                /* self.uploadError('')
+                                self.DBSActionBtn('Update')
+                                self.requiredDBS(true)
+                                if(result[0][7] == "Pending") {
+                                    self.dbsStatus('Pending');
+                                }else if(result[0][7] == "Audited") {
+                                    self.dbsStatus('Audited');
+                                }   */
+
+                            } else{
+                                document.getElementById('listDBS').style.display='none'; 
+                            } 
+                            for (var i = 0; i < data.length; i++) {
+                                if(data[i][6]){
+                                self.TrainingDet.push({'id': data[i][0], 'staff_id' : data[i][1], 'file_type' : data[i][2] , 'file_type_additional' : data[i][3] , 'file_name' :data[i][4] ,  'certificate' : data[i][5],'expiry_date' : data[i][6] }); 
+                                }else{
+                                    self.TrainingDet.push({'id': data[i][0], 'staff_id' : data[i][1], 'file_type' : data[i][2] , 'file_type_additional' : data[i][3] , 'file_name' :data[i][4] , 'certificate' : "Not Uploaded",'expiry_date' : data[i][6] }); 
+                                }  
+                        } 
+      
+                        self.TrainingDet.valueHasMutated();
+                        return self; 
+                    }
+                    })                
+                }
+                this.dataProvider1 = new ArrayDataProvider(this.TrainingDet, { keyAttributes: "id"});
 
                 self.movingSubmit = function (event,data) {
                     var file = event.detail.files[0];
@@ -94,8 +158,9 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                             success: function (data) {
                                 console.log(data)
                                 document.querySelector('#openAddUploadingProgress').close();
-                                document.querySelector('#openFileUploadResult').open();
-                                self.uploadDocumentMsg(data[0]);
+                                getTrainingData();
+                               /*  document.querySelector('#openFileUploadResult').open();
+                                self.uploadDocumentMsg(data[0]); */
                             }
                         })      
                     }
@@ -146,8 +211,9 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                         success: function (data) {
                             console.log(data)
                             document.querySelector('#openAddUploadingProgress').close();
-                            document.querySelector('#openFileUploadResult').open();
-                            self.uploadDocumentMsg(data[0]);
+                            getTrainingData();
+                            /* document.querySelector('#openFileUploadResult').open();
+                            self.uploadDocumentMsg(data[0]); */
                         }
                     })      
                 }
@@ -202,8 +268,9 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                         success: function (data) {
                             console.log(data)
                             document.querySelector('#openAddUploadingProgress').close();
-                            document.querySelector('#openFileUploadResult').open();
-                            self.uploadDocumentMsg(data[0]);
+                            getTrainingData();
+                           /*  document.querySelector('#openFileUploadResult').open();
+                            self.uploadDocumentMsg(data[0]); */
                         }
                     })      
                 }
@@ -254,8 +321,9 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                     success: function (data) {
                         console.log(data)
                         document.querySelector('#openAddUploadingProgress').close();
-                        document.querySelector('#openFileUploadResult').open();
-                        self.uploadDocumentMsg(data[0]);
+                        getTrainingData();
+                        /* document.querySelector('#openFileUploadResult').open();
+                        self.uploadDocumentMsg(data[0]); */
                     }
                 })      
             }
@@ -306,8 +374,9 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                 success: function (data) {
                     console.log(data)
                     document.querySelector('#openAddUploadingProgress').close();
-                    document.querySelector('#openFileUploadResult').open();
-                    self.uploadDocumentMsg(data[0]);
+                    getTrainingData();
+                    /* document.querySelector('#openFileUploadResult').open();
+                    self.uploadDocumentMsg(data[0]); */
                 }
             })      
         }
@@ -357,8 +426,9 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                     success: function (data) {
                         console.log(data)
                         document.querySelector('#openAddUploadingProgress').close();
-                        document.querySelector('#openFileUploadResult').open();
-                        self.uploadDocumentMsg(data[0]);
+                        getTrainingData();
+                        /* document.querySelector('#openFileUploadResult').open();
+                        self.uploadDocumentMsg(data[0]); */
                     }
                 })      
             }
@@ -409,8 +479,9 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                     success: function (data) {
                         console.log(data)
                         document.querySelector('#openAddUploadingProgress').close();
-                        document.querySelector('#openFileUploadResult').open();
-                        self.uploadDocumentMsg(data[0]);
+                        getTrainingData();
+                        /* document.querySelector('#openFileUploadResult').open();
+                        self.uploadDocumentMsg(data[0]); */
                     }
                 })      
             }
@@ -460,8 +531,9 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                     success: function (data) {
                         console.log(data)
                         document.querySelector('#openAddUploadingProgress').close();
-                        document.querySelector('#openFileUploadResult').open();
-                        self.uploadDocumentMsg(data[0]);
+                        getTrainingData();
+                        /* document.querySelector('#openFileUploadResult').open();
+                        self.uploadDocumentMsg(data[0]); */
                     }
                 })      
             }
@@ -511,8 +583,9 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                 success: function (data) {
                     console.log(data)
                     document.querySelector('#openAddUploadingProgress').close();
-                    document.querySelector('#openFileUploadResult').open();
-                    self.uploadDocumentMsg(data[0]);
+                    getTrainingData();
+                    /* document.querySelector('#openFileUploadResult').open();
+                    self.uploadDocumentMsg(data[0]); */
                 }
             })      
         }
@@ -563,8 +636,9 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                     success: function (data) {
                         console.log(data)
                         document.querySelector('#openAddUploadingProgress').close();
-                        document.querySelector('#openFileUploadResult').open();
-                        self.uploadDocumentMsg(data[0]);
+                        getTrainingData();
+                        /* document.querySelector('#openFileUploadResult').open();
+                        self.uploadDocumentMsg(data[0]); */
                     }
                 })      
             }
@@ -615,8 +689,9 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                     success: function (data) {
                         console.log(data)
                         document.querySelector('#openAddUploadingProgress').close();
-                        document.querySelector('#openFileUploadResult').open();
-                        self.uploadDocumentMsg(data[0]);
+                        getTrainingData();
+                       /*  document.querySelector('#openFileUploadResult').open();
+                        self.uploadDocumentMsg(data[0]); */
                     }
                 })      
             }
@@ -667,8 +742,9 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                     success: function (data) {
                         console.log(data)
                         document.querySelector('#openAddUploadingProgress').close();
-                        document.querySelector('#openFileUploadResult').open();
-                        self.uploadDocumentMsg(data[0]);
+                        getTrainingData();
+                        /* document.querySelector('#openFileUploadResult').open();
+                        self.uploadDocumentMsg(data[0]); */
                     }
                 })      
             }
@@ -719,8 +795,9 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                     success: function (data) {
                         console.log(data)
                         document.querySelector('#openAddUploadingProgress').close();
-                        document.querySelector('#openFileUploadResult').open();
-                        self.uploadDocumentMsg(data[0]);
+                        getTrainingData();
+                       /*  document.querySelector('#openFileUploadResult').open();
+                        self.uploadDocumentMsg(data[0]); */
                     }
                 })      
             }
@@ -771,13 +848,49 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                     success: function (data) {
                         console.log(data)
                         document.querySelector('#openAddUploadingProgress').close();
-                        document.querySelector('#openFileUploadResult').open();
-                        self.uploadDocumentMsg(data[0]);
+                        getTrainingData();
+                        /* document.querySelector('#openFileUploadResult').open();
+                        self.uploadDocumentMsg(data[0]); */
                     }
                 })      
             }
         }
+        self.previewClick = function (event) {
+            console.log(event.srcElement.id)  
+            var clickedId=event.srcElement.id
+            var file=clickedId.replace(/\s/g,'%20');
+            document.getElementById(clickedId).href = file;
 
+        }; 
+        self.updateTrainingStatus = function (event,data) {
+            var BaseURL = sessionStorage.getItem("BaseURL")
+            $.ajax({
+                url: BaseURL+ "/jpStaffUpdateTrainingStatus",
+                type: 'POST',
+                data: JSON.stringify({
+                    staffId : sessionStorage.getItem("userId"),
+                }),
+                dataType: 'json',
+                timeout: sessionStorage.getItem("timeInetrval"),
+                context: self,
+                error: function (xhr, textStatus, errorThrown) {
+                    if(textStatus == 'timeout'){
+                        document.querySelector('#openUpdateStaffProgress').close();
+                        document.querySelector('#Timeout').open();
+                    }
+                },
+                success: function (data) {
+                   console.log("Success")
+                   if(sessionStorage.getItem('section_status')=="Pending"){
+                    sessionStorage.setItem('training_status','Audited');
+                   }else if(sessionStorage.getItem('section_status')=="Audited"){
+                    sessionStorage.setItem('training_status','Pending');
+                   }
+                   location.reload();
+                }
+            })  
+    
+        }
     
             }
             

@@ -76,18 +76,20 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                                 document.getElementById('listDBS').style.display='block'; 
                                 document.getElementById('dbsQuestion').style.display='none'; 
                                 document.getElementById('dbsHint').style.display='none'; 
+                                self.DBSActionBtn('Update')
                             }
                             else{
                                 self.DBSActionBtn('Add')
                             }
-                            for (var i = 0; i < data.length; i++) {
+                           /*  for (var i = 0; i < data.length; i++) {
                                 if(data[i][6]){
                                 self.DBSDet.push({'id': data[i][0], 'staff_id' : data[i][1], 'file_type' : data[i][2] , 'file_type_additional' : data[i][3] , 'file_name' :data[i][4] ,  'certificate' : data[i][5],'expiry_date' : data[i][6] }); 
                                 }else{
                                     self.DBSDet.push({'id': data[i][0], 'staff_id' : data[i][1], 'file_type' : data[i][2] , 'file_type_additional' : data[i][3] , 'file_name' :data[i][4] , 'certificate' : data[i][5],'expiry_date' : data[i][6] }); 
                                 }  
-                        }
-                        self.DBSActionBtn('Update')
+                        } */
+                        self.DBSDet.push({'dbs_number' : result[0][0][2], 'dbs_certificate' : data[0][5], 'update_certificate' : data[1][5], 'expiry_date' : data[0][6] }); 
+
                         self.dbsNumber(result[0][0][2])
                         self.dbs_expiry_date(data[0][6])
                         if(data[0][7] == "Pending") {
@@ -373,11 +375,39 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
         document.getElementById(clickedId).href = file;
 
     }; 
+    
     self.editDBSInfo = function (event) {
          document.querySelector('#openUpdateDBSDialog').open();
          console.log(event)
     }; 
-            
+    self.dbsRequestMailSend = function (event) {
+        self.ResultTitle('DBS Request Sent')
+        self.progressDialog('Please wait! Rquest Email Sending...')
+        document.querySelector('#openAddDBSProgress').open();
+        var BaseURL = sessionStorage.getItem("BaseURL")
+        $.ajax({
+            url: BaseURL+ "/jpStaffRequestMailSend",
+            type: 'POST',
+            data: JSON.stringify({
+                staff_id : sessionStorage.getItem("staffId"),
+            }),
+            dataType: 'json',
+            timeout: sessionStorage.getItem("timeInetrval"),
+            context: self,
+            error: function (xhr, textStatus, errorThrown) {
+                if(textStatus == 'timeout'){
+                    document.querySelector('#openAddDBSProgress').close();
+                    document.querySelector('#Timeout').open();
+                }
+            },
+            success: function (data) {
+                document.querySelector('#openAddDBSProgress').close();
+                document.querySelector('#openAddDBSResult').open();
+                self.addDBSMsg(data[0]);
+            }
+        })  
+
+    };      
             
           }
         }
