@@ -221,6 +221,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
             self.status = ko.observable();
             self.address1 = ko.observable();
             self.address2 = ko.observable();
+            self.address3 = ko.observable();
             self.postTown = ko.observable();
             self.postCode = ko.observable();
             self.contactEmail = ko.observable();
@@ -235,6 +236,10 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
             self.emailError = ko.observable();
             self.contactError = ko.observable();
 
+            self.addressLine1Error = ko.observable('');
+            self.addressLine2Error = ko.observable('');
+            self.townError = ko.observable('');
+            self.postcodeError = ko.observable('');
 
 
             function getStaff() {
@@ -429,7 +434,43 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
             self.staffAddSave = function (event,data) {
                 var validSec1 = self._checkValidationGroup("clientAddSec1");
                 var validSec2 = self._checkValidationGroup("clientAddSec2");
+                var addressLine1 = document.getElementById("line_1");
+                if(addressLine1.value != ""){
+                    self.address1(addressLine1.value);
+                    self.addressLine1Error('');
+                }
+                else{
+                    self.addressLine1Error("Please fill the address")
+                }
 
+                var addressLine2 = document.getElementById("line_2");
+                if(addressLine2.value != ""){
+                    self.address2(addressLine2.value);
+                    self.addressLine2Error('');
+                }
+                else{
+                    self.addressLine2Error("Please fill the address")
+                }
+                var addressLine3 = document.getElementById("line_3");
+                if(addressLine3.value != ""){
+                    self.address3(addressLine3.value);
+                }
+                var postTown = document.getElementById("post_town");
+                if(postTown.value != ""){
+                    self.postTown(postTown.value);
+                    self.townError('');
+                }
+                else{
+                    self.townError("Please enter your town")
+                }
+                var postcode = document.getElementById("postcode");
+                if(postcode.value != ""){
+                    self.postCode(postcode.value);
+                    self.postcodeError('');
+                }
+                else{
+                    self.postcodeError("Please enter your postcode");
+                }
                 if (validSec1 && validSec2 && self.emailError() == '' && self.contactError() == '') {
                     // submit the form would go here
                      //alert('everything is valid; submit the form');
@@ -1571,6 +1612,8 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
             if(inputText.match(mailformat))
             {
                 self.emailError('')
+            }else if(self.emailError() ==undefined){
+                self.emailError('');
             }
             else
             {
@@ -1596,7 +1639,10 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
             var ASCIICode= event.detail.value
             if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57) && ASCIICode.length==10){
                 self.contactError('')
-            }else{
+            }else if(self.contactError() ==undefined){
+                self.contactError('');
+            }
+            else{
                 self.contactError("Invalid phone number.");
             }
          }

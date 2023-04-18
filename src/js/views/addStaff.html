@@ -1,4 +1,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="css/postcode.css" type="text/css" />
+
 <div class="sampleDemo">
 <div class="oj-xl-margin-4x">
   <div class="oj-flex addStaffAlign">
@@ -147,9 +150,9 @@
   </div> -->
 
   <div
-    class="oj-panel oj-flex oj-sm-margin-2x-bottom oj-xl-margin-3x oj-xl-padding-5x oj-lg-margin-3x oj-lg-padding-7x oj-md-margin-3x oj-md-padding-4x oj-sm-margin-1x oj-sm-padding-1x">
+    class="oj-panel">
     <div
-      class="oj-panel  oj-sm-margin-2x-bottom oj-xl-margin-3x oj-xl-padding-3x oj-lg-margin-3x oj-lg-padding-7x oj-md-margin-3x oj-md-padding-4x oj-sm-margin-1x oj-sm-padding-1x oj-sm-6">
+      class="">
       <oj-validation-group id="clientAddSec1" role="group" valid="{{groupValid}}"
       aria-labelledby="grouplabelid" disbaled>
       <oj-input-text id="clientId" label-hint="Client Id" value="{{clientId}}" clear-icon="always"  style="display:none">
@@ -184,17 +187,28 @@
       </oj-validation-group>
     </div>
     <div
-      class="oj-panel oj-flex oj-sm-margin-2x-bottom oj-xl-margin-3x oj-xl-padding-5x oj-lg-margin-3x oj-lg-padding-7x oj-md-margin-3x oj-md-padding-4x oj-sm-margin-1x oj-sm-padding-1x oj-sm-5 ">
+      class="">
       <oj-validation-group id="clientAddSec2" role="group" valid="{{groupValid}}"
       aria-labelledby="grouplabelid">
-      <oj-input-text required id="address1" label-hint="Address1" value="{{address1}}" clear-icon="always">
+      <p class="text-center"></p></br>
+      <div id="context"></div></br>
+      <input type="text" id="line_1" class="form-control" placeholder='Address line 1' spellcheck='false' aria-label='Address line 1' value="">
+      <div class="oj-text-color-danger"><oj-bind-text value='[[addressLine1Error]]'></oj-bind-text></div></br>
+      <input type="text" id="line_2" class="form-control" placeholder='Address line 2' spellcheck='false' aria-label='Address line 1' value="">
+      <div class="oj-text-color-danger"><oj-bind-text value='[[addressLine2Error]]'></oj-bind-text></div></br>
+      <input type="text" id="line_3" class="form-control" placeholder='Address line 3' spellcheck='false' aria-label='Address line 1' value=""></br>
+      <input type="text" class="form-control" id="post_town" placeholder='Post town' spellcheck='false' aria-label='Address line 1' value="">
+      <div class="oj-text-color-danger"><oj-bind-text value='[[townError]]'></oj-bind-text></div></br>
+      <input type="text" id="postcode" class="form-control" placeholder='Enter your postcode' spellcheck='false' aria-label='Address line 1' value="">
+      <div class="oj-text-color-danger"><oj-bind-text value='[[postcodeError]]'></oj-bind-text></div></br>    
+     <!--  <oj-input-text required id="address1" label-hint="Address1" value="{{address1}}" clear-icon="always">
       </oj-input-text>
       <oj-input-text required id="address2" label-hint="Address2" value="{{address2}}" clear-icon="always">
       </oj-input-text>
       <oj-input-text required id="postTown" label-hint="Town/City" value="{{postTown}}" clear-icon="always">
       </oj-input-text>
       <oj-input-text required id="postCode" label-hint="Postal code" value="{{postCode}}" clear-icon="always">
-      </oj-input-text>
+      </oj-input-text> -->
       <!-- <oj-input-text required id="contactEmail" label-hint="Contact Email" value="{{contactEmail}}"  validators="[[emailPatternValidator]]" clear-icon="always">
       </oj-input-text> -->
       <oj-input-text required id="contactEmail" label-hint="Contact Email" value="{{contactEmail}}" clear-icon="always" on-value-changed="[[emailPatternValidator]]">
@@ -219,7 +233,7 @@
     </div>
   </div>
   <oj-bind-if test="[[clientActionBtn() === 'Add']]">
-  <div
+  <div style="display: flex;justify-content: center;"
     class="oj-panel  oj-sm-margin-2x-bottom oj-xl-margin-2x oj-xl-padding-2x oj-lg-margin-2x oj-lg-padding-2x oj-md-margin-2x oj-md-padding-2x oj-sm-margin-1x oj-sm-padding-1x">
     <div class="oj-flex-bar">
      <!--  <oj-button id="cancelBtn" class="oj-flex-bar-start" on-oj-action="[[clientAddCancel]]">Cancel
@@ -230,7 +244,7 @@
   </div>
 </oj-bind-if>
 <oj-bind-if test="[[clientActionBtn() === 'Update']]">
-  <div
+  <div style="display: flex;justify-content: center;"
     class="oj-panel  oj-sm-margin-2x-bottom oj-xl-margin-2x oj-xl-padding-2x oj-lg-margin-2x oj-lg-padding-2x oj-md-margin-2x oj-md-padding-2x oj-sm-margin-1x oj-sm-padding-1x">
     <div class="oj-flex-bar">
       <oj-button id="cancelBtn" class="oj-flex-bar-start" on-oj-action="[[clientAddCancel]]">Cancel
@@ -293,3 +307,19 @@
     </oj-progress-bar>
   </div>
 </oj-dialog>
+
+<script type="module">
+  import { PostcodeLookup } from "https://cdn.jsdelivr.net/npm/@ideal-postcodes/postcode-lookup-bundled@2/dist/postcode-lookup.esm.js";
+  window.PostcodeLookup = PostcodeLookup;
+  PostcodeLookup.setup({
+    apiKey: "ak_l96o294xFkm5IoleolP19eggRpQyX",
+    context: "#context",
+    outputFields: {
+      line_1: "#line_1",
+      line_2: "#line_2",
+      line_3: "#line_3",
+      post_town: "#post_town",
+      postcode: "#postcode"
+    }
+  });
+</script>

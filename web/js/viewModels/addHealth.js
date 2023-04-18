@@ -75,6 +75,11 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                 self.staffActionBtn = ko.observable();  
                 self.healthStatus = ko.observable('');
 
+                self.addressLine1Error = ko.observable('');
+                self.addressLine2Error = ko.observable('');
+                self.townError = ko.observable('');
+                self.postcodeError = ko.observable('');
+
                 self.choiceList = ko.observableArray([]);
                 self.choiceList.push(
                     {'value' : 'Yes', 'label' : 'Yes'},
@@ -360,6 +365,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                             if(data==''){  
                                 self.staffActionBtn('Add')
                             }else{
+                                document.getElementById('postCodeLookup').style.display='none';
                                 self.staffActionBtn('Update')
                                 self.gp_name(data[0][2])
                                 self.countryCode(data[0][3])
@@ -561,6 +567,58 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                     var staffHealthTown = self._checkValidationGroup("staffHealthTown");
                     var staffHealthPostcode = self._checkValidationGroup("staffHealthPostcode");  
                     var staffHealthCheck = self._checkValidationGroup("staffHealthCheck"); 
+                    if(staffHealthAddress1){
+                        var addressLine1 = document.getElementById("line_1");
+                        if(addressLine1.value != ""){
+                            self.addressLine1(addressLine1.value);
+                            self.addressLine1Error('');
+                        }
+                        else{
+                            self.addressLine1Error("Please fill the address")
+                        }
+                    }
+                   /*  if(staffHealthAddress2){
+                        var addressLine2 = document.getElementById("line_2");
+                        if(addressLine2.value != ""){
+                            self.addressLine2(addressLine2.value);
+                            self.addressLine2Error('');
+                        }
+                        else{
+                            self.addressLine2Error("Please fill the address")
+                        }
+                    } */
+                    var addressLine2 = document.getElementById("line_3");
+                    if(addressLine2.value != ""){
+                        self.addressLine2(addressLine2.value);
+                    }
+                    
+                    var addressLine3 = document.getElementById("line_3");
+                    if(addressLine3.value != ""){
+                        self.addressLine3(addressLine3.value);
+                    }
+                    if(staffHealthTown){
+                        var postTown = document.getElementById("post_town");
+                        if(postTown.value != ""){
+                            self.town(postTown.value);
+                            self.townError('');
+                        }
+                        else{
+                            self.townError("Please enter your town")
+                        }
+                    }
+                    if(staffHealthPostcode){
+                        var postcode = document.getElementById("postcode");
+                        if(postcode.value != ""){
+                            self.postcode(postcode.value);
+                            self.postcodeError('');
+                        }
+                        else{
+                            self.postcodeError("Please enter your postcode");
+                        }
+                    }
+                    if(self.addressLine2() == undefined){
+                        self.addressLine2('NULL')
+                    }
                     if(self.addressLine3() == undefined){
                         self.addressLine3('NULL')
                     }
@@ -609,7 +667,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                     if(self.additional_note() == undefined){
                         self.additional_note('NULL')
                     }
-                    if (staffHealthGPName && staffHealthCountryCode && staffHealthContact && staffHealthAddress1 && staffHealthAddress2 && staffHealthTown && staffHealthPostcode && staffHealthCheck && self.alcoholError() == '' && self.tobaccoError() == '' && self.absentError() == ''  && self.contactError() == '') {
+                    if (staffHealthGPName && staffHealthCountryCode && staffHealthContact && staffHealthAddress1 && staffHealthAddress2 && staffHealthTown && staffHealthPostcode && staffHealthCheck && self.alcoholError() == '' && self.tobaccoError() == '' && self.absentError() == ''  && self.contactError() == ''&& self.addressLine1Error() == '' && self.townError() == '' && self.postcodeError() == '') {
                         document.querySelector('#openAddHealthProgress').open();
                         self.saveHealthMsg('');
                         var BaseURL = sessionStorage.getItem("BaseURL")
@@ -852,7 +910,8 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
              }
              self.DBErrorOKClose = function (event) {
                 document.querySelector('#openHealthSaveResult').close();
-                self.router.go({path:'addStaff'})
+                //self.router.go({path:'addStaff'})
+                location.reload()
             }; 
 
             self.updateHealthStatus = function (event,data) {

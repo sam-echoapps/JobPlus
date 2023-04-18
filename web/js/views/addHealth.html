@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="css/postcode.css" type="text/css" />
 
 <div id="sampleDemo"  class="demo-container sampleDemo">
   <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
@@ -34,7 +35,54 @@
           <div class="oj-text-color-danger"><oj-bind-text value='[[contactError]]'></oj-bind-text></div></br>
           </oj-validation-group>
         </div>
+        <div id="postCodeLookup">
+        <p class="text-center"></p>
+        <div id="context"></div>
+      </div>
+        <oj-bind-if test="[[staffActionBtn() === 'Add']]">
+        <div
+          class="oj-panel  oj-sm-margin-2x-bottom oj-xl-margin-3x oj-xl-padding-3x oj-lg-margin-3x oj-lg-padding-7x oj-md-margin-3x oj-md-padding-4x oj-sm-margin-1x oj-sm-padding-1x oj-sm-4">
+          <oj-validation-group id="staffHealthAddress1" role="group" valid="{{groupValid}}"
+          aria-labelledby="grouplabelid">
+          <input type="text" id="line_1" class="form-control" placeholder='Address line 1' spellcheck='false' aria-label='Address line 1' value="">
+          <div class="oj-text-color-danger"><oj-bind-text value='[[addressLine1Error]]'></oj-bind-text></div></br>
 
+          </oj-validation-group>
+        </div>
+        <div
+        class="oj-panel  oj-sm-margin-2x-bottom oj-xl-margin-3x oj-xl-padding-3x oj-lg-margin-3x oj-lg-padding-7x oj-md-margin-3x oj-md-padding-4x oj-sm-margin-1x oj-sm-padding-1x oj-sm-3">
+        <oj-validation-group id="staffHealthAddress2" role="group" valid="{{groupValid}}"
+        aria-labelledby="grouplabelid">
+        <input type="text" id="line_2" class="form-control" placeholder='Address line 2' spellcheck='false' aria-label='Address line 1' value="">
+        <div class="oj-text-color-danger"><oj-bind-text value='[[addressLine2Error]]'></oj-bind-text></div></br>
+      </oj-validation-group>
+      </div>
+      <div
+          class="oj-panel  oj-sm-margin-2x-bottom oj-xl-margin-3x oj-xl-padding-3x oj-lg-margin-3x oj-lg-padding-7x oj-md-margin-3x oj-md-padding-4x oj-sm-margin-1x oj-sm-padding-1x oj-sm-4">
+          
+          <input type="text" id="line_3" class="form-control" placeholder='Address line 3' spellcheck='false' aria-label='Address line 1' value="">
+
+
+        </div>
+    
+        <div
+          class="oj-panel  oj-sm-margin-2x-bottom oj-xl-margin-3x oj-xl-padding-3x oj-lg-margin-3x oj-lg-padding-7x oj-md-margin-3x oj-md-padding-4x oj-sm-margin-1x oj-sm-padding-1x oj-sm-4">
+          <oj-validation-group id="staffHealthTown" role="group" valid="{{groupValid}}"
+          aria-labelledby="grouplabelid">
+          <input type="text" class="form-control" id="post_town" placeholder='Post town' spellcheck='false' aria-label='Address line 1' value="">
+          <div class="oj-text-color-danger"><oj-bind-text value='[[townError]]'></oj-bind-text></div></br>
+          </oj-validation-group>
+        </div>
+        <div
+        class="oj-panel  oj-sm-margin-2x-bottom oj-xl-margin-3x oj-xl-padding-3x oj-lg-margin-3x oj-lg-padding-7x oj-md-margin-3x oj-md-padding-4x oj-sm-margin-1x oj-sm-padding-1x oj-sm-3">
+        <oj-validation-group id="staffHealthPostcode" role="group" valid="{{groupValid}}"
+        aria-labelledby="grouplabelid">
+        <input type="text" id="postcode" class="form-control" placeholder='Enter your postcode' spellcheck='false' aria-label='Address line 1' value="">
+        <div class="oj-text-color-danger"><oj-bind-text value='[[postcodeError]]'></oj-bind-text></div></br>       
+      </oj-validation-group>
+      </div>
+      </oj-bind-if>
+      <oj-bind-if test="[[staffActionBtn() === 'Update']]">
         <div
           class="oj-panel  oj-sm-margin-2x-bottom oj-xl-margin-3x oj-xl-padding-3x oj-lg-margin-3x oj-lg-padding-7x oj-md-margin-3x oj-md-padding-4x oj-sm-margin-1x oj-sm-padding-1x oj-sm-4">
           <oj-validation-group id="staffHealthAddress1" role="group" valid="{{groupValid}}"
@@ -74,6 +122,7 @@
         </oj-input-text>        
       </oj-validation-group>
       </div>
+    </oj-bind-if>
       </div>
       <div
         class="oj-sm-margin-2x-bottom oj-xl-margin-3x oj-xl-padding-3x oj-lg-margin-3x oj-lg-padding-7x oj-md-margin-3x oj-md-padding-4x oj-sm-margin-1x oj-sm-padding-1x oj-sm-12">
@@ -362,6 +411,26 @@
     </div>
   </oj-dialog> 
 
-    
+  <script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@ideal-postcodes/postcode-lookup-bundled@2/dist/postcode-lookup.esm.js"
+></script>
+
+<script type="module">
+    import { PostcodeLookup } from "https://cdn.jsdelivr.net/npm/@ideal-postcodes/postcode-lookup-bundled@2/dist/postcode-lookup.esm.js";
+    window.PostcodeLookup = PostcodeLookup;
+    PostcodeLookup.setup({
+      apiKey: "ak_l96o294xFkm5IoleolP19eggRpQyX",
+      context: "#context",
+      outputFields: {
+        line_1: "#line_1",
+        line_2: "#line_2",
+        line_3: "#line_3",
+        post_town: "#post_town",
+        postcode: "#postcode"
+      }
+    });
+  </script>
+  
 
   

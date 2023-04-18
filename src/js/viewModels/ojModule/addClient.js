@@ -1738,6 +1738,8 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
             if(inputText.match(mailformat))
             {
                 self.emailError('')
+            }else if(self.emailError() ==undefined){
+                self.emailError('');
             }
             else
             {
@@ -1750,6 +1752,8 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
             var ASCIICode= event.detail.value
             if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57) && ASCIICode.length==10){
                 self.contactError('')
+            }else if(self.contactError() ==undefined){
+                self.contactError('');
             }else{
                 self.contactError("Invalid phone number.");
             }
