@@ -3,7 +3,9 @@
 
 <div id="sampleDemo"  class="demo-container sampleDemo">
   <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
-    
+    <div class="hint" style="border: 1px solid #80808036; margin: 10px;padding: 10px;background-color: #d1ecf1;">
+      The candidate is requested to provide an Enhanced DBS (PVG) Certificate.
+    </div>  
     <div id="moduleDemo">              
         <div
         class="oj-panel oj-flex oj-sm-margin-2x-bottom oj-xl-margin-3x oj-xl-padding-5x oj-lg-margin-3x oj-lg-padding-7x oj-md-margin-3x oj-md-padding-4x oj-sm-margin-1x oj-sm-padding-1x">
@@ -82,7 +84,7 @@ class="oj-sm-padding-2x-vertical" selection-mode="multiple" selected="{{selector
      <div class="oj-typography-body-md">
        <div class="oj-flex oj-sm-align-items-center">
   
-         <div class="oj-flex-item demo-list-item-layout2 ">
+         <div class="oj-flex-item demo-list-item-layout1 oj-md-padding-4x-end">
            <oj-list-item-layout class="oj-listitemlayout-padding-off"
              :aria-label="[['task ' +item.data.taskName]]">
              <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
@@ -95,7 +97,7 @@ class="oj-sm-padding-2x-vertical" selection-mode="multiple" selected="{{selector
            </oj-list-item-layout>
          </div>
          
-         <div class="oj-flex-item demo-list-item-layout2 oj-md-padding-4x-end">
+         <div class="oj-flex-item demo-list-item-layout1 oj-md-padding-4x-end">
            <oj-list-item-layout class="oj-listitemlayout-padding-off"
              :aria-label="[['task ' +item.data.taskName]]">
              <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
@@ -108,7 +110,7 @@ class="oj-sm-padding-2x-vertical" selection-mode="multiple" selected="{{selector
            </oj-list-item-layout>
          </div>
 
-         <div class="oj-flex-item demo-list-item-layout2 oj-md-padding-4x-end">
+         <div class="oj-flex-item demo-list-item-layout1 oj-md-padding-4x-end">
            <oj-list-item-layout class="oj-listitemlayout-padding-off"
              :aria-label="[['task ' +item.data.taskName]]">
              <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
@@ -123,7 +125,7 @@ class="oj-sm-padding-2x-vertical" selection-mode="multiple" selected="{{selector
            </oj-list-item-layout>
          </div>
 
-         <div class="oj-flex-item demo-list-item-layout2 oj-md-padding-4x-end">
+         <div class="oj-flex-item demo-list-item-layout1 oj-md-padding-4x-end">
           <oj-list-item-layout class="oj-listitemlayout-padding-off"
             :aria-label="[['task ' +item.data.taskName]]">
             <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
@@ -139,7 +141,7 @@ class="oj-sm-padding-2x-vertical" selection-mode="multiple" selected="{{selector
         </div>
 
 
-           <div class="oj-flex-item oj-md-padding-4x-end">
+           <div class="oj-flex-item demo-list-item-layout1 oj-md-padding-4x-end">
              <oj-list-item-layout class="oj-listitemlayout-padding-off"
                :aria-label="[['task ' +item.data.taskName]]">
                <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
@@ -158,14 +160,14 @@ class="oj-sm-padding-2x-vertical" selection-mode="multiple" selected="{{selector
                  <span slot="startIcon"></span>
                Edit
                </oj-button> 
-           <!--     <oj-button
+                <oj-button
                chroming="borderless"
                display="icons"
                class="oj-button-sm deleteBtn"
-               on-oj-action="">
+               on-oj-action="[[deleteConfirm]]">
                <span slot="startIcon"></span>
                Delate
-             </oj-button> --> 
+             </oj-button> 
              </div>
            </div>
          </oj-list-item-layout>
@@ -293,6 +295,24 @@ style="display:none;width:350px;min-width:240px;max-width:450px;">
 </div>
 </oj-dialog>
 
+<oj-dialog id="openDeleteConfirm" dialog-title="Delete DBS Details" modality="modeless"  style="display:none;width:350px;min-width:240px;max-width:450px;" cancel-behavior="[[CancelBehaviorOpt]]">
+  <div slot="body">
+    <oj-bind-text value='Do you want to delete the selected row?'></oj-bind-text>
+  </div>
+  <div  class="oj-flex-bar" slot="footer">
+    <oj-button id="okdelButton" class="oj-flex-bar-start oj-button-cancel oj-button-danger-chrome" on-oj-action="[[deleteDBSInfo]]">
+      Yes
+    </oj-button>
+  </div>
+</oj-dialog>
+
+<oj-dialog id="openDeleteDBSProgress" dialog-title="Please wait!Deleteing...." modality="modeless"
+style="display:none;width:350px;min-width:240px;max-width:450px;">
+<div slot="body">
+  <oj-progress-bar id="createbar" class="oj-progress-bar-embedded" value="-1">
+  </oj-progress-bar>
+</div>
+</oj-dialog>
     
 
   

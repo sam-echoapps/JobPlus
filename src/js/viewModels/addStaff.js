@@ -1601,6 +1601,50 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
             }
          }
 
+         self.deleteConfirm = function (event,data) {
+            var clickedRowId = self.getDisplayValue(self.selectorSelectedItems())[0];
+            sessionStorage.setItem("staffId", clickedRowId);
+            console.log(clickedRowId)
+            if(clickedRowId !=undefined){
+                document.querySelector('#openDeleteConfirm').open();
+            }         
+           
+        }
+
+        self.deleteStaffInfo = function (event,data) {
+            var clickedRowId = self.getDisplayValue(self.selectorSelectedItems())[0];
+            sessionStorage.setItem("staffId", clickedRowId);
+            console.log(clickedRowId)
+            var BaseURL = sessionStorage.getItem("BaseURL");
+            if(clickedRowId !=undefined){
+                document.querySelector('#openDeleteConfirm').close();
+                document.querySelector('#openDeleteStaffProgress').open();
+                 $.ajax({
+                    url: BaseURL + "/jpDeleteStaffDetails",
+                    type: 'POST',
+                    data: JSON.stringify({
+                       staffId : self.getDisplayValue(self.selectorSelectedItems())[0]
+                    }),
+                    dataType: 'json',
+                    timeout: sessionStorage.getItem("timeInetrval"),
+                    context: self,
+                    error: function (xhr, textStatus, errorThrown) {
+                        if(textStatus == 'timeout' || textStatus == 'error'){
+                            document.querySelector('#TimeoutSup').open();
+                        }
+                    },
+                    success: function (data) {
+                        document.querySelector('#openDeleteStaffProgress').close();
+                        document.querySelector('#openAddClientResult').open();
+                        self.addClientMsg(data[0]);
+                        console.log("success")
+                }
+                })  
+
+            }         
+           
+        }
+
         }
     }
     return  addStaffViewModel;

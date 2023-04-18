@@ -35,8 +35,40 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
             self.ClientType = ko.observableArray([]);
             self.ClientGroup = ko.observableArray([]);
             self.PaymentMode = ko.observableArray([]);
+            self.PaymentModeList = ko.observableArray([]);
+            self.PaymentModeList.push(
+                {'value' : '1', 'label' : 'Direct Payment'},
+                {'value' : '2', 'label' : 'Factoring Payment'}
+            );
+            self.PaymentModeListDP = new ArrayDataProvider(self.PaymentModeList, {keyAttributes: 'value'});
             self.InvoiceDueOn = ko.observableArray([]);
+
+            self.InvoiceDueOnList = ko.observableArray([]);
+            self.InvoiceDueOnList.push(
+                {'value' : '7', 'label' : '7 days'},
+                {'value' : '10', 'label' : '10 days'},
+                {'value' : '14', 'label' : '14 days'},
+                {'value' : '30', 'label' : '30 days'},
+                {'value' : '45', 'label' : '45 days'},  
+                {'value' : '60', 'label' : '60 days'},
+                {'value' : '90', 'label' : '90 days'},
+                {'value' : '1000', 'label' : 'End of billing month'},
+                {'value' : '1015', 'label' : '15 days after month end'},
+                {'value' : '1030', 'label' : '30 days after month end'},
+                {'value' : '1045', 'label' : '45 days after month end'},
+                {'value' : '1060', 'label' : '60 days after month end'}
+
+            );
+            self.InvoiceDueOnListDP = new ArrayDataProvider(self.InvoiceDueOnList, {keyAttributes: 'value'});
+
             self.HolidayPayType = ko.observableArray([]);
+            self.HolidayPayTypeList = ko.observableArray([]);
+            self.HolidayPayTypeList.push(
+                {'value' : '1', 'label' : '12a-12a Holiday (midnight to midnight) Pay'},
+                {'value' : '2', 'label' : 'Full Holiday Pay. [If shift touches holiday]'},
+                {'value' : '3', 'label' : 'Full Holiday Pay. [If Shift Starting on a holiday]'}
+            );
+            self.HolidayPayTypeListDP = new ArrayDataProvider(self.HolidayPayTypeList, {keyAttributes: 'value'});
 
             self.ClientDet = ko.observableArray([]);
             self.shiftDet = ko.observableArray([]);

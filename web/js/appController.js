@@ -71,7 +71,9 @@ define([ 'ojs/ojoffcanvas' , 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojre
           { path: 'myprofile', detail : {label: 'My Profile',iconClass: 'oj-navigationlist-item-icon fa fa-user',dep_url : self.onepDepUrl,dep_type : self.onepDepType} },
           { path: 'ggadmin', detail : {label: 'Client Manager',iconClass: 'oj-navigationlist-item-icon fa fa-cogs',dep_url : self.onepDepUrl,dep_type : self.onepDepType} },
           { path: 'addStaff', detail : {label: 'Recruitment',iconClass: 'oj-navigationlist-item-icon fa fa-user',dep_url : self.onepDepUrl,dep_type : self.onepDepType} },
-          { path: 'induction', detail : {label: 'Induction',iconClass: 'oj-navigationlist-item-icon fa fa-calendar',dep_url : self.onepDepUrl,dep_type : self.onepDepType} }
+          { path: 'induction', detail : {label: 'Induction',iconClass: 'oj-navigationlist-item-icon fa fa-calendar',dep_url : self.onepDepUrl,dep_type : self.onepDepType} },
+/*           { path: 'postcode', detail : {label: 'Postcode',iconClass: 'oj-navigationlist-item-icon fa fa-calendar',dep_url : self.onepDepUrl,dep_type : self.onepDepType} }
+ */
         ];
       }
       

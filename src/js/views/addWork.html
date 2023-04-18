@@ -4,7 +4,11 @@
   <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
     
     <div id="moduleDemo">    
-        
+      <div class="hint" style="border: 1px solid #80808036; margin: 10px;padding: 10px;background-color: #d1ecf1;">
+        The candidate is requested to enter work history for the past 5 years or since their qualification date, whichever is sooner.
+&nbsp;
+        Any temporary and agency work experience can be included.
+      </div>  
          <oj-button chroming="callToAction" class="oj-xl-margin-4x" on-oj-action="[[openAddWorkDialog]]">
               <span slot="startIcon" class="demo-icon-sprite"> Add Work History</span>
             </oj-button>
@@ -21,7 +25,7 @@
           <div class="oj-typography-body-md">
             <div class="oj-flex oj-sm-align-items-center">
        
-              <div class="oj-flex-item demo-list-item-layout ">
+              <div class="oj-flex-item demo-list-item-layout2 ">
                 <oj-list-item-layout class="oj-listitemlayout-padding-off"
                   :aria-label="[['task ' +item.data.taskName]]">
                   <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
@@ -34,7 +38,7 @@
                 </oj-list-item-layout>
               </div>
               
-              <div class="oj-flex-item demo-list-item-layout oj-md-padding-4x-end">
+              <div class="oj-flex-item demo-list-item-layout2 oj-md-padding-4x-end">
                 <oj-list-item-layout class="oj-listitemlayout-padding-off"
                   :aria-label="[['task ' +item.data.taskName]]">
                   <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
@@ -47,7 +51,7 @@
                 </oj-list-item-layout>
               </div>
 
-              <div class="oj-flex-item demo-list-item-layout oj-md-padding-4x-end">
+              <div class="oj-flex-item demo-list-item-layout2 oj-md-padding-4x-end">
                 <oj-list-item-layout class="oj-listitemlayout-padding-off"
                   :aria-label="[['task ' +item.data.taskName]]">
                   <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
@@ -89,7 +93,7 @@
                   
                 </oj-list-item-layout> -->
 
-                <div class="oj-flex-item demo-list-item-layout oj-md-padding-4x-end">
+                <div class="oj-flex-item demo-list-item-layout2 oj-md-padding-4x-end">
                   <oj-list-item-layout class="oj-listitemlayout-padding-off"
                     :aria-label="[['task ' +item.data.taskName]]">
                     <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">

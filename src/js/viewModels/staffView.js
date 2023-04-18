@@ -19,6 +19,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
             self.healthStatus = ko.observable('');
             self.trainingStatus = ko.observable('');
             self.rightStatus = ko.observable('');
+            self.staffName = ko.observable();
+            self.staffNameCap = ko.observable();
+
             self.progressValue = ko.observable(30);
 
             self.router = args.parentRouter;
@@ -145,7 +148,10 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                         }else{
                             self.rightStatus('Pending');
                         } 
-                   
+
+                        self.staffName(data[10][0][0] + " " + data[10][0][1])
+                        self.staffNameCap(self.staffName().toUpperCase());
+
                         console.log(self.profileStatus())
                         if(self.profileStatus() != sessionStorage.getItem('profile_status')){
                             location.reload()

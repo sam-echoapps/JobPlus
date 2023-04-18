@@ -1,12 +1,22 @@
-<div id="induction" style="border: 1px solid #80808036; margin: 10px;padding: 10px; border-radius: 3px;">
-    <p style="font-weight: bold; font-size: 15px;">Office Induction</p>
-    <div class="induction-form">
-        <oj-label for="datepicker">Choose induction Date :</oj-label>
-        
-        <oj-input-date id="date" value="{{day}}" day-formatter="[[dayFormatter]]" autocomplete="off"
-            label-hint="Input Date No Visual Label" label-edge="none" on-value-changed="[[showDate]]"></oj-input-date>
-        <oj-select-single id="timeSlots" label-hint="Select your time slot" label-edge="inside" 
-            class="oj-form-control-max-width-md" data="[[timeSlots]]" value="{{timeSlot}}" style="display: none;"></oj-select-single>
-
-    </div>
+<link rel="stylesheet" href="../../../css/bookInduction.css">
+<div id="induction">
+    <oj-bind-if test="[[userCheck() === 'Not available' ]]">
+        <p style="font-weight: bold; font-size: 15px;">Office Induction</p>
+        <div class="induction-form">
+            <oj-validation-group id="inductionUpdate" role="group" valid="{{inductionValid}}">
+                <oj-label for="datepicker">Choose induction Date :</oj-label>
+                
+                <oj-input-date required id="date" value="{{day}}" day-formatter="[[dayFormatter]]" autocomplete="off"
+                    label-hint="Input Date No Visual Label" label-edge="none" on-value-changed="[[showTime]]"></oj-input-date>
+                <oj-select-single required id="timeSlots" label-hint="Select your time slot" label-edge="inside" class="oj-form-control-max-width-md" 
+                    data="[[timeSlots]]" value="{{inductionId}}" style="display: none;"></oj-select-single>
+            </oj-validation-group>
+            <div class="sub-btn" id="submitBtn">
+                <oj-button id="btn" chroming='callToAction' on-oj-action="[[inductionSubmit]]">Submit</oj-button>
+            </div>
+        </div>
+    </oj-bind-if>
+    <oj-bind-if test="[[userCheck() === 'Requested' ]]">
+        <p style="font-size: 20px;font-weight: bold;">Please wait for the response</p>
+    </oj-bind-if>
 </div>

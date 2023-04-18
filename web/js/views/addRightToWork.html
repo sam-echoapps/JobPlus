@@ -4,7 +4,12 @@
 <div id="sampleDemo"  class="demo-container sampleDemo">
   <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
     
-    <div id="moduleDemo">  </br> 
+    <div id="moduleDemo">
+      <div class="hint" style="border: 1px solid #80808036; margin: 10px;padding: 10px;background-color: #d1ecf1;">
+        For all candidates with nationalities other than the UK, the system will ask to confirm their right to work (RTW) in the UK by collecting the following details so you can perform your checks.
+      </div>          </br> 
+      <div
+      class="oj-panel">
       <h4 class="">Passport/ Visa Details</h4><hr>
       <div
         class="col-md-12">
@@ -94,7 +99,7 @@
   </div>
 </oj-bind-if>
     </div>
-     
+  </div>  
 <div class="oj-panel">
   <div class="oj-flex">
     <oj-bind-if test="[[rightStatus() === 'Pending']]">

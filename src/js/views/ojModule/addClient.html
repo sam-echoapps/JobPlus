@@ -165,6 +165,9 @@
       </div>
     </oj-bind-if>
     <oj-bind-if test="[[clientActionBtn() === 'Update']]">
+      <div class="hint" style="border: 1px solid #80808036; margin: 10px;padding: 10px;background-color: #d1ecf1;">
+        You should click the update button to save the changes before going to the next button.
+      </div> 
       <div class="oj-flex-bar-middle oj-flex">
         <oj-train id="train2" class="oj-flex-item oj-train-stretch demo-stretched-train" selected-step="{{selectedStep2}}"
           steps="[[stepArray2]]" on-selected-step-changed="[[update2]]"></oj-train>
@@ -408,12 +411,18 @@
         <oj-text-area id="paymentTerms" value="{{paymentTerms}}" label-hint="Payment Terms/ Instructions for invoice" raw-valuenewE=""
         rows="4" clear-icon="always" required="true" disabled="[[clientContent]]">
         </oj-text-area>
-        <oj-combobox-one label-hint="Invoice Due on" label-edge="inside" options="{{InvoiceDueOn}}"
+       <!--  <oj-combobox-one label-hint="Invoice Due on" label-edge="inside" options="{{InvoiceDueOn}}"
         value="{{selectedInvoiceDueOn}}" required="true" disabled="[[clientContent]]">
-        </oj-combobox-one>
-        <oj-combobox-one label-hint="Holiday Pay Type" label-edge="inside" options="{{HolidayPayType}}"
+        </oj-combobox-one> -->
+        <oj-select-single required label-hint="Invoice Due on" 
+              label-edge="inside" data="[[InvoiceDueOnListDP]]" value="{{selectedInvoiceDueOn}}" disabled="[[clientContent]]">
+        </oj-select-single>
+       <!--  <oj-combobox-one label-hint="Holiday Pay Type" label-edge="inside" options="{{HolidayPayType}}"
         value="{{selectedHolidayPayType}}" required="true" disabled="[[clientContent]]">
-        </oj-combobox-one>
+        </oj-combobox-one> -->
+        <oj-select-single required label-hint="Holiday Pay Type" 
+        label-edge="inside" data="[[HolidayPayTypeListDP]]" value="{{selectedHolidayPayType}}" disabled="[[clientContent]]">
+        </oj-select-single>
         <oj-combobox-one
             id="supportDocument"
             value="{{supportDocument}}"
@@ -423,9 +432,12 @@
             <oj-option value="No">No</oj-option>
             <oj-option value="Yes">Yes</oj-option>
         </oj-combobox-one>
-        <oj-combobox-one label-hint="Payment Mode" label-edge="inside" options="{{PaymentMode}}"
+       <!--  <oj-combobox-one label-hint="Payment Mode" label-edge="inside" options="{{PaymentMode}}"
             value="{{selectedPaymentMode}}" required="true" disabled="[[clientContent]]">
-        </oj-combobox-one>
+        </oj-combobox-one> -->
+        <oj-select-single required label-hint="Payment Mode" 
+        label-edge="inside" data="[[PaymentModeListDP]]" value="{{selectedPaymentMode}}" disabled="[[clientContent]]">
+        </oj-select-single>
       </oj-validation-group>
       </div>
     </div>

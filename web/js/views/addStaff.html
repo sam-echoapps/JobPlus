@@ -111,6 +111,14 @@
                     <span slot="startIcon"></span>
                   Edit
                   </oj-button> 
+                  <oj-button
+                  chroming="borderless"
+                  display="icons"
+                  class="oj-button-sm deleteBtn"
+                  on-oj-action="[[deleteConfirm]]">
+                  <span slot="startIcon"></span>
+                  Delate
+                </oj-button>
                 </div>
               </div>
                 </oj-list-item-layout>
@@ -266,3 +274,22 @@
   </div>
 </oj-dialog>
 </div>
+
+<oj-dialog id="openDeleteConfirm" dialog-title="Delete Staff Details" modality="modeless"  style="display:none;width:350px;min-width:240px;max-width:450px;" cancel-behavior="[[CancelBehaviorOpt]]">
+  <div slot="body">
+    <oj-bind-text value='Do you want to delete the selected row?'></oj-bind-text>
+  </div>
+  <div  class="oj-flex-bar" slot="footer">
+    <oj-button id="okdelButton" class="oj-flex-bar-start oj-button-cancel oj-button-danger-chrome" on-oj-action="[[deleteStaffInfo]]">
+      Yes
+    </oj-button>
+  </div>
+</oj-dialog>
+
+<oj-dialog id="openDeleteStaffProgress" dialog-title="Please wait!Deleteing...." modality="modeless"
+  style="display:none;width:350px;min-width:240px;max-width:450px;">
+  <div slot="body">
+    <oj-progress-bar id="createbar" class="oj-progress-bar-embedded" value="-1">
+    </oj-progress-bar>
+  </div>
+</oj-dialog>
