@@ -3,7 +3,10 @@
 
 <div id="sampleDemo"  class="demo-container sampleDemo">
   <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
-    
+    <div class="hint" style="border: 1px solid #80808036; margin: 10px;padding: 10px;background-color: #d1ecf1;display: flex;align-items: baseline;">
+      <i class="bi bi-info-circle-fill" style="color: #002366;font-size: 20px;"></i> &nbsp;&nbsp;
+      <p>The candidate is requested to provide an Enhanced DBS (PVG) Certificate. </p>
+    </div>  
     <div id="moduleDemo">              
         <div
         class="oj-panel oj-flex oj-sm-margin-2x-bottom oj-xl-margin-3x oj-xl-padding-5x oj-lg-margin-3x oj-lg-padding-7x oj-md-margin-3x oj-md-padding-4x oj-sm-margin-1x oj-sm-padding-1x">
@@ -19,10 +22,9 @@
           <br><br>
           We will contact you to organise your DBS check. Please get in touch with us if you do not hear within 3 working days. Please click on the below button.<br><br>
           <div class="requestBtn-div" style="display: flex; justify-content: center;">
-            <oj-button id="confirmBtn" class="" on-oj-action="" style="color: aliceblue;">Request
+            <oj-button id="confirmBtn" class="" on-oj-action="[[dbsRequestMailSend]]" style="color: aliceblue;">Request
             </oj-button>
           </div>
-          
         </div>
         <div class="col-md-12" id="have_dbs" style="display:none;">
           <br>
@@ -61,7 +63,7 @@
     </div>
   </div>
   <oj-bind-if test="[[DBSActionBtn() === 'Add']]">
-    <div
+    <div style="display: flex;justify-content: center;"
     class="oj-sm-margin-2x-bottom oj-xl-margin-2x oj-xl-padding-2x oj-lg-margin-2x oj-lg-padding-2x oj-md-margin-2x oj-md-padding-2x oj-sm-margin-1x oj-sm-padding-1x">
     <div class="oj-flex-bar">
       <oj-button id="confirmBtn" class="oj-flex-bar-end" chroming='callToAction' on-oj-action="[[staffDBSSave]]">Save
@@ -83,20 +85,20 @@ class="oj-sm-padding-2x-vertical" selection-mode="multiple" selected="{{selector
      <div class="oj-typography-body-md">
        <div class="oj-flex oj-sm-align-items-center">
   
-         <div class="oj-flex-item demo-list-item-layout ">
+         <div class="oj-flex-item demo-list-item-layout1 oj-md-padding-4x-end">
            <oj-list-item-layout class="oj-listitemlayout-padding-off"
              :aria-label="[['task ' +item.data.taskName]]">
              <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
-               <oj-bind-text value="Name"></oj-bind-text>
+               <oj-bind-text value="DBS Number"></oj-bind-text>
              </div>
-             <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.file_type]]">
-               <oj-bind-text value="[[item.data.file_type]]"></oj-bind-text>
+             <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.dbs_number]]">
+               <oj-bind-text value="[[item.data.dbs_number]]"></oj-bind-text>
              </div>
              
            </oj-list-item-layout>
          </div>
          
-         <div class="oj-flex-item demo-list-item-layout oj-md-padding-4x-end">
+         <div class="oj-flex-item demo-list-item-layout1 oj-md-padding-4x-end">
            <oj-list-item-layout class="oj-listitemlayout-padding-off"
              :aria-label="[['task ' +item.data.taskName]]">
              <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
@@ -109,26 +111,38 @@ class="oj-sm-padding-2x-vertical" selection-mode="multiple" selected="{{selector
            </oj-list-item-layout>
          </div>
 
-         <div class="oj-flex-item demo-list-item-layout oj-md-padding-4x-end">
+         <div class="oj-flex-item demo-list-item-layout1 oj-md-padding-4x-end">
            <oj-list-item-layout class="oj-listitemlayout-padding-off"
              :aria-label="[['task ' +item.data.taskName]]">
              <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
-               <oj-bind-text value="Document Preview"></oj-bind-text>
+               <oj-bind-text value="DBS Document"></oj-bind-text>
              </div>
-             <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.certificate]]">
-               <oj-bind-if test="[[ item.data.certificate != 'Not Uploaded']]">
-               <div class="oj-text-color-success"><a  :id = "[[ item.data.certificate ]]" on-click= "[[previewClick]]" target="_blank">Click here</a></div>
-               </oj-bind-if>
-               <oj-bind-if test="[[ item.data.certificate == 'Not Uploaded']]">
-                 <oj-bind-text value="Not Uploaded"></oj-bind-text>
+             <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.dbs_certificate]]">
+               <oj-bind-if test="[[ item.data.dbs_certificate != 'Not Uploaded']]">
+               <div class="oj-text-color-success"><a  :id = "[[ item.data.dbs_certificate ]]" on-click= "[[previewClick]]" target="_blank">Click here</a></div>
                </oj-bind-if>
              </div>
              
            </oj-list-item-layout>
          </div>
 
+         <div class="oj-flex-item demo-list-item-layout1 oj-md-padding-4x-end">
+          <oj-list-item-layout class="oj-listitemlayout-padding-off"
+            :aria-label="[['task ' +item.data.taskName]]">
+            <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
+              <oj-bind-text value="Update Document"></oj-bind-text>
+            </div>
+            <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.update_certificate]]">
+              <oj-bind-if test="[[ item.data.update_certificate != 'Not Uploaded']]">
+               <div class="oj-text-color-success"><a  :id = "[[ item.data.update_certificate ]]" on-click= "[[previewClick]]" target="_blank">Click here</a></div>
+             </oj-bind-if>
+            </div>
+            
+          </oj-list-item-layout>
+        </div>
 
-           <div class="oj-flex-item demo-list-item-layout oj-md-padding-4x-end">
+
+           <div class="oj-flex-item demo-list-item-layout1 oj-md-padding-4x-end">
              <oj-list-item-layout class="oj-listitemlayout-padding-off"
                :aria-label="[['task ' +item.data.taskName]]">
                <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
@@ -147,14 +161,14 @@ class="oj-sm-padding-2x-vertical" selection-mode="multiple" selected="{{selector
                  <span slot="startIcon"></span>
                Edit
                </oj-button> 
-           <!--     <oj-button
+                <oj-button
                chroming="borderless"
                display="icons"
                class="oj-button-sm deleteBtn"
-               on-oj-action="">
+               on-oj-action="[[deleteConfirm]]">
                <span slot="startIcon"></span>
                Delate
-             </oj-button> --> 
+             </oj-button> 
              </div>
            </div>
          </oj-list-item-layout>
@@ -172,22 +186,7 @@ class="oj-sm-padding-2x-vertical" selection-mode="multiple" selected="{{selector
 
     </div>
   </div>
-  <div class="oj-panel">
-  <div class="oj-flex">
-    <oj-bind-if test="[[dbsStatus() === 'Pending']]">
-  <oj-button chroming="solid" class="oj-xl-margin-4x" on-oj-action="[[updateDBSStatus]]">
-       <span slot="startIcon" class=""> Not Audited: Click to mark as audited</span>
-     </oj-button>
-    </oj-bind-if>
-   </div>
-   <div class="oj-flex">
-    <oj-bind-if test="[[dbsStatus() === 'Audited']]">
-  <oj-button chroming="solid" class="oj-xl-margin-4x" on-oj-action="[[updateDBSStatus]]">
-       <span slot="startIcon" class=""> Audited: Click to mark as audit pending</span>
-     </oj-button>
-    </oj-bind-if>
-   </div>
-  </div>
+  
     <oj-dialog id="openAddUploadingProgress" dialog-title="Please wait!Uploading...." modality="modeless"
     style="display:none;width:350px;min-width:240px;max-width:450px;">
     <div slot="body">
@@ -274,6 +273,32 @@ cancel-behavior="[[CancelBehaviorOpt]]" style="display:none;width:900px;min-widt
 </div>
 </oj-dialog>
 
+<oj-dialog id="openAddDBSProgress" dialog-title="[[progressDialog]]" modality="modeless"
+style="display:none;width:350px;min-width:240px;max-width:450px;">
+<div slot="body">
+  <oj-progress-bar id="createbar" class="oj-progress-bar-embedded" value="-1">
+  </oj-progress-bar>
+</div>
+</oj-dialog>
+
+<oj-dialog id="openDeleteConfirm" dialog-title="Delete DBS Details" modality="modeless"  style="display:none;width:350px;min-width:240px;max-width:450px;" cancel-behavior="[[CancelBehaviorOpt]]">
+  <div slot="body">
+    <oj-bind-text value='Do you want to delete the selected row?'></oj-bind-text>
+  </div>
+  <div  class="oj-flex-bar" slot="footer">
+    <oj-button id="okdelButton" class="oj-flex-bar-start oj-button-cancel oj-button-danger-chrome" on-oj-action="[[deleteDBSInfo]]">
+      Yes
+    </oj-button>
+  </div>
+</oj-dialog>
+
+<oj-dialog id="openDeleteDBSProgress" dialog-title="Please wait!Deleteing...." modality="modeless"
+style="display:none;width:350px;min-width:240px;max-width:450px;">
+<div slot="body">
+  <oj-progress-bar id="createbar" class="oj-progress-bar-embedded" value="-1">
+  </oj-progress-bar>
+</div>
+</oj-dialog>
     
 
   

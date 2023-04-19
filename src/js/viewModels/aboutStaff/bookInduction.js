@@ -13,6 +13,8 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider) {
             self.timeSlots = ko.observable();
             self.inductionValid = ko.observable();
             self.userCheck = ko.observable('Not available');
+            self.bookedDate = ko.observable();
+            self.bookedTime = ko.observable();
             
             var BaseURL = sessionStorage.getItem("BaseURL")
 
@@ -24,8 +26,35 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider) {
                         userId: sessionStorage.getItem("userId"),
                     }),
                     success: function(data){
-                        console.log(data[0][0]);
-                        self.userCheck(data[0][0]);
+                        data = JSON.parse(data)
+                        console.log(data)
+                        if(data[0]==null){
+                            self.userCheck("Not available");    
+                        }
+                        else{
+                            self.userCheck(data[0][0]);
+
+                            const date = new Date(data[0][2]);
+                            const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                            const formattedDate = formatter.format(date);
+                            self.bookedDate(formattedDate)
+                            
+                            const timeArr = data[0][3].split(':')
+                            let time = new Date('2013','04','18',timeArr[0],timeArr[1]);
+                            let hours = time.getHours();
+                            const minutes = time.getMinutes().toString().padStart(2, '0');
+                            const seconds = time.getSeconds();
+                            let suffix = "AM";
+                            if (hours >= 12) {
+                                suffix = 'PM';
+                                hours -= 12;
+                            }
+                            if (hours === 0) {
+                                hours = 12;
+                            }
+                            self.bookedTime(`${hours}:${minutes} ${suffix}`)
+                        }
+                        // self.userCheck("Attended")
                     },
                     error: function(xhr, status, error) {
                         console.log(xhr.statusText);
@@ -34,7 +63,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider) {
                     }
                 })
             }
-            //self.checkUserInductionBooked()
+            self.checkUserInductionBooked()
 
             self.getInductionDates = ()=>{
                 $.ajax({
@@ -85,6 +114,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider) {
                     }),
                     success: function(data) {
                         data = JSON.parse(data);
+                        console.log(data);
                         let len = data.length;
                         if(len != 0){
                             document.getElementById("timeSlots").style.display = "block";
@@ -96,10 +126,10 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider) {
                         }
                         let times = []
                         for(var i=0;i<len;i++){
-                            const timeArr = data[i][1].split(':')
+                            const timeArr = data[i][0].split(':')
                             let time = new Date('2013','04','18',timeArr[0],timeArr[1]);
                             let hours = time.getHours();
-                            const minutes = time.getMinutes();
+                            const minutes = time.getMinutes().toString().padStart(2, '0');
                             const seconds = time.getSeconds();
                             let suffix = "AM";
                             if (hours >= 12) {
@@ -109,7 +139,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider) {
                             if (hours === 0) {
                                 hours = 12;
                             }
-                            times.push({ value: `${data[i][0]}`, label: `${hours}:${minutes} ${suffix}`})
+                            times.push({ value: `${data[i][1]}`, label: `${hours}:${minutes} ${suffix}`})
                         }
                         self.time(times)
                         self.timeSlots(new ArrayDataProvider(self.time(), {
@@ -123,7 +153,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider) {
                     }
                 })
             }
-
+            
             self.showTime()
             
             self.inductionSubmit = ()=>{
@@ -138,7 +168,6 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider) {
                             status : "Requested",
                         }),
                         success: function(data) {
-                            // console.log(data);
                             location.reload()
                         },
                         error: function(xhr, status, error) {

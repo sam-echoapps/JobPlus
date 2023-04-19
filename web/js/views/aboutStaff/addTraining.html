@@ -139,22 +139,7 @@
           </div>
         </div>
     </div>
-    <div class="oj-panel">
-    <div class="oj-flex">
-      <oj-bind-if test="[[trainingStatus() === 'Pending']]">
-    <oj-button chroming="solid" class="oj-xl-margin-4x" on-oj-action="[[updateTrainingStatus]]">
-         <span slot="startIcon" class=""> Not Audited: Click to mark as audited</span>
-       </oj-button>
-      </oj-bind-if>
-     </div>
-     <div class="oj-flex">
-      <oj-bind-if test="[[trainingStatus() === 'Audited']]">
-    <oj-button chroming="solid" class="oj-xl-margin-4x" on-oj-action="[[updateTrainingStatus]]">
-         <span slot="startIcon" class=""> Audited: Click to mark as audit pending</span>
-       </oj-button>
-      </oj-bind-if>
-     </div>
-    </div>
+    
     <oj-dialog id="openAddUploadingProgress" dialog-title="Please wait!Uploading...." modality="modeless"
     style="display:none;width:350px;min-width:240px;max-width:450px;">
     <div slot="body">

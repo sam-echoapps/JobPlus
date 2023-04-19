@@ -38,6 +38,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                 self.updateFile = ko.observable('');
                 self.selectorSelectedItems = new ojknockout_keyset_1.ObservableKeySet();
                 self.CancelBehaviorOpt = ko.observable('icon'); 
+                self.dbsRowId = ko.observable();
 
 
                 self.connected = function () {
@@ -72,22 +73,32 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                             console.log(result)
                             var data = JSON.parse(result[1]);
                             console.log(data)
-                            if(data.length !=0){ 
+
+                            if(data[0].length !=0){ 
                                 document.getElementById('listDBS').style.display='block'; 
                                 document.getElementById('dbsQuestion').style.display='none'; 
                                 document.getElementById('dbsHint').style.display='none'; 
+                                document.getElementById('have_dbs').style.display='none'; 
+                                self.DBSActionBtn('Update')
+                                self.dbs_expiry_date('')
+                                self.dbsNumber('')
+                                self.dbsSec('')
                             }
-                            else{
+                           if(result[0].length ==0){
                                 self.DBSActionBtn('Add')
+                                document.getElementById('dbsQuestion').style.display='block'; 
+                                document.getElementById('dbsHint').style.display='block'; 
+                                document.getElementById('listDBS').style.display='none'; 
                             }
-                            for (var i = 0; i < data.length; i++) {
+                           /*  for (var i = 0; i < data.length; i++) {
                                 if(data[i][6]){
                                 self.DBSDet.push({'id': data[i][0], 'staff_id' : data[i][1], 'file_type' : data[i][2] , 'file_type_additional' : data[i][3] , 'file_name' :data[i][4] ,  'certificate' : data[i][5],'expiry_date' : data[i][6] }); 
                                 }else{
                                     self.DBSDet.push({'id': data[i][0], 'staff_id' : data[i][1], 'file_type' : data[i][2] , 'file_type_additional' : data[i][3] , 'file_name' :data[i][4] , 'certificate' : data[i][5],'expiry_date' : data[i][6] }); 
                                 }  
-                        }
-                        self.DBSActionBtn('Update')
+                        } */
+                        self.DBSDet.push({'dbs_number' : result[0][0][2], 'dbs_certificate' : data[0][5], 'update_certificate' : data[1][5], 'expiry_date' : data[0][6] }); 
+                        self.dbsRowId(result[0][0][0])
                         self.dbsNumber(result[0][0][2])
                         self.dbs_expiry_date(data[0][6])
                         if(data[0][7] == "Pending") {
@@ -373,11 +384,73 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
         document.getElementById(clickedId).href = file;
 
     }; 
+    
     self.editDBSInfo = function (event) {
          document.querySelector('#openUpdateDBSDialog').open();
          console.log(event)
     }; 
-            
+    self.dbsRequestMailSend = function (event) {
+        self.ResultTitle('DBS Request Sent')
+        self.progressDialog('Please wait! Rquest Email Sending...')
+        document.querySelector('#openAddDBSProgress').open();
+        var BaseURL = sessionStorage.getItem("BaseURL")
+        $.ajax({
+            url: BaseURL+ "/jpStaffRequestMailSend",
+            type: 'POST',
+            data: JSON.stringify({
+                staff_id : sessionStorage.getItem("userId"),
+            }),
+            dataType: 'json',
+            timeout: sessionStorage.getItem("timeInetrval"),
+            context: self,
+            error: function (xhr, textStatus, errorThrown) {
+                if(textStatus == 'timeout'){
+                    document.querySelector('#openAddDBSProgress').close();
+                    document.querySelector('#Timeout').open();
+                }
+            },
+            success: function (data) {
+                document.querySelector('#openAddDBSProgress').close();
+                document.querySelector('#openAddDBSResult').open();
+                self.addDBSMsg(data[0]);
+            }
+        })  
+
+    };  
+    
+    self.deleteDBSInfo = function (event,data) {
+        self.ResultTitle('Delete DBS Details')
+            document.querySelector('#openDeleteConfirm').close();
+            document.querySelector('#openDeleteDBSProgress').open();
+             $.ajax({
+                url: BaseURL + "/jpDeleteDBSDetails",
+                type: 'POST',
+                data: JSON.stringify({
+                    dbsId : self.dbsRowId() 
+                }),
+                dataType: 'json',
+                timeout: sessionStorage.getItem("timeInetrval"),
+                context: self,
+                error: function (xhr, textStatus, errorThrown) {
+                    if(textStatus == 'timeout' || textStatus == 'error'){
+                        document.querySelector('#TimeoutSup').open();
+                    }
+                },
+                success: function (data) {
+                    document.querySelector('#openDeleteDBSProgress').close();
+                    document.querySelector('#openAddDBSResult').open();
+                    self.addDBSMsg(data[0]);
+                    console.log("success")
+            }
+            })  
+        
+       
+    }
+
+     self.deleteConfirm = function (event,data) {
+                document.querySelector('#openDeleteConfirm').open();                   
+        }
+        
             
           }
         }

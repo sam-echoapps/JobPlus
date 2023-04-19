@@ -471,7 +471,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                 else{
                     self.postcodeError("Please enter your postcode");
                 }
-                if (validSec1 && validSec2 && self.emailError() == '' && self.contactError() == '') {
+                if (validSec1 && validSec2 && self.emailError() == '' && self.contactError() == '' && self.addressLine1Error() == '' && self.townError() == '' && self.postcodeError() == '') {
                     // submit the form would go here
                      //alert('everything is valid; submit the form');
                 

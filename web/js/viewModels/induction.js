@@ -35,7 +35,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
             var records = {
                 "childPath" : [
                     { "path" : "createInduction", "label" : "Create Induction"},
-                    { "path" : "viewInduction", "label" : "View Induction"}
+                    { "path" : "viewInduction", "label" : "View Induction"},
+                    { "path" : "inductionList", "label" : "Induction List"}
                 ]
             }
 
@@ -67,7 +68,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
             self.router = self.args.parentRouter.createChildRouter([
                 { path: '', redirect: 'createInduction' },
                 { path: 'createInduction'},
-                { path: 'viewInduction'}
+                { path: 'viewInduction'},
+                { path: 'inductionList'}
             ]);
 
             self.router.currentState.subscribe((args) => {

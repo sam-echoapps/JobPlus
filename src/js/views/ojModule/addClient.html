@@ -1,6 +1,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <div class="oj-xl-margin-4x">
+  <div class="hint" style="border: 1px solid #80808036; margin: 10px;padding: 10px;background-color: #d1ecf1;">
+    <i class="bi bi-info-circle-fill" style="color: #002366;font-size: 20px;"></i> &nbsp;&nbsp;From this section, you can add and edit new clients. You can also do the Client related settings such as their payment type, shift configuration etc.
+  </div>       
   <div class="oj-flex addClientAlign">
 <!--     <div class="oj-sm-10"></div>
  -->    <oj-button chroming="callToAction" class="oj-xl-margin-4x" on-oj-action="[[openAddClientDialog]]">
@@ -166,7 +169,7 @@
     </oj-bind-if>
     <oj-bind-if test="[[clientActionBtn() === 'Update']]">
       <div class="hint" style="border: 1px solid #80808036; margin: 10px;padding: 10px;background-color: #d1ecf1;">
-        You should click the update button to save the changes before going to the next button.
+        <i class="bi bi-info-circle-fill" style="color: #002366;font-size: 20px;"></i> &nbsp;You should click the update button to save the changes before going to the next button.
       </div> 
       <div class="oj-flex-bar-middle oj-flex">
         <oj-train id="train2" class="oj-flex-item oj-train-stretch demo-stretched-train" selected-step="{{selectedStep2}}"

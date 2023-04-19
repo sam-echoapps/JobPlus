@@ -43,6 +43,10 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                 self.referenceActionBtn = ko.observable();
                 self.referenceStatus = ko.observable('');
 
+                self.userName = ko.observable();
+                self.referenceFileText = ko.observable('Reference');
+                self.referenceCustomText = ko.observable('Please choose one');
+                self.filePath = ko.observable();
 
 
                 self.selectorSelectedItems = new ojknockout_keyset_1.ObservableKeySet();
@@ -83,7 +87,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                             }
 
                                 for (var i = 0; i < data[0].length; i++) {
-                                self.ReferenceDet.push({'id': data[0][i][0], 'staff_id' : data[0][i][1], 'refer_name' : data[0][i][2] , 'refer_job' : data[0][i][3] , 'refer_address' :data[0][i][4], 'refer_company' : data[0][i][5] , 'refer_email' : data[0][i][6] , 'refer_contact' :data[0][i][7], 'referrer_status' :data[0][i][9]});   
+                                self.ReferenceDet.push({'id': data[0][i][0], 'staff_id' : data[0][i][1], 'refer_name' : data[0][i][2] , 'refer_job' : data[0][i][3] , 'refer_address' :data[0][i][4], 'refer_company' : data[0][i][5] , 'refer_email' : data[0][i][6] , 'refer_contact' :data[0][i][7], 'referrer_status' :data[0][i][9], 'document' :data[0][i][10]});   
                         } 
                         if(data[0][0][8] == "Pending") {
                             self.referenceStatus('Pending');
@@ -446,10 +450,136 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
            
         }
 
+        const getUserName = ()=>{
+            $.ajax({                   
+                url: BaseURL + "/jpEditStaffDetails",
+                type: 'POST',
+                data: JSON.stringify({
+                    staffId : sessionStorage.getItem("userId"),
+                }),
+                dataType: 'json',
+                success: function (data) {
+                    self.userName(`${data[0][2]} ${data[0][3]}`)
+                }
+            })
+        }
+
+        getUserName()
+
+        self.referName = ko.observable();
+        self.relationShip = ko.observable();
+        self.organisationName = ko.observable();
+        self.jobTitle = ko.observable();
+        self.logKnownCandidate = ko.observable();
+        self.trustWorthy = ko.observable();
+        self.anyCircumstance = ko.observable();
+        self.otherInformation = ko.observable();
+        
         self.viewFormDetails = function (event,data) {
             var clickedRowId = self.getDisplayValue(self.selectorSelectedItems())[0];
-            alert(clickedRowId)          
+            if(clickedRowId !=undefined){
+                $.ajax({
+                    url: BaseURL + "/getReferenceDetails",
+                    type: 'POST',
+                    data: JSON.stringify({
+                        rowId : clickedRowId
+                    }),
+                    dataType: 'json',
+                    timeout: sessionStorage.getItem("timeInetrval"),
+                    context: self,
+                    error: function (xhr, textStatus, errorThrown) {
+                        if(textStatus == 'timeout' || textStatus == 'error'){
+                            document.querySelector('#TimeoutSup').open();
+                        }
+                    },
+                    success: function (result) {
+                        let data = JSON.parse(result);
+                        console.log(data);
+                        self.DialogTitle(`Charater Reference Details For ${self.userName()}`)
+                        self.referName(data[0][2])
+                        self.relationShip(data[0][9])
+                        self.logKnownCandidate(`${data[0][11]} - ${data[0][12]}`)
+                        self.organisationName(data[0][13])
+                        self.jobTitle(data[0][14])
+                        self.trustWorthy(data[0][15])
+                        self.anyCircumstance(data[0][17])
+                        self.otherInformation(data[0][21])
+                        document.querySelector('#openViewReferenceDialog').open();
+                }
+                })
+
+            }
+            
         }
+
+        self.UploadDocument = function (event,data) {
+            var clickedRowId = self.getDisplayValue(self.selectorSelectedItems())[0];
+            sessionStorage.setItem("referenceId", clickedRowId);
+            console.log(clickedRowId)
+            document.querySelector('#openFileUpload').open();
+        }
+
+        self.referenceDocUpload = function (event,data) {
+            var uploadURL = BaseURL + "/css/uploads/";
+            const result = event.detail.files;
+            const files = result[0];
+            var fileName= files.name;
+            var filePath= uploadURL+fileName;
+            self.filePath(filePath);
+
+            console.log(files)
+            var fileFormat =files.name.split(".");
+            var checkFormat =fileFormat[1];
+            
+            if(checkFormat == 'pdf' || checkFormat =="doc"){
+            self.progressText('Please wait!Uploading....')
+            document.querySelector('#openAddUploadingProgress').open();
+            self.typeError('')
+            const reader = new FileReader();
+            reader.readAsDataURL(files);
+            
+            reader.onload = ()=>{
+                $.ajax({
+                    url: BaseURL + "/jpStaffReferenceDocUplaod",
+                    type: 'POST',
+                    data: JSON.stringify({
+                        file : reader.result,
+                        file_name : fileName,
+                        referenceId : sessionStorage.getItem("referenceId"),
+                        file_path : filePath
+                    }),
+                    dataType: 'json',
+                    timeout: sessionStorage.getItem("timeInetrval"),
+                    context: self,
+                    error: function (xhr, textStatus, errorThrown) {
+                        if(textStatus == 'timeout'){
+                            document.querySelector('#openAddUploadingProgress').close();
+                            document.querySelector('#Timeout').open();
+                        }
+                    },
+                    success: function (data) {
+                        //console.log(data)
+                        console.log("success")
+                        document.querySelector('#openAddUploadingProgress').close();
+                        document.querySelector('#openFileUpload').close();
+                        getReference()
+
+                    }
+                })
+            }
+        }
+        else{
+            self.typeError('The certificate must be a file of type: pdf, doc')
+        }
+      }
+
+      self.previewClick = function (event) {
+        console.log(event.srcElement.id)  
+        var clickedId=event.srcElement.id
+        var file=clickedId.replace(/\s/g,'%20');
+        document.getElementById(clickedId).href = file;
+
+    }; 
             }
             
             

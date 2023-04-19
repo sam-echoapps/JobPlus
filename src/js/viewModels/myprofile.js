@@ -271,7 +271,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                 { path: 'addHealth'},
                 { path: 'addRightToWork'},
                 { path: 'addTraining'},
-                { path: 'bookInduction'}
+                { path: 'bookInduction'},
+                { path: 'inductionCheck'}
             ]);
 
             self.router.currentState.subscribe((args) => {

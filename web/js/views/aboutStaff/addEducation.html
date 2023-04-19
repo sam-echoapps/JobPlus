@@ -3,15 +3,18 @@
 <div id="sampleDemo"  class="demo-container sampleDemo">
   <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
     
-    <div id="moduleDemo">    
-      
-         <div class="oj-flex" style="padding: 10px;">
+    <div id="moduleDemo">    </br>
+      <div class="hint" style="border: 1px solid #80808036; margin: 10px;padding: 10px;background-color: #d1ecf1;display: flex;align-items: baseline;">
+        <i class="bi bi-info-circle-fill" style="color: #002366;font-size: 20px;"></i> &nbsp;
+        <p>The candidate is requested to enter educational qualification details. </p>
+      </div>  
+         <div class="oj-flex">
          <oj-button chroming="callToAction" class="oj-xl-margin-4x" on-oj-action="[[openAddEducationDialog]]">
               <span slot="startIcon" class="demo-icon-sprite"> Add Education</span>
             </oj-button>
           </div>
 
-     <div class="oj-panel oj-xl-margin-4x">
+     <div class="oj-panel">
      <oj-list-view id="listviewtwo" aria-label="multicolumn with list item layout" data="[[dataProvider1]]"
     class="oj-sm-padding-2x-vertical" selection-mode="multiple" selected="{{selectorSelectedItems}}">
     <template slot="itemTemplate" data-oj-as="item">
@@ -23,7 +26,7 @@
           <div class="oj-typography-body-md">
             <div class="oj-flex oj-sm-align-items-center">
        
-              <div class="oj-flex-item demo-list-item-layout ">
+              <div class="oj-flex-item demo-list-item-layout2 ">
                 <oj-list-item-layout class="oj-listitemlayout-padding-off"
                   :aria-label="[['task ' +item.data.taskName]]">
                   <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
@@ -36,7 +39,7 @@
                 </oj-list-item-layout>
               </div>
               
-              <div class="oj-flex-item demo-list-item-layout oj-md-padding-4x-end">
+              <div class="oj-flex-item demo-list-item-layout2 oj-md-padding-4x-end">
                 <oj-list-item-layout class="oj-listitemlayout-padding-off"
                   :aria-label="[['task ' +item.data.taskName]]">
                   <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
@@ -44,6 +47,24 @@
                   </div>
                   <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.qualification]]">
                     <oj-bind-text value="[[item.data.qualification]]"></oj-bind-text>
+                  </div>
+                  
+                </oj-list-item-layout>
+              </div>
+
+              <div class="oj-flex-item demo-list-item-layout2 oj-md-padding-4x-end">
+                <oj-list-item-layout class="oj-listitemlayout-padding-off"
+                  :aria-label="[['task ' +item.data.taskName]]">
+                  <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
+                    <oj-bind-text value="Document Preview"></oj-bind-text>
+                  </div>
+                  <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.certificate]]">
+                    <oj-bind-if test="[[ item.data.certificate != 'Not Uploaded']]">
+                    <div class="oj-text-color-success"><a  :id = "[[ item.data.certificate ]]" on-click= "[[previewClick]]" target="_blank">Click here</a></div>
+                    </oj-bind-if>
+                    <oj-bind-if test="[[ item.data.certificate == 'Not Uploaded']]">
+                      <oj-bind-text value="Not Uploaded"></oj-bind-text>
+                    </oj-bind-if>
                   </div>
                   
                 </oj-list-item-layout>
@@ -73,7 +94,7 @@
                   
                 </oj-list-item-layout> -->
 
-                <div class="oj-flex-item demo-list-item-layout oj-md-padding-4x-end">
+                <div class="oj-flex-item demo-list-item-layout2 oj-md-padding-4x-end">
                   <oj-list-item-layout class="oj-listitemlayout-padding-off"
                     :aria-label="[['task ' +item.data.taskName]]">
                     <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
@@ -115,6 +136,7 @@
     </template>
   </oj-list-view>
 </div>
+
       <oj-dialog id="openAddEducationDialog" dialog-title="[[DialogTitle]]" modality="modeless" drag-affordance="title-bar"
   cancel-behavior="[[CancelBehaviorOpt]]" style="display:none;width:900px;min-width:900px;max-width:900px;">
   <div slot="body">
@@ -141,11 +163,12 @@
       <oj-file-picker  primary-text="[[primaryCustomText]]"
       secondary-text="[[secondaryCustomText]]" on-oj-select="[[selectListener]]">
       </oj-file-picker>
-    <div class="oj-text-color-danger"><oj-bind-text value='[[typeError]]'></oj-bind-text></div></br>
+<!--       <div class="oj-text-color-success"></br><a id="education" target="_blank"><oj-bind-text value='[[educationFile]]'></a></oj-bind-text></div>
+ -->    <div class="oj-text-color-danger"><oj-bind-text value='[[typeError]]'></oj-bind-text></div></br>
     </div>
   </div>
   <oj-bind-if test="[[EducationActionBtn() === 'Add']]">
-  <div
+  <div style="display: flex;justify-content: center;"
     class="oj-panel  oj-sm-margin-2x-bottom oj-xl-margin-2x oj-xl-padding-2x oj-lg-margin-2x oj-lg-padding-2x oj-md-margin-2x oj-md-padding-2x oj-sm-margin-1x oj-sm-padding-1x">
     <div class="oj-flex-bar">
       <oj-button id="confirmBtn" class="oj-flex-bar-end" chroming='callToAction' on-oj-action="[[staffEducationSave]]">Save
@@ -154,7 +177,7 @@
   </div>
 </oj-bind-if>
 <oj-bind-if test="[[EducationActionBtn() === 'Update']]">
-  <div
+  <div style="display: flex;justify-content: center;"
     class="oj-panel  oj-sm-margin-2x-bottom oj-xl-margin-2x oj-xl-padding-2x oj-lg-margin-2x oj-lg-padding-2x oj-md-margin-2x oj-md-padding-2x oj-sm-margin-1x oj-sm-padding-1x">
     <div class="oj-flex-bar">
       <oj-button id="confirmBtn" class="oj-flex-bar-end" chroming='callToAction' on-oj-action="[[staffEducationUpdate]]">Update
@@ -195,13 +218,13 @@ style="display:none;width:350px;min-width:240px;max-width:450px;">
 </div>
 </oj-dialog>
 
-<oj-dialog id="openDeleteConfirm" dialog-title="Delete Education Details" modality="modeless"  style="display:none;width:350px;min-width:240px;max-width:450px;">
+<oj-dialog id="openDeleteConfirm" dialog-title="Delete Education Details" modality="modeless"  style="display:none;width:350px;min-width:240px;max-width:450px;" cancel-behavior="[[CancelBehaviorOpt]]">
   <div slot="body">
     <oj-bind-text value='Do you want to delete the selected row?'></oj-bind-text>
   </div>
   <div  class="oj-flex-bar" slot="footer">
-    <oj-button id="okdelButton" class="oj-flex-bar-start oj-button-cancel" on-oj-action="[[deleteEducationInfo]]">
-      OK
+    <oj-button id="okdelButton" class="oj-flex-bar-start oj-button-cancel oj-button-danger-chrome" on-oj-action="[[deleteEducationInfo]]">
+      Yes
     </oj-button>
   </div>
 </oj-dialog>

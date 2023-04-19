@@ -1,4 +1,8 @@
 <link rel="stylesheet" href="../../../css/bookInduction.css">
+<div class="hint" style="border: 1px solid #80808036; margin: 10px;padding: 10px;background-color: #d1ecf1;display: flex;align-items: baseline;">
+    <i class="bi bi-info-circle-fill" style="color: #002366;font-size: 20px;"></i> &nbsp;&nbsp;
+    <p>Induction dates are highlighted in blue circles.</p>
+</div>  
 <div id="induction">
     <oj-bind-if test="[[userCheck() === 'Not available' ]]">
         <p style="font-weight: bold; font-size: 15px;">Office Induction</p>
@@ -17,6 +21,30 @@
         </div>
     </oj-bind-if>
     <oj-bind-if test="[[userCheck() === 'Requested' ]]">
-        <p style="font-size: 20px;font-weight: bold;">Please wait for the response</p>
+        <p>
+            You Booked Date is <oj-bind-text value="[[bookedDate]]"></oj-bind-text> 
+            <oj-bind-text value="[[bookedTime]]"></oj-bind-text>
+        </p>
+        <p style="font-size: 15px;font-weight: 500;">Please wait for the response</p>
+    </oj-bind-if>
+    <oj-bind-if test="[[userCheck() === 'Confirmed' ]]">
+        <p>
+            You Booked Date is <oj-bind-text value="[[bookedDate]]"></oj-bind-text> 
+            <oj-bind-text value="[[bookedTime]]"></oj-bind-text>
+        </p>
+        <p style="font-size: 15px;font-weight: 500;">
+            Your induction program has been confirmed by the Jobs Plus admin.
+        </p>
+    </oj-bind-if>
+    <oj-bind-if test="[[userCheck() === 'Attended' ]]">
+        <p style="font-size: 15px;font-weight: 500;">
+            You have successfully attended the office induction. Please fill out the induction checklist form. 
+            <a href="?ojr=staffView%2FinductionCheck%3Bindex%3D11">Click here</a>
+        </p>
+    </oj-bind-if>
+    <oj-bind-if test="[[userCheck() === 'Checklist Submitted' ]]">
+        <p style="font-size: 15px;font-weight: 500;">
+            Thank you for attending the induction program and submitting the induction checklist.
+        </p>
     </oj-bind-if>
 </div>

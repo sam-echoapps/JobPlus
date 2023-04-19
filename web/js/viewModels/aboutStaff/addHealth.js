@@ -418,7 +418,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                     if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57) && ASCIICode.length==10){
                         self.contactError('')
                     }else{
-                        self.contactError("Invalid Phone number");
+                        self.contactError("Invalid phone number.");
                     }
                  }
                  self.NoteSecShow = function (event,data) {
@@ -827,7 +827,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                 if (check == true){
                     self.alcoholError('')
                 }else{
-                    self.alcoholError("Should be digital.");
+                    self.alcoholError("Should be digits.");
                 }
              }
              self.onlyNumberTobacco= function(event,data) {
@@ -837,7 +837,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                 if (check == true){
                     self.tobaccoError('')
                 }else{
-                    self.tobaccoError("Should be digital.");
+                    self.tobaccoError("Should be digits.");
                 }
              }
              self.onlyNumberAbsent= function(event,data) {
@@ -847,7 +847,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                 if (check == true){
                     self.absentError('')
                 }else{
-                    self.absentError("Should be digital.");
+                    self.absentError("Should be digits.");
                 }
              }
              self.DBErrorOKClose = function (event) {
