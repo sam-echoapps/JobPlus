@@ -32,35 +32,35 @@
           Kindly upload the certificates you have, we can help you arrange training for the missing certificates.<br/>&nbsp;    
         </div>
           <div class="row">
-            <div class="col-md-5"></br></br>
+            <div class="col-md-5"></br>
             <oj-input-date label-hint="DBS Expiry Date" autocomplete="off" value="{{dbs_expiry_date}}"></oj-input-date>
 
         </div>
         <div  class="col-md-1"></div>            
-        <div class="col-md-5">
-          <div class="oj-text-color-danger"><oj-bind-text value='[[uploadError]]'></oj-bind-text></div>
-            <oj-file-picker  primary-text="[[dbsFileText]]"
-              secondary-text="[[DBSCustomText]]" on-oj-select="[[dbsSubmit]]">
-              </oj-file-picker>
-         </div>
-        </div>
-
-        <div class="row"></br>
-          <oj-file-picker  primary-text="[[updateFileText]]"
-          secondary-text="[[secondaryCustomText]]" on-oj-select="[[updateService]]">
-          </oj-file-picker>
-        </br>
-      </div></br></br>
-
-      <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-5"></br>
           <oj-validation-group id="dbsNumSec" role="group" valid="{{groupValid}}"
           aria-labelledby="grouplabelid">
        <oj-input-text id="dbsNumber" label-hint="DBS Number" value="{{dbsNumber}}" clear-icon="always" required="[[requiredDBS]]">
        </oj-input-text></br>
        </oj-validation-group>
     </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-5">
+            <div class="oj-text-color-danger"><oj-bind-text value='[[uploadError]]'></oj-bind-text></div>
+              <oj-file-picker  primary-text="[[dbsFileText]]"
+                secondary-text="[[DBSCustomText]]" on-oj-select="[[dbsSubmit]]">
+                </oj-file-picker>
+           </div>
+      <div  class="col-md-1"></div>            
+      <div class="col-md-5"></br>
+        <oj-file-picker  primary-text="[[updateFileText]]"
+        secondary-text="[[secondaryCustomText]]" on-oj-select="[[updateService]]">
+        </oj-file-picker>
   </div>
+      </div></br>
+
   <oj-bind-if test="[[DBSActionBtn() === 'Add']]">
     <div style="display: flex;justify-content: center;"
     class="oj-sm-margin-2x-bottom oj-xl-margin-2x oj-xl-padding-2x oj-lg-margin-2x oj-lg-padding-2x oj-md-margin-2x oj-md-padding-2x oj-sm-margin-1x oj-sm-padding-1x">

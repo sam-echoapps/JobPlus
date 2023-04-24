@@ -15,7 +15,8 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider) {
             self.userCheck = ko.observable('Not available');
             self.bookedDate = ko.observable();
             self.bookedTime = ko.observable();
-            
+            self.inductionStatus = ko.observable();
+
             var BaseURL = sessionStorage.getItem("BaseURL")
 
             self.checkUserInductionBooked = ()=>{
@@ -52,8 +53,14 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider) {
                                 hours = 12;
                             }
                             self.bookedTime(`${hours}:${minutes} ${suffix}`)
+
+                            if(data[0][4] == "Pending") {
+                                self.inductionStatus('Pending');
+                            }else if(data[0][4] == "Audited") {
+                                self.inductionStatus('Audited');
+                            }  
                         }
-                        // self.userCheck("Attended")
+                        // self.userCheck("Rejected")
                     },
                     error: function(xhr, status, error) {
                         console.log(xhr.statusText);
@@ -177,6 +184,28 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider) {
                 }
             }
 
+            self.inductionUpdate = ()=>{
+                var validInductionDet = self._checkValidationGroup("inductionUpdate1");
+                if(validInductionDet){
+                    $.ajax({
+                        url: BaseURL + "/updateInduction",
+                        method: 'POST',
+                        data: JSON.stringify({
+                            userId : sessionStorage.getItem("staffId"),
+                            inductionId : self.inductionId(),
+                            status : "Requested",
+                        }),
+                        success: function(data) {
+                            location.reload()
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(status);
+                            console.log(error);
+                        }
+                    }) 
+                }
+            }
+
             self._checkValidationGroup = (value) => {
                 var tracker = document.getElementById(value);
                 if (tracker.valid === "valid") {
@@ -188,6 +217,36 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider) {
                     return false;
                 }
             };
+
+            self.updateInductionStatus = function (event,data) {
+                var BaseURL = sessionStorage.getItem("BaseURL")
+                $.ajax({
+                    url: BaseURL+ "/jpStaffUpdateInductionStatus",
+                    type: 'POST',
+                    data: JSON.stringify({
+                        staffId : sessionStorage.getItem("staffId"),
+                    }),
+                    dataType: 'json',
+                    timeout: sessionStorage.getItem("timeInetrval"),
+                    context: self,
+                    error: function (xhr, textStatus, errorThrown) {
+                        if(textStatus == 'timeout'){
+                            document.querySelector('#openUpdateStaffProgress').close();
+                            document.querySelector('#Timeout').open();
+                        }
+                    },
+                    success: function (data) {
+                       console.log("Success")
+                       if(sessionStorage.getItem('induction_status')=="Pending"){
+                        sessionStorage.setItem('induction_status','Audited');
+                       }else if(sessionStorage.getItem('induction_status')=="Audited"){
+                        sessionStorage.setItem('induction_status','Pending');
+                       }
+                       location.reload();
+                    }
+                })  
+
+            }
         }
             
     }

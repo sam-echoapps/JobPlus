@@ -391,12 +391,14 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
             if(inputText.match(mailformat))
             {
                 self.emailError('')
+            }else if(self.emailError() ==undefined){
+                self.emailError('');
             }
             else
             {
                 self.emailError("Should enter a valid email address.");
                 return false;
-            }     
+            }   
          }
 
          self.onlyNumberKey= function(event,data) {
@@ -404,8 +406,11 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
             var ASCIICode= event.detail.value
             if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57) && ASCIICode.length==10){
                 self.contactError('')
-            }else{
-                self.contactError("Should be digital and must be 10 digits in length.");
+            }else if(self.contactError() ==undefined){
+                self.contactError('');
+            }
+            else{
+                self.contactError("Invalid phone number.");
             }
          }
          self.sendEmailConfirm = function (event,data) {

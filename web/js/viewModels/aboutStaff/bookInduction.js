@@ -15,7 +15,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider) {
             self.userCheck = ko.observable('Not available');
             self.bookedDate = ko.observable();
             self.bookedTime = ko.observable();
-            
+ 
             var BaseURL = sessionStorage.getItem("BaseURL")
 
             self.checkUserInductionBooked = ()=>{
@@ -27,7 +27,6 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider) {
                     }),
                     success: function(data){
                         data = JSON.parse(data)
-                        console.log(data)
                         if(data[0]==null){
                             self.userCheck("Not available");    
                         }
@@ -54,7 +53,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider) {
                             }
                             self.bookedTime(`${hours}:${minutes} ${suffix}`)
                         }
-                        // self.userCheck("Attended")
+                        // self.userCheck("Rejected")
                     },
                     error: function(xhr, status, error) {
                         console.log(xhr.statusText);
@@ -178,6 +177,28 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider) {
                 }
             }
 
+            self.inductionUpdate = ()=>{
+                var validInductionDet = self._checkValidationGroup("inductionUpdate1");
+                if(validInductionDet){
+                    $.ajax({
+                        url: BaseURL + "/updateInduction",
+                        method: 'POST',
+                        data: JSON.stringify({
+                            userId : sessionStorage.getItem("userId"),
+                            inductionId : self.inductionId(),
+                            status : "Requested",
+                        }),
+                        success: function(data) {
+                            location.reload()
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(status);
+                            console.log(error);
+                        }
+                    }) 
+                }
+            }
+
             self._checkValidationGroup = (value) => {
                 var tracker = document.getElementById(value);
                 if (tracker.valid === "valid") {
@@ -189,8 +210,8 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider) {
                     return false;
                 }
             };
-        }
             
+        }            
     }
     return  Induction;
 

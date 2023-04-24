@@ -152,6 +152,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
             }; 
             self.DBSSecShow = function (event,data) {
                 if(self.dbsSec()=='Yes'){
+                    self.DBSActionBtn('Add')
                     document.getElementById('have_dbs').style.display='block';
                     document.getElementById('no_dbs').style.display='none';
                     self.requiredDBS(true)

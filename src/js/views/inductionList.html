@@ -129,20 +129,92 @@ class="oj-sm-padding-2x-vertical" selection-mode="multiple" selected="{{selector
         </div>
       <div slot="tertiary" class="oj-typography-body-lg"
       :aria-label="[['Contact Phone ' + item.data.PPhone]]">
+      <oj-bind-if test="[[item.data.document_status == null]]">
         <div>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NIL
-        <!-- <oj-button on-oj-action="[[inductionConfirm]]">
-        <span slot="startIcon"></span>
-        Confirm
-        </oj-button> 
-        <oj-button
-        on-oj-action="[[inductionReject]]">
-        <span slot="startIcon"></span>
-        Reject
-      </oj-button> -->
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          <oj-button
+          chroming="borderless"
+          display="icons"
+          class="oj-button-sm uploadBtn"
+          on-oj-action="[[UploadDocument]]">
+          <span slot="startIcon"></span>
+          Upload
+        </oj-button>
       </div>
+    </oj-bind-if>
+    <oj-bind-if test="[[item.data.document_status == 'Uploaded']]">
+      <div>
+        <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.referrer_status]]">
+          <div class="oj-text-color-success">    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+            <a  :id = "[[ item.data.document ]]" on-click= "[[previewClick]]" title="View uploaded document" target="_blank">Click here</a></div>
+        </div>
+    </div>
+  </oj-bind-if>
     </div>
   </oj-list-item-layout>
+</div>
+</oj-bind-if>
+
+<oj-bind-if test="[[item.data.status === 'Checklist Submitted']]">
+  <div class="oj-flex-item demo-list-item-layout3 oj-md-padding-4x-end">
+    <oj-list-item-layout class="oj-listitemlayout-padding-off"
+      :aria-label="[['task ' +item.data.taskName]]">
+      <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
+        &nbsp;&nbsp;<oj-bind-text value="Actions"></oj-bind-text>
+      </div>
+    <div slot="tertiary" class="oj-typography-body-lg"
+    :aria-label="[['Contact Phone ' + item.data.PPhone]]">
+      <div>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <oj-button
+        id = "viewClient"
+        chroming="borderless"
+        display="icons"
+        class="oj-button-sm viewBtn"
+        on-oj-action="[[handleOpen]]">
+        <span slot="startIcon"></span>
+        View
+      </oj-button> 
+
+<!--    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NIL
+ -->      <!-- <oj-button on-oj-action="[[inductionConfirm]]">
+      <span slot="startIcon"></span>
+      Confirm
+      </oj-button> 
+      <oj-button
+      on-oj-action="[[inductionReject]]">
+      <span slot="startIcon"></span>
+      Reject
+    </oj-button> -->
+    </div>
+  </div>
+</oj-list-item-layout>
+</div>
+</oj-bind-if>
+
+<oj-bind-if test="[[item.data.status === 'Rejected']]">
+  <div class="oj-flex-item demo-list-item-layout3 oj-md-padding-4x-end">
+    <oj-list-item-layout class="oj-listitemlayout-padding-off"
+      :aria-label="[['task ' +item.data.taskName]]">
+      <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
+  &nbsp;&nbsp;<oj-bind-text value="Actions"></oj-bind-text>
+      </div>
+    <div slot="tertiary" class="oj-typography-body-lg"
+    :aria-label="[['Contact Phone ' + item.data.PPhone]]">
+      <div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NIL
+        <!-- <oj-button on-oj-action="[[inductionConfirm]]">
+      <span slot="startIcon"></span>
+      Confirm
+      </oj-button> 
+      <oj-button
+      on-oj-action="[[inductionReject]]">
+      <span slot="startIcon"></span>
+      Reject
+    </oj-button> -->
+    </div>
+  </div>
+</oj-list-item-layout>
 </div>
 </oj-bind-if>
 
@@ -208,5 +280,75 @@ style="display:none;width:350px;min-width:240px;max-width:450px;">
   </oj-progress-bar>
 </div>
 </oj-dialog>
+
+<oj-dialog id="openFileUpload" dialog-title="Upload Induction Document" modality="modeless"  style="display:none;width:350px;min-width:240px;max-width:450px;" cancel-behavior="[[CancelBehaviorOpt]]">
+  <div slot="body">
+    <oj-file-picker  primary-text="[[inductionFileText]]"
+      secondary-text="[[inductionCustomText]]" on-oj-select="[[inductionDocUpload]]">
+    </oj-file-picker></br>
+  </div>
+</oj-dialog>
+
+<oj-dialog id="openAddUploadingProgress" dialog-title="[[progressText]]" modality="modeless"
+style="display:none;width:350px;min-width:240px;max-width:450px;">
+<div slot="body">
+  <oj-progress-bar id="createbar" class="oj-progress-bar-embedded" value="-1">
+  </oj-progress-bar>
+</div>
+</oj-dialog>
+
+        <oj-dialog id="scrollingDialog" dialog-title="Induction Checklist Form Details">
+            <div slot="body">
+                <h4>1. History and culture of organisation</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[cultureOrganisationVal]]"></oj-bind-text></h6>
+                <h4>2. Philosophy and Principles of Care</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[principlesCareVal]]"></oj-bind-text></h6>
+                <h4>3. Introduction to Main Personalities</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[personalitiesVal]]"></oj-bind-text></h6>
+                <h4>4. Organisation Structure</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[organisationStructureVal]]"></oj-bind-text></h6>
+                <h4>5. Staff Handbook and Employment Agreement</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[employeeAgreementVal]]"></oj-bind-text></h6>
+                <h4>6. Emergency and other telephone contacts (official administrators, essential services)</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[emergencyVal]]"></oj-bind-text></h6>
+                <h4>7. Policy on Gifts, Wills and Bequests</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[policyOnGiftsVal]]"></oj-bind-text></h6>
+                <h4>8. Equal Opportunities Policy</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[equalOpprtVal]]"></oj-bind-text></h6>
+                <h4>9. Introduction to Workplace</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[workPlaceVal]]"></oj-bind-text></h6>
+                <h4>10. Statement of Main Terms and Conditions</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[statementTermsVal]]"></oj-bind-text></h6>
+                <h4>11. Salary and Payment Mode</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[salaryAndPaymentVal]]"></oj-bind-text></h6>
+                <h4>12. Absenteeism/ sickness</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[sicknessVal]]"></oj-bind-text></h6>
+                <h4>13. Duty Rotas</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[dutyRotasVal]]"></oj-bind-text></h6>
+                <h4>14. Uniform Policy</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[uniformPolicyVal]]"></oj-bind-text></h6>
+                <h4>15. Staff Availability Policy</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[staffAvailabilityVal]]"></oj-bind-text></h6>
+                <h4>16. Time Sheet Policy</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[timeSheetVal]]"></oj-bind-text></h6>
+                <h4>17. Transportation Policy</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[transportationVal]]"></oj-bind-text></h6>
+                <h4>18. Mobile Phone Policy</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[mobilePhoneVal]]"></oj-bind-text></h6>
+                <h4>19. General Data Protection Policy</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[generalDataVal]]"></oj-bind-text></h6>
+                <h4>20. Disciplinary, Grievance and Complaints Procedure</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[disciplinaryVal]]"></oj-bind-text></h6>
+                <h4>21. Mandatory Trainings</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[mandatoryTrainingsVal]]"></oj-bind-text></h6>
+                <h4>22. Personal Hygiene</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[personalHygieneVal]]"></oj-bind-text></h6>
+                <h4>Comments</h4>
+                <h6 style="margin-left: 20px;"> <oj-bind-text value="[[comment]]"></oj-bind-text></h6>
+            </div>
+            <div slot="footer">
+              <oj-button id="okButton" on-oj-action="[[handleOKClose]]">OK</oj-button>
+            </div>
+          </oj-dialog>
 
 

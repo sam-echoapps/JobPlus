@@ -29,9 +29,25 @@
             </oj-input-text>
             <oj-input-text required id="lastName" label-hint="Last Name"
               value="{{lastName}}" clear-icon="always"></oj-input-text>
-              <oj-select-single required id="mainPost" label-hint="Position applying for" label-edge="inside" data="[[mainPostListDP]]" value="{{mainPost}}" 
+              <oj-select-single required id="mainPost" label-hint="Position applying for" label-edge="inside" data="[[mainPostListDP]]" value="{{mainPost}}" on-value-changed="[[subpostShow]]"
               >
               </oj-select-single>
+              <div id="subpost1" style="display:none"><br>
+                <oj-checkboxset value="{{subpost}}" label-hint="Sub positions (Optional)" class="oj-choice-direction-row">
+                  <oj-option value="kitchen_assistant">Kitchen Assistant</oj-option>
+                  <oj-option value="domestic_care">Domestic Care</oj-option>
+                </oj-checkboxset>
+                </div>
+                <div id="subpost2" style="display:none"><br>
+                <oj-checkboxset value="{{subpost}}" label-hint="Sub positions (Optional)">
+                  <oj-option value="care_assistant">Care Assistant</oj-option>
+                </oj-checkboxset>
+              </div>
+              <div id="subpost3" style="display:none"><br>
+                <oj-checkboxset value="{{subpost}}" label-hint="Sub positions (Optional)">
+                  <oj-option value="living_care">Living care</oj-option>
+                </oj-checkboxset>
+              </div><br>
               <oj-select-single required id="status" label-hint="Work status" label-edge="inside" data="[[statusDP]]" value="{{status}}">
               </oj-select-single>
               <oj-input-text required id="address1" label-hint="Address1" value="{{address1}}" clear-icon="always">

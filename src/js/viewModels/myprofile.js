@@ -173,6 +173,15 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                     }else{
                         self.rightStatus('Pending');
                     }
+                    if(data[11].length !=0) {
+                        if(data[11][0] == "Pending") {
+                            self.inductionStatus('Pending');
+                        }else if(data[11][0] == "Audited") {
+                            self.inductionStatus('Audited');
+                        }
+                    }else{
+                        self.inductionStatus('Pending');
+                    } 
                    
                     if(self.profileStatus() != sessionStorage.getItem('profile_status')){
                         location.reload()
@@ -203,7 +212,10 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                     }    
                     if(self.rightStatus() != sessionStorage.getItem('right_status')){
                         location.reload()
-                    }                    
+                    }      
+                    if(self.inductionStatus() != sessionStorage.getItem('induction_status')){
+                        location.reload()
+                    }                     
 
                     sessionStorage.setItem('profile_status',self.profileStatus()); 
                     sessionStorage.setItem('reference_status',self.referenceStatus()); 
@@ -215,6 +227,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                     sessionStorage.setItem('dbs_status',self.dbsStatus()); 
                     sessionStorage.setItem('training_status',self.trainingStatus()); 
                     sessionStorage.setItem('right_status',self.rightStatus()); 
+                    sessionStorage.setItem('induction_status',self.inductionStatus()); 
                 }
             })
 
@@ -230,7 +243,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                     { "path" : "addRightToWork", "label" : "Right To Work", "status" : sessionStorage.getItem('right_status')},
                     { "path" : "addDBS", "label" : "DBS", "status" : sessionStorage.getItem('dbs_status')},
                     { "path" : "addTraining", "label" : "Training", "status" : sessionStorage.getItem('training_status')},
-                    { "path" : "bookInduction", "label" : "Induction", "status" : "Pending"},
+                    { "path" : "bookInduction", "label" : "Induction", "status" : sessionStorage.getItem('induction_status')},
+                    { "path" : "starterChecklist", "label" : "Starter Checklist", "status" : "Pending"},
                 ]
             }
 
@@ -272,7 +286,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                 { path: 'addRightToWork'},
                 { path: 'addTraining'},
                 { path: 'bookInduction'},
-                { path: 'inductionCheck'}
+                { path: 'inductionCheck'},
+                { path: 'starterChecklist'}
             ]);
 
             self.router.currentState.subscribe((args) => {

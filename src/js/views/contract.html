@@ -1,0 +1,288 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<div id="sampleDemo"  class="demo-container sampleDemo">
+    <div id="componentDemoContent" style="width: 1px; min-width: 100%;">
+      
+      <div id="moduleDemo">  
+        <div class="demo-padding">
+            <div class="demo-controls">
+              <div class="hint" style="border: 1px solid #80808036; margin: 10px;padding: 10px;background-color: #d1ecf1;display: flex;align-items: baseline;">
+                <i class="bi bi-info-circle-fill" style="color: #002366;font-size: 20px;"></i> &nbsp;&nbsp;In this section, admin can add pay rates and send contract for the selected staff.
+              </div>    
+            </div>
+                 <div class="oj-panel">
+                    <oj-validation-group id="contactSubmitCheck" role="group" valid="{{groupValid}}"
+                    aria-labelledby="grouplabelid" disbaled>
+                 </br>
+                    <div class="row">   
+                        <div class="col-sm-3">
+                            Name
+                            <oj-input-text id="staff_name" label-hint="" value="{{staff_name}}" clear-icon="always" disabled>
+                            </oj-input-text>                        
+                        </div>
+                        <div class="col-sm-3">
+                            Main Post
+                            <oj-input-text id="staff_name" label-hint="" value="{{main_post}}" clear-icon="always" disabled>
+                            </oj-input-text>                         
+                        </div>
+                        <div class="col-sm-3">
+                            Sub Posts
+                            <oj-input-text id="staff_name" label-hint="" value="{{sub_post}}" clear-icon="always" disabled>
+                            </oj-input-text> 
+                        </div>
+                        <div class="col-sm-3">
+                            Commencement Date
+                            <oj-input-date label-hint="" autocomplete="off" value="{{commencement_date}}" required></oj-input-date>
+                        </div>
+                    </div>
+
+                </br></br>
+             <div id="mainPostType1" style="display:none">
+                    <b><div class="mb-3">Main Post Pay Rate </div></b>     
+                    <div class="row">   
+                        <div class="col-sm-3">
+                            Weekday Longday
+                            <oj-input-number label-hint="" value="{{weekday_longday_type}}" clear-icon="always" required="[[requiredSec1]]">
+                            </oj-input-number>                        
+                        </div>
+                        <div class="col-sm-3">
+                            Weekday Night
+                            <oj-input-number  label-hint="" value="{{weekday_night_type}}" clear-icon="always" required="[[requiredSec1]]">
+                            </oj-input-number>                         
+                        </div>
+                        <div class="col-sm-3">
+                            Bank Holiday
+                            <oj-input-number  label-hint="" value="{{bank_holiday_type}}" clear-icon="always" required="[[requiredSec1]]">
+                            </oj-input-number> 
+                        </div>
+                    </div><br><br>
+                    <div class="row"> 
+                        <div class="col-sm-3">
+                            Weekend Longday
+                            <oj-input-number  label-hint="" value="{{weekend_longday_type}}" clear-icon="always" required="[[requiredSec1]]">
+                            </oj-input-number>                        
+                        </div>
+                        <div class="col-sm-3">
+                            Weekday Night
+                            <oj-input-number  label-hint="" value="{{weekend_night_type}}" clear-icon="always" required="[[requiredSec1]]">
+                            </oj-input-number>                         
+                        </div>
+                    </div>
+                </br>
+            </div>
+          
+        <div id="mainPostType2" style="display:none">
+            </br></br>
+            <b><div class="mb-3">Main Post Pay Rate </div></b>     
+            <div class="row">   
+                <div class="col-sm-3">
+                    Weekday Longday
+                    <oj-input-number  label-hint="" value="{{weekday_longday_type}}" clear-icon="always" required="[[requiredSec2]]">
+                    </oj-input-number>                        
+                </div>
+                <div class="col-sm-3">
+                    Weekday Night
+                    <oj-input-number  label-hint="" value="{{weekday_night_type}}" clear-icon="always" required="[[requiredSec2]]">
+                    </oj-input-number>                         
+                </div>
+                <div class="col-sm-3">
+                    Bank Holiday
+                    <oj-input-number  label-hint="" value="{{bank_holiday_type}}" clear-icon="always" required="[[requiredSec2]]">
+                    </oj-input-number> 
+                </div>
+            </div><br><br>
+        </br>
+    </div>
+
+    <div id="kitchenRate" style="display:none">
+    </br></br>
+        <b><div class="mb-3">Sub Posts Pay Rate - Kitchen Assistant </div></b>     
+        <div class="row">   
+            <div class="col-sm-3">
+                Weekday Longday
+                <oj-input-number id="kitchen_weekday_longday" label-hint="" value="{{kitchen_weekday_longday}}" clear-icon="always" required="[[kitchenSec]]">
+                </oj-input-number>                        
+            </div>
+            <div class="col-sm-3">
+                Weekday Night
+                <oj-input-number id="kitchen_weekday_night" label-hint="" value="{{kitchen_weekday_night}}" clear-icon="always" required="[[kitchenSec]]">
+                </oj-input-number>                         
+            </div>
+            <div class="col-sm-3">
+                Bank Holiday
+                <oj-input-number id="kitchen_bank_holiday" label-hint="" value="{{kitchen_bank_holiday}}" clear-icon="always" required="[[kitchenSec]]">
+                </oj-input-number> 
+            </div>
+        </div><br><br>
+        <div class="row"> 
+            <div class="col-sm-3">
+                Weekend Longday
+                <oj-input-number id="kitchen_weekend_longday" label-hint="" value="{{kitchen_weekend_longday}}" clear-icon="always" required="[[kitchenSec]]">
+                </oj-input-number>                        
+            </div>
+            <div class="col-sm-3">
+                Weekday Night
+                <oj-input-number id="kitchen_weekend_night" label-hint="" value="{{kitchen_weekend_night}}" clear-icon="always" required="[[kitchenSec]]">
+                </oj-input-number>                         
+            </div>
+        </div>
+    </br>
+</div>
+
+<div id="domesticRate" style="display:none">
+</br></br>
+    <b><div class="mb-3">Sub Posts Pay Rate - Domestic care </div></b>     
+    <div class="row">   
+        <div class="col-sm-3">
+            Weekday Longday
+            <oj-input-number id="domestic_weekday_longday" label-hint="" value="{{domestic_weekday_longday}}" clear-icon="always" required="[[domesticSec]]">
+            </oj-input-number>                        
+        </div>
+        <div class="col-sm-3">
+            Weekday Night
+            <oj-input-number id="domestic_weekday_night" label-hint="" value="{{domestic_weekday_night}}" clear-icon="always" required="[[domesticSec]]">
+            </oj-input-number>                         
+        </div>
+        <div class="col-sm-3">
+            Bank Holiday
+            <oj-input-number id="domestic_bank_holiday" label-hint="" value="{{domestic_bank_holiday}}" clear-icon="always" required="[[domesticSec]]">
+            </oj-input-number> 
+        </div>
+    </div><br><br>
+    <div class="row"> 
+        <div class="col-sm-3">
+            Weekend Longday
+            <oj-input-number id="domestic_weekend_longday" label-hint="" value="{{domestic_weekend_longday}}" clear-icon="always" required="[[domesticSec]]">
+            </oj-input-number>                        
+        </div>
+        <div class="col-sm-3">
+            Weekday Night
+            <oj-input-number id="domestic_weekend_night" label-hint="" value="{{domestic_weekend_night}}" clear-icon="always" required="[[domesticSec]]">
+            </oj-input-number>                         
+        </div>
+    </div>
+</br>
+</div>
+
+<div id="careRate" style="display:none">
+</br></br>
+    <b><div class="mb-3">Sub Posts Pay Rate - Care Assistant </div></b>     
+    <div class="row">   
+        <div class="col-sm-3">
+            Weekday Longday
+            <oj-input-number id="care_weekday_longday" label-hint="" value="{{care_weekday_longday}}" clear-icon="always" required="[[careSec]]">
+            </oj-input-number>                        
+        </div>
+        <div class="col-sm-3">
+            Weekday Night
+            <oj-input-number id="care_weekday_night" label-hint="" value="{{care_weekday_night}}" clear-icon="always" required="[[careSec]]">
+            </oj-input-number>                         
+        </div>
+        <div class="col-sm-3">
+            Bank Holiday
+            <oj-input-number id="care_bank_holiday" label-hint="" value="{{care_bank_holiday}}" clear-icon="always" required="[[careSec]]">
+            </oj-input-number> 
+        </div>
+    </div><br><br>
+    <div class="row"> 
+        <div class="col-sm-3">
+            Weekend Longday
+            <oj-input-number id="care_weekend_longday" label-hint="" value="{{care_weekend_longday}}" clear-icon="always" required="[[careSec]]">
+            </oj-input-number>                        
+        </div>
+        <div class="col-sm-3">
+            Weekday Night
+            <oj-input-number id="care_weekend_night" label-hint="" value="{{care_weekend_night}}" clear-icon="always" required="[[careSec]]">
+            </oj-input-number>                         
+        </div>
+    </div>
+</br>
+</div>
+
+<div id="livingRate" style="display:none">
+</br></br>
+    <b><div class="mb-3">Sub Posts Pay Rate - Living Care </div></b>     
+    <div class="row">   
+        <div class="col-sm-3">
+            Weekday Longday
+            <oj-input-number id="living_weekday_longday" label-hint="" value="{{living_weekday_longday}}" clear-icon="always" required="[[livingSec]]">
+            </oj-input-number>                        
+        </div>
+        <div class="col-sm-3">
+            Weekday Night
+            <oj-input-number id="living_weekday_night" label-hint="" value="{{living_weekday_night}}" clear-icon="always" required="[[livingSec]]">
+            </oj-input-number>                         
+        </div>
+        <div class="col-sm-3">
+            Bank Holiday
+            <oj-input-number id="living_bank_holiday" label-hint="" value="{{living_bank_holiday}}" clear-icon="always" required="[[livingSec]]">
+            </oj-input-number> 
+        </div>
+    </div><br><br>
+    <div class="row"> 
+        <div class="col-sm-3">
+            Weekend Longday
+            <oj-input-number id="living_weekend_longday" label-hint="" value="{{living_weekend_longday}}" clear-icon="always" required="[[livingSec]]">
+            </oj-input-number>                        
+        </div>
+        <div class="col-sm-3">
+            Weekday Night
+            <oj-input-number id="living_weekend_night" label-hint="" value="{{living_weekend_night}}" clear-icon="always" required="[[livingSec]]">
+            </oj-input-number>                         
+        </div>
+    </div>
+</br>
+</div>
+
+
+
+</oj-validation-group>
+<oj-bind-if test="[[RateActionBtn() === 'Add']]">
+    <div style="display: flex;justify-content: center;"
+    class="oj-sm-margin-2x-bottom oj-xl-margin-2x oj-xl-padding-2x oj-lg-margin-2x oj-lg-padding-2x oj-md-margin-2x oj-md-padding-2x oj-sm-margin-1x oj-sm-padding-1x">
+    <div class="oj-flex-bar">
+      <oj-button id="confirmBtn" class="oj-flex-bar-end" chroming='callToAction' on-oj-action="[[payRateSubmit]]">Save
+      </oj-button>
+    </div>
+  </div>
+</oj-bind-if>
+<oj-bind-if test="[[RateActionBtn() === 'Update']]">
+    <div style="display: flex;justify-content: center;"
+    class="oj-sm-margin-2x-bottom oj-xl-margin-2x oj-xl-padding-2x oj-lg-margin-2x oj-lg-padding-2x oj-md-margin-2x oj-md-padding-2x oj-sm-margin-1x oj-sm-padding-1x">
+    <div class="oj-flex-bar">
+      <oj-button id="confirmBtn" class="oj-flex-bar-end" chroming='callToAction' on-oj-action="[[payRateUpdate]]">Update
+      </oj-button>
+    </div>
+  </div>
+</oj-bind-if>
+                </div>
+        
+  
+          </div>
+    
+      </div>
+        
+    </div>
+  </div>
+  
+
+  <oj-dialog id="openAddPayRatesProgress" dialog-title="Saving Staff Pay Rates" modality="modeless"
+  style="display:none;width:350px;min-width:240px;max-width:450px;">
+  <div slot="body">
+    <oj-progress-bar id="createbar" class="oj-progress-bar-embedded" value="-1">
+    </oj-progress-bar>
+  </div>
+</oj-dialog>
+      
+<oj-dialog id="openPayRateSaveResult" dialog-title="Save Pay Rates" modality="modeless"  style="display:none;width:350px;min-width:240px;max-width:450px;">
+    <div slot="body">
+      <oj-bind-text value='[[savePayRateMsg]]'></oj-bind-text>
+    </div>
+    <div  class="oj-flex-bar" slot="footer">
+      <oj-button id="okdelButton" class="oj-flex-bar-start oj-button-cancel" on-oj-action="[[DBErrorOKClose]]">
+        OK
+      </oj-button>
+    </div>
+  </oj-dialog> 
+        
+    

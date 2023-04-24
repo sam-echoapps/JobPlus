@@ -57,6 +57,7 @@ function (oj,ko,$, app, ArrayDataProvider) {
 
             self.checkSubmit = ()=>{
                 var validInductionCheck = self._checkValidationGroup("inductionCheck");
+                
                 if(validInductionCheck){
                     $.ajax({
                         url: BaseURL + "/saveInductionCheck",
@@ -89,19 +90,17 @@ function (oj,ko,$, app, ArrayDataProvider) {
                             name: self.name(),
                             esignature: self.esignature(),
                             date: self.date(),
-                            userId : sessionStorage.getItem("userId"),
+                            userId : sessionStorage.getItem("staffId"),
                             status : "Checklist Submitted",
                         }),
                         success: function(data) {
-                            console.log(data);
-                            // window.location.href = "?ojr=myprofile%2F2FbookInduction%3Bindex%3D10"
+                            window.location.href = "?ojr=staffView%2FbookInduction%3Bindex%3D10"
                         },
                         error: function(xhr, status, error) {
                             console.log(status);
                             console.log(error);
                         }
                     }) 
-                    console.log("submit");
                 }
             }
 

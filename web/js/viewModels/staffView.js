@@ -21,6 +21,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
             self.rightStatus = ko.observable('');
             self.staffName = ko.observable();
             self.staffNameCap = ko.observable();
+            self.inductionStatus = ko.observable('');
 
             self.progressValue = ko.observable(30);
 
@@ -152,6 +153,16 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                         self.staffName(data[10][0][0] + " " + data[10][0][1])
                         self.staffNameCap(self.staffName().toUpperCase());
 
+                        if(data[11].length !=0) {
+                            if(data[11][0] == "Pending") {
+                                self.inductionStatus('Pending');
+                            }else if(data[11][0] == "Audited") {
+                                self.inductionStatus('Audited');
+                            }
+                        }else{
+                            self.inductionStatus('Pending');
+                        } 
+
                         console.log(self.profileStatus())
                         if(self.profileStatus() != sessionStorage.getItem('profile_status')){
                             location.reload()
@@ -182,6 +193,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                         }    
                         if(self.rightStatus() != sessionStorage.getItem('right_status')){
                             location.reload()
+                        }     
+                        if(self.inductionStatus() != sessionStorage.getItem('induction_status')){
+                            location.reload()
                         }                       
 
                         sessionStorage.setItem('profile_status',self.profileStatus()); 
@@ -194,6 +208,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                         sessionStorage.setItem('dbs_status',self.dbsStatus()); 
                         sessionStorage.setItem('training_status',self.trainingStatus()); 
                         sessionStorage.setItem('right_status',self.rightStatus()); 
+                        sessionStorage.setItem('induction_status',self.inductionStatus()); 
 
 
                 }
@@ -211,7 +226,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                     { "path" : "addDBS", "label" : "DBS", "status" : sessionStorage.getItem('dbs_status')},
                     { "path" : "addRightToWork", "label" : "Right To Work", "status" : sessionStorage.getItem('right_status')},
                     { "path" : "addTraining", "label" : "Training", "status" : sessionStorage.getItem('training_status')},
-                    { "path" : "bookInduction", "label" : "Book Induction", "status" :""},
+                    { "path" : "bookInduction", "label" : "Book Induction", "status" :sessionStorage.getItem('induction_status')},
+                    { "path" : "contract", "label" : "Contract", "status" :""},
                 ]
             }
 
@@ -253,7 +269,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                 { path: 'addTraining'},
                 { path: 'addRightToWork'},
                 { path: 'bookInduction'},
-                { path: 'inductionCheck'}
+                { path: 'inductionCheck'},
+                { path: 'contract'}
             ]);
 
             self.router.currentState.subscribe((args) => {

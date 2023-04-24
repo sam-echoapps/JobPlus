@@ -17,6 +17,35 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
             self.InductionUsersDet = ko.observableArray([]);
             self.selectorSelectedItems = new ojknockout_keyset_1.ObservableKeySet();
             self.CancelBehaviorOpt = ko.observable('icon'); 
+            self.inductionFileText = ko.observable('Induction Document');
+            self.inductionCustomText = ko.observable('Please choose one');
+            self.filePath = ko.observable();
+            self.progressText = ko.observable('');
+            self.typeError = ko.observable();
+            
+            self.cultureOrganisationVal = ko.observable();
+            self.principlesCareVal = ko.observable()
+            self.personalitiesVal = ko.observable()
+            self.organisationStructureVal = ko.observable()
+            self.employeeAgreementVal = ko.observable()
+            self.emergencyVal = ko.observable()
+            self.policyOnGiftsVal = ko.observable()
+            self.equalOpprtVal = ko.observable()
+            self.workPlaceVal = ko.observable()
+            self.statementTermsVal = ko.observable()
+            self.salaryAndPaymentVal = ko.observable()
+            self.sicknessVal = ko.observable()
+            self.dutyRotasVal = ko.observable()
+            self.uniformPolicyVal = ko.observable()
+            self.staffAvailabilityVal = ko.observable()
+            self.timeSheetVal = ko.observable()
+            self.transportationVal = ko.observable()
+            self.mobilePhoneVal = ko.observable()
+            self.generalDataVal = ko.observable()
+            self.disciplinaryVal = ko.observable()
+            self.mandatoryTrainingsVal = ko.observable()
+            self.personalHygieneVal = ko.observable()
+            self.comment = ko.observable()
 
             self.connected = function () {
                 if (sessionStorage.getItem("userName") == null) {
@@ -49,7 +78,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                         var data = JSON.parse(result);
                         console.log(data)
                     for (var i = 0; i < data.length; i++) {
-                        self.InductionUsersDet.push({'id': data[i][0], 'staff_id' : data[i][1],'name': data[i][10] +" "+ data[i][11], 'induction_date' : data[i][5], 'induction_time' : data[i][6], 'status' : data[i][3] }); 
+                        self.InductionUsersDet.push({'id': data[i][0], 'staff_id' : data[i][1],'name': data[i][13] +" "+ data[i][14], 'induction_date' : data[i][8], 'induction_time' : data[i][9], 'status' : data[i][3], 'document_status' : data[i][6], 'document' : data[i][5] }); 
                     } 
                     self.InductionUsersDet.valueHasMutated();
                     return self; 
@@ -204,6 +233,123 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                 
             }
 
+            self.UploadDocument = function (event,data) {
+                var clickedRowId = self.getDisplayValue(self.selectorSelectedItems())[0];
+                sessionStorage.setItem("inductionId", clickedRowId);
+                console.log(clickedRowId)
+                document.querySelector('#openFileUpload').open();
+            }
+
+            self.inductionDocUpload = function (event,data) {
+                var uploadURL = BaseURL + "/css/uploads/";
+                const result = event.detail.files;
+                const files = result[0];
+                var fileName= files.name;
+                var filePath= uploadURL+fileName;
+                self.filePath(filePath);
+    
+                console.log(files)
+                var fileFormat =files.name.split(".");
+                var checkFormat =fileFormat[1];
+                
+                if(checkFormat == 'pdf' || checkFormat =="doc"){
+                self.progressText('Please wait!Uploading....')
+                document.querySelector('#openFileUpload').close();
+                document.querySelector('#openAddUploadingProgress').open();
+                self.typeError('')
+                const reader = new FileReader();
+                reader.readAsDataURL(files);
+                
+                reader.onload = ()=>{
+                    $.ajax({
+                        url: BaseURL + "/jpStaffInductionDocUplaod",
+                        type: 'POST',
+                        data: JSON.stringify({
+                            file : reader.result,
+                            file_name : fileName,
+                            inductionId : sessionStorage.getItem("inductionId"),
+                            file_path : filePath
+                        }),
+                        dataType: 'json',
+                        timeout: sessionStorage.getItem("timeInetrval"),
+                        context: self,
+                        error: function (xhr, textStatus, errorThrown) {
+                            if(textStatus == 'timeout'){
+                                document.querySelector('#openAddUploadingProgress').close();
+                                document.querySelector('#Timeout').open();
+                            }
+                        },
+                        success: function (data) {
+                            //console.log(data)
+                            console.log("success")
+                            document.querySelector('#openAddUploadingProgress').close();
+                            getInductionUsers()
+    
+                        }
+                    })
+                }
+            }
+            else{
+                self.typeError('The certificate must be a file of type: pdf, doc')
+            }
+          }
+    
+          self.previewClick = function (event) {
+            console.log(event.srcElement.id)  
+            var clickedId=event.srcElement.id
+            var file=clickedId.replace(/\s/g,'%20');
+            document.getElementById(clickedId).href = file;
+    
+        }; 
+
+        self.getInductionForm = ()=>{
+            $.ajax({
+                url: BaseURL + "/getInductionCheck",
+                method: 'POST',
+                data: JSON.stringify({
+                    userId : sessionStorage.getItem("staffId"),
+                }),
+                success: function(data) {
+                    data = JSON.parse(data);
+                    self.cultureOrganisationVal(data[0][2]);
+                    self.principlesCareVal(data[0][3])
+                    self.personalitiesVal(data[0][4])
+                    self.organisationStructureVal(data[0][5])
+                    self.employeeAgreementVal(data[0][6])
+                    self.emergencyVal(data[0][7])
+                    self.policyOnGiftsVal(data[0][8])
+                    self.equalOpprtVal(data[0][9])
+                    self.workPlaceVal(data[0][10])
+                    self.statementTermsVal(data[0][11])
+                    self.salaryAndPaymentVal(data[0][12])
+                    self.sicknessVal(data[0][13])
+                    self.dutyRotasVal(data[0][14])
+                    self.uniformPolicyVal(data[0][15])
+                    self.staffAvailabilityVal(data[0][16])
+                    self.timeSheetVal(data[0][17])
+                    self.transportationVal(data[0][18])
+                    self.mobilePhoneVal(data[0][19])
+                    self.generalDataVal(data[0][20])
+                    self.disciplinaryVal(data[0][21])
+                    self.mandatoryTrainingsVal(data[0][22])
+                    self.personalHygieneVal(data[0][23])
+                    self.comment(data[0][24])
+                },
+                error: function(xhr, status, error) {
+                    console.log(status);
+                    console.log(error);
+                }
+            }) 
+        }
+
+        self.handleOpen = ()=>{
+            self.getInductionForm();
+            document.querySelector("#scrollingDialog").open();
+        }
+
+        self.handleOKClose = ()=>{
+            document.querySelector("#scrollingDialog").close();
+        }
         }
     }
     return  InductionListModel;

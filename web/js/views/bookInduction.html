@@ -20,6 +20,26 @@
             </div>
         </div>
     </oj-bind-if>
+    <oj-bind-if test="[[userCheck() === 'Rejected' ]]">
+        <p>
+            You Booked Date is <oj-bind-text value="[[bookedDate]]"></oj-bind-text> 
+            <oj-bind-text value="[[bookedTime]]"></oj-bind-text> Rejected
+        </p>
+        <p style="font-size: 15px;font-weight: 500;">Please book again</p>
+        <div class="induction-form">
+            <oj-validation-group id="inductionUpdate1" role="group" valid="{{inductionValid}}">
+                <oj-label for="datepicker">Choose induction Date :</oj-label>
+                
+                <oj-input-date required id="date" value="{{day}}" day-formatter="[[dayFormatter]]" autocomplete="off"
+                    label-hint="Input Date No Visual Label" label-edge="none" on-value-changed="[[showTime]]"></oj-input-date>
+                <oj-select-single required id="timeSlots" label-hint="Select your time slot" label-edge="inside" class="oj-form-control-max-width-md" 
+                    data="[[timeSlots]]" value="{{inductionId}}" style="display: none;"></oj-select-single>
+            </oj-validation-group>
+            <div class="sub-btn" id="submitBtn">
+                <oj-button id="btn" chroming='callToAction' on-oj-action="[[inductionSubmit]]">Submit</oj-button>
+            </div>
+        </div>
+    </oj-bind-if>
     <oj-bind-if test="[[userCheck() === 'Requested' ]]">
         <p>
             You Booked Date is <oj-bind-text value="[[bookedDate]]"></oj-bind-text> 
@@ -48,3 +68,21 @@
         </p>
     </oj-bind-if>
 </div>
+
+<div class="oj-panel">
+    <div class="oj-flex">
+      <oj-bind-if test="[[inductionStatus() === 'Pending']]">
+    <oj-button chroming="solid" class="oj-xl-margin-4x" on-oj-action="[[updateInductionStatus]]">
+         <span slot="startIcon" class=""> Not Audited: Click to mark as audited</span>
+       </oj-button>
+      </oj-bind-if>
+     </div>
+     <div class="oj-flex">
+      <oj-bind-if test="[[inductionStatus() === 'Audited']]">
+    <oj-button chroming="solid" class="oj-xl-margin-4x" on-oj-action="[[updateInductionStatus]]">
+         <span slot="startIcon" class=""> Audited: Click to mark as audit pending</span>
+       </oj-button>
+      </oj-bind-if>
+     </div>
+    </div>
+
