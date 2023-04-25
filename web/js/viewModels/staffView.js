@@ -22,6 +22,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
             self.staffName = ko.observable();
             self.staffNameCap = ko.observable();
             self.inductionStatus = ko.observable('');
+            self.contractStatus = ko.observable('');
 
             self.progressValue = ko.observable(30);
 
@@ -163,6 +164,16 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                             self.inductionStatus('Pending');
                         } 
 
+                        if(data[12].length !=0) {
+                            if(data[12][0] == "Pending") {
+                                self.contractStatus('Pending');
+                            }else if(data[12][0] == "Audited") {
+                                self.contractStatus('Audited');
+                            }
+                        }else{
+                            self.contractStatus('Pending');
+                        } 
+
                         console.log(self.profileStatus())
                         if(self.profileStatus() != sessionStorage.getItem('profile_status')){
                             location.reload()
@@ -196,6 +207,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                         }     
                         if(self.inductionStatus() != sessionStorage.getItem('induction_status')){
                             location.reload()
+                        } 
+                        if(self.contractStatus() != sessionStorage.getItem('contract_status')){
+                            location.reload()
                         }                       
 
                         sessionStorage.setItem('profile_status',self.profileStatus()); 
@@ -209,6 +223,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                         sessionStorage.setItem('training_status',self.trainingStatus()); 
                         sessionStorage.setItem('right_status',self.rightStatus()); 
                         sessionStorage.setItem('induction_status',self.inductionStatus()); 
+                        sessionStorage.setItem('contract_status',self.contractStatus()); 
 
 
                 }
@@ -227,7 +242,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                     { "path" : "addRightToWork", "label" : "Right To Work", "status" : sessionStorage.getItem('right_status')},
                     { "path" : "addTraining", "label" : "Training", "status" : sessionStorage.getItem('training_status')},
                     { "path" : "bookInduction", "label" : "Book Induction", "status" :sessionStorage.getItem('induction_status')},
-                    { "path" : "contract", "label" : "Contract", "status" :""},
+                    { "path" : "contract", "label" : "Contract", "status" :sessionStorage.getItem('contract_status')},
                 ]
             }
 

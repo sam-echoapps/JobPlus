@@ -46,6 +46,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                 self.commencement_date = ko.observable();
                 self.savePayRateMsg = ko.observable();
                 self.RateActionBtn= ko.observable('Add');
+                self.contractStatus = ko.observable();
 
                 self.connected = function () {
                     if (sessionStorage.getItem("userName") == null) {
@@ -158,6 +159,11 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                                 self.living_bank_holiday(Number(result[25]))
                                 self.living_weekend_longday(Number(result[26]))
                                 self.living_weekend_night(Number(result[27]))
+                                if(result[29] == "Pending") {
+                                    self.contractStatus('Pending');
+                                }else if(result[29] == "Audited") {
+                                    self.contractStatus('Audited');
+                                }   
                                 }
                         }
                         })
@@ -412,6 +418,65 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                     //self.router.go({path:'addStaff'})
                     location.reload()
                 }; 
+
+                self.sendContract = function (event,data) {
+                    var BaseURL = sessionStorage.getItem("BaseURL")
+                    $.ajax({
+                        url: BaseURL+ "/jpStaffSendContract",
+                        type: 'POST',
+                        data: JSON.stringify({
+                            staffId : sessionStorage.getItem("staffId"),
+                        }),
+                        dataType: 'json',
+                        timeout: sessionStorage.getItem("timeInetrval"),
+                        context: self,
+                        error: function (xhr, textStatus, errorThrown) {
+                            if(textStatus == 'timeout'){
+                                document.querySelector('#openUpdateStaffProgress').close();
+                                document.querySelector('#Timeout').open();
+                            }
+                        },
+                        success: function (data) {
+                           console.log("Success")
+                           location.reload();
+                        }
+                    })  
+    
+                }
+
+                self.updateContractStatus = function (event,data) {
+                    var BaseURL = sessionStorage.getItem("BaseURL")
+                    $.ajax({
+                        url: BaseURL+ "/jpStaffUpdateContractStatus",
+                        type: 'POST',
+                        data: JSON.stringify({
+                            staffId : sessionStorage.getItem("staffId"),
+                        }),
+                        dataType: 'json',
+                        timeout: sessionStorage.getItem("timeInetrval"),
+                        context: self,
+                        error: function (xhr, textStatus, errorThrown) {
+                            if(textStatus == 'timeout'){
+                                document.querySelector('#openUpdateStaffProgress').close();
+                                document.querySelector('#Timeout').open();
+                            }
+                        },
+                        success: function (data) {
+                           console.log("Success")
+                           if(sessionStorage.getItem('contract_status')=="Pending"){
+                            sessionStorage.setItem('contract_status','Audited');
+                           }else if(sessionStorage.getItem('contract_status')=="Audited"){
+                            sessionStorage.setItem('contract_status','Pending');
+                           }
+                           location.reload();
+                        }
+                    })  
+    
+                }
+                self.viewContractSec = function (event) {
+                    document.getElementById('contractContent').style="block";
+                }; 
+
             }
             
             

@@ -6,10 +6,7 @@
       
       <div id="moduleDemo">    
         <div class="hint" style="border: 1px solid #80808036; margin: 10px;padding: 10px;background-color: #d1ecf1; display: flex;align-items: baseline;">
-          <i class="bi bi-info-circle-fill" style="color: #002366;font-size: 20px;"></i> &nbsp;&nbsp;
-          <p>
-            The candidate is requested to update profile details. 
-          </p>
+          <i class="bi bi-info-circle-fill" style="color: #002366;font-size: 20px;"></i> &nbsp;&nbsp; The candidate is requested to update profile details.
         </div> 
        <!--  <div class="demo-padding">
             <div class="demo-controls">
@@ -32,9 +29,25 @@
             </oj-input-text>
             <oj-input-text required id="lastName" label-hint="Last Name"
               value="{{lastName}}" clear-icon="always"></oj-input-text>
-              <oj-select-single required id="mainPost" label-hint="Position applying for" label-edge="inside" data="[[mainPostListDP]]" value="{{mainPost}}" 
+              <oj-select-single required id="mainPost" label-hint="Position applying for" label-edge="inside" data="[[mainPostListDP]]" value="{{mainPost}}" on-value-changed="[[subpostShow]]"
               >
               </oj-select-single>
+              <div id="subpost1" style="display:none"><br>
+                <oj-checkboxset value="{{subpost}}" label-hint="Sub positions (Optional)" class="oj-choice-direction-row">
+                  <oj-option value="kitchen_assistant">Kitchen Assistant</oj-option>
+                  <oj-option value="domestic_care">Domestic Care</oj-option>
+                </oj-checkboxset>
+                </div>
+                <div id="subpost2" style="display:none"><br>
+                <oj-checkboxset value="{{subpost}}" label-hint="Sub positions (Optional)">
+                  <oj-option value="care_assistant">Care Assistant</oj-option>
+                </oj-checkboxset>
+              </div>
+              <div id="subpost3" style="display:none"><br>
+                <oj-checkboxset value="{{subpost}}" label-hint="Sub positions (Optional)">
+                  <oj-option value="living_care">Living care</oj-option>
+                </oj-checkboxset>
+              </div><br>
               <oj-select-single required id="status" label-hint="Work status" label-edge="inside" data="[[statusDP]]" value="{{status}}">
               </oj-select-single>
               <oj-input-text required id="address1" label-hint="Address1" value="{{address1}}" clear-icon="always">
@@ -87,7 +100,6 @@
           </div>
         </div>
         </div>
-        
       </div>
 
       

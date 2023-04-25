@@ -106,6 +106,46 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                         self.firstName(data[0][2]);
                         self.lastName(data[0][3]);
                         self.mainPost(data[0][4]);
+                        if(self.mainPost()=='Care Assistant'){
+                            document.getElementById('subpost1').style.display='block';
+                            document.getElementById('subpost2').style.display='none';
+                            document.getElementById('subpost3').style.display='none';
+                        }
+                        else if(self.mainPost()=='Senior Care Assistant'){
+                            document.getElementById('subpost2').style.display='block';
+                            document.getElementById('subpost1').style.display='none';
+                            document.getElementById('subpost3').style.display='none';
+                        }                
+                        else if(self.mainPost()=='Domiciliary Care'){
+                            document.getElementById('subpost3').style.display='block';
+                            document.getElementById('subpost1').style.display='none';
+                            document.getElementById('subpost2').style.display='none';      
+                        }
+                        else{
+                            document.getElementById('subpost1').style.display='none';
+                            document.getElementById('subpost2').style.display='none';
+                            document.getElementById('subpost3').style.display='none';
+                        }
+                        if(data[0][5]=="kitchen_assistant")
+                        {
+                            self.subpost(["kitchen_assistant"])
+                        } 
+                        if(data[0][5]=="domestic_care")
+                        {
+                            self.subpost(["domestic_care"])
+                        }
+                        if(data[0][5]=="kitchen_assistant,domestic_care")
+                        {
+                            self.subpost(["kitchen_assistant","domestic_care"])
+                        }
+                        if(data[0][5]=="care_assistant")
+                        {
+                            self.subpost(["care_assistant"])
+                        }
+                        if(data[0][5]=="living_care")
+                        {
+                            self.subpost(["living_care"])
+                        }
                         self.status(data[0][6]);
                         self.address1(data[0][7]);
                         self.address2(data[0][8]);
@@ -127,6 +167,29 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                         }
                 }
                 })
+            }
+
+            self.subpostShow = function (event,data) {
+                if(self.mainPost()=='Care Assistant'){
+                    document.getElementById('subpost1').style.display='block';
+                    document.getElementById('subpost2').style.display='none';
+                    document.getElementById('subpost3').style.display='none';
+                }
+                else if(self.mainPost()=='Senior Care Assistant'){
+                    document.getElementById('subpost2').style.display='block';
+                    document.getElementById('subpost1').style.display='none';
+                    document.getElementById('subpost3').style.display='none';
+                }                
+                else if(self.mainPost()=='Domiciliary Care'){
+                    document.getElementById('subpost3').style.display='block';
+                    document.getElementById('subpost1').style.display='none';
+                    document.getElementById('subpost2').style.display='none';      
+                }
+                else{
+                    document.getElementById('subpost1').style.display='none';
+                    document.getElementById('subpost2').style.display='none';
+                    document.getElementById('subpost3').style.display='none';
+                }
             }
 
                 self.staffInfoUpdate = function (event,data) {

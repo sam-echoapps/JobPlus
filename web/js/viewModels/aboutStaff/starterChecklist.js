@@ -1,5 +1,6 @@
 define(['ojs/ojcore',"knockout","jquery","appController","ojs/ojarraydataprovider", 
-    "ojs/ojknockout", "ojs/ojcheckboxset", "ojs/ojdatetimepicker", 'ojs/ojvalidationgroup', "ojs/ojselectsingle", "ojs/ojfilepicker"], 
+    "ojs/ojknockout", "ojs/ojcheckboxset", "ojs/ojpopup","ojs/ojprogress-circle", "ojs/ojdatetimepicker", 
+    'ojs/ojvalidationgroup', "ojs/ojselectsingle", "ojs/ojfilepicker"], 
 function (oj,ko,$, app, ArrayDataProvider) {
 
     class Induction {
@@ -11,11 +12,8 @@ function (oj,ko,$, app, ArrayDataProvider) {
             self.lastname = ko.observable();
             self.address1 = ko.observable();
             self.address2 = ko.observable();
-            self.address3 = ko.observable();
             self.posttown = ko.observable();
             self.postcode = ko.observable();
-            self.dob = ko.observable();
-            self.gender = ko.observable();
             self.nationalInsuranceNo = ko.observable();
             self.employementStartDate = ko.observable();
 
@@ -29,6 +27,8 @@ function (oj,ko,$, app, ArrayDataProvider) {
             self.selectPs4Val = ko.observable();
             self.selectStudLoanVal = ko.observable();
 
+            var BaseURL = sessionStorage.getItem("BaseURL")
+
             self.options = [
                 { value: 'Yes', label: 'Yes' },
                 { value: 'No', label: 'No' }
@@ -39,34 +39,13 @@ function (oj,ko,$, app, ArrayDataProvider) {
             });
 
             self.invalidMessage = ko.observable("");
-            self.invalidListener = (event) => {
-                self.fileNames([]);
-                self.invalidMessage("{severity: '" +
-                    event.detail.messages[0].severity +
-                    "', summary: '" +
-                    event.detail.messages[0].summary +
-                    "'}");
-                const promise = event.detail.until;
-                if (promise) {
-                    promise.then(() => {
-                        this.invalidMessage("");
-                    });
-                }
-            };
-
+            
             self.acceptStr = ko.observable("image/*");
-            self.acceptArr = ko.pureComputed(() => {
-                const accept = self.acceptStr();
-                return accept ? accept.split(",") : [];
-            });
+            
             self.fileNames = ko.observable([]);
-            self.selectListener = (event) => {
-                self.invalidMessage("");
-                const files = event.detail.files;
-                self.fileNames(Array.prototype.map.call(files, (file) => {
-                    return file.name;
-                }));
-            };
+            
+            self.ps45FileText = ko.observable('PS45 File');
+            self.ps45CustomText = ko.observable('Please choose one');
 
 
 
@@ -149,7 +128,7 @@ function (oj,ko,$, app, ArrayDataProvider) {
                 }
             }
 
-            self.selectStudiesVal = ko.observable()
+            self.selectStudiesVal = ko.observable('')
             self.studiesChanged = (e)=>{
                 let studies = e.detail.value;
                 if(studies=="Yes"){
@@ -160,7 +139,7 @@ function (oj,ko,$, app, ArrayDataProvider) {
                 }
             }
 
-            self.repayStudLoanVal = ko.observable()
+            self.repayStudLoanVal = ko.observable('')
             self.repayStudLoanChanged = (e)=>{
                 let repayLoanVal = e.detail.value;
                 if(repayLoanVal=="Yes"){
@@ -180,9 +159,9 @@ function (oj,ko,$, app, ArrayDataProvider) {
             self.typeLoanOptions = new ArrayDataProvider(self.typeLoan, {
                 keyAttributes: 'value'
             });
-            self.typeStudLoanVal = ko.observable()
+            self.typeStudLoanVal = ko.observable('')
 
-            self.selectPostGrdVal = ko.observable()
+            self.selectPostGrdVal = ko.observable('')
             self.postgrdChanged = (e)=>{
                 let postGrdVal = e.detail.value;
                 if(postGrdVal=="Yes"){
@@ -195,7 +174,7 @@ function (oj,ko,$, app, ArrayDataProvider) {
                 }
             }
 
-            self.compltPostgrdVal = ko.observable()
+            self.compltPostgrdVal = ko.observable('')
             self.compltPostgrdChanged = (e)=>{
                 let compltPostVal = e.detail.value;
                 if(compltPostVal=="Yes"){
@@ -208,7 +187,7 @@ function (oj,ko,$, app, ArrayDataProvider) {
                 }
             }
 
-            self.repayPostgrdVal = ko.observable();
+            self.repayPostgrdVal = ko.observable('');
             self.repayPostgrdChanged = (e)=>{
                 let compltPostVal = e.detail.value;
                 if(compltPostVal=="Yes"){
@@ -230,15 +209,6 @@ function (oj,ko,$, app, ArrayDataProvider) {
             }
             self.checkListValid = ko.observable()
 
-            self.formSubmit = ()=>{
-                var validInductionCheck = self._checkValidationGroup("checkListValidation");
-                
-                if(validInductionCheck){
-                    console.log("Submit");
-                }
-                
-            }
-
             self._checkValidationGroup = (value) => {
                 var tracker = document.getElementById(value);
                 if (tracker.valid === "valid") {
@@ -250,7 +220,179 @@ function (oj,ko,$, app, ArrayDataProvider) {
                     return false;
                 }
             };
-        }            
+
+            self.userExist = ko.observable();
+            self.p45Val = ko.observable();
+            self.file = ko.observable();
+
+            self.checkUserExist = ()=>{
+                $.ajax({
+                    url: BaseURL + "/starterUserExist",
+                    type: 'POST',
+                    data: JSON.stringify({
+                        userId : sessionStorage.getItem("userId"),
+                    }),
+                    dataType: 'json',
+                    timeout: sessionStorage.getItem("timeInetrval"),
+                    context: self,
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                    },
+                    success: function (data) {
+                        data = JSON.parse(data)
+                        if(data.length==0){
+                            self.userExist(0)
+                        }
+                        else{
+                            self.userExist(1)
+                        }
+
+                        if(data[0][2]=="Yes"){
+                            self.p45Val("Yes")
+                            self.file(data[0][3]);
+                        }
+                        else{
+                            self.p45Val("No")
+                        }
+                    }
+                })      
+            }
+
+            self.checkUserExist();
+
+            self.previewClick = function (event) {
+                document.getElementById("passportLink").href = self.file();
+            };
+
+            self.uploadError = ko.observable();
+
+            self.ps45FileSave = (event, data)=>{
+                self.uploadError('')
+                var file = event.detail.files[0];
+                const result = event.detail.files;
+                const files = result[0];
+                var fileName= files.name;
+                var uploadURL = BaseURL + "/css/uploads/";
+                var filePath= uploadURL+fileName;
+
+                const reader = new FileReader();
+                reader.readAsDataURL(files);
+                    
+                reader.onload = ()=>{
+                    const fileContent = reader.result;
+                    $.ajax({
+                        url: BaseURL + "/p45FileUpload",
+                        type: 'POST',
+                        data: JSON.stringify({
+                            userId : sessionStorage.getItem("userId"),
+                            file_name : fileName,
+                            file : fileContent,
+                            file_type : "P45 File", 
+                            file_type_additional : "Right To Work",
+                            file_path : filePath,
+                            p45 : self.selectPs4Val()
+                        }),
+                        dataType: 'json',
+                        timeout: sessionStorage.getItem("timeInetrval"),
+                        context: self,
+                        error: function (xhr, textStatus, errorThrown) {
+                            console.log(textStatus);
+                            console.log(errorThrown);
+                        },
+                        success: function (data) {
+                            console.log(data)
+                            self.ps45CustomText(fileName)
+                            location.reload()
+                        }
+                    })      
+                }
+            }
+
+            self.getEmployeePersonalDetails = ()=>{
+                $.ajax({                   
+                    url: BaseURL + "/jpEditStaffDetails",
+                    type: 'POST',
+                    data: JSON.stringify({
+                        staffId : sessionStorage.getItem("userId")
+                    }),
+                    dataType: 'json',
+                    timeout: sessionStorage.getItem("timeInetrval"),
+                    context: self,
+                    error: function (xhr, textStatus, errorThrown) {
+                        if(textStatus == 'timeout' || textStatus == 'error'){
+                            document.querySelector('#TimeoutSup').open();
+                        }
+                    },
+                    success: function (data) {
+                        console.log(data)
+                        self.title(data[0][1])
+                        self.firstname(data[0][2])
+                        self.lastname(data[0][3])
+                        self.address1(data[0][7])
+                        self.address2(data[0][8])
+                        self.posttown(data[0][9])
+                        self.postcode(data[0][10])
+                    }
+                })
+            }
+
+            self.getEmployeePersonalDetails();
+
+            self.formSubmit = ()=>{
+                var validInductionCheck = self._checkValidationGroup("checkListValidation");
+                if(validInductionCheck){
+                    let popup = document.getElementById("popup1");
+                    popup.open();
+                    self.statement(Array.from(self.statement()))
+                    console.log(self.statement());
+                    $.ajax({
+                        url: BaseURL + "/starterFormSubmit",
+                        type: 'POST',
+                        data: JSON.stringify({
+                            userId : sessionStorage.getItem("userId"),
+                            p45 : self.selectPs4Val(),
+                            nationalInsuranceNo : self.nationalInsuranceNo(),
+                            employementStartDate : self.employementStartDate(),
+                            statement : self.statement(),
+                            studLoan : self.selectStudLoanVal(),
+                            studies : self.selectStudiesVal(),
+                            repayStudLoan : self.repayStudLoanVal(),
+                            typeStudLoan : self.typeStudLoanVal(),
+                            postGrad : self.selectPostGrdVal(),
+                            completePostgrad : self.compltPostgrdVal(),
+                            repayPostgrd : self.repayPostgrdVal(),
+                            declaration : self.declaration(),
+                            name : self.name(),
+                            esignature : self.esignature(),
+                            date : self.date()
+                        }),
+                        dataType: 'json',
+                        timeout: sessionStorage.getItem("timeInetrval"),
+                        context: self,
+                        error: function (xhr, textStatus, errorThrown) {
+                            console.log(textStatus);
+                            console.log(errorThrown);
+                        },
+                        success: function (data) {
+                            let popup = document.getElementById("popup1");
+                            popup.close();
+                            location.reload()
+                        }
+                    })
+                }
+                
+            }
+        }     
+        
+        openListener() {
+            let popup = document.getElementById("popup1");
+            popup.open("#btnGo");
+        }
+        cancelListener() {
+            let popup = document.getElementById("popup1");
+            popup.close();
+        }
     }
     return  Induction;
 
