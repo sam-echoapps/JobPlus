@@ -107,7 +107,6 @@ function (oj,ko,$, app, ArrayDataProvider) {
                 else{
                     self.statement().add("C")
                 }
-
                 if(self.statement().size !=0 ){
                     document.getElementById("icon_button3").disabled = false;
                 }
@@ -119,7 +118,7 @@ function (oj,ko,$, app, ArrayDataProvider) {
             self.studValChanged = (e)=>{
                 let studLoanVal = e.detail.value;
 
-                document.getElementById("postgrd-lon").style.display = "flex";
+                document.getElementById("postgrd-lon").style.display = "block";
                 if(studLoanVal=="Yes"){
                     document.getElementById("studies").style.display = "flex"
                 }
@@ -166,7 +165,7 @@ function (oj,ko,$, app, ArrayDataProvider) {
                 let postGrdVal = e.detail.value;
                 if(postGrdVal=="Yes"){
                     document.getElementById("icon_button4").style.display = "none"
-                    document.getElementById("compltPostgrd").style.display = "flex"
+                    document.getElementById("compltPostgrd").style.display = "block"
                 }
                 else{
                     document.getElementById("icon_button4").style.display = "block"
@@ -246,14 +245,13 @@ function (oj,ko,$, app, ArrayDataProvider) {
                         }
                         else{
                             self.userExist(1)
-                        }
-
-                        if(data[0][2]=="Yes"){
-                            self.p45Val("Yes")
-                            self.file(data[0][3]);
-                        }
-                        else{
-                            self.p45Val("No")
+                            if(data[0][2]=="Yes"){
+                                self.p45Val("Yes")
+                                self.file(data[0][3]);
+                            }
+                            else{
+                                self.p45Val("No")
+                            }
                         }
                     }
                 })      
@@ -301,7 +299,6 @@ function (oj,ko,$, app, ArrayDataProvider) {
                             console.log(errorThrown);
                         },
                         success: function (data) {
-                            console.log(data)
                             self.ps45CustomText(fileName)
                             location.reload()
                         }
@@ -325,7 +322,6 @@ function (oj,ko,$, app, ArrayDataProvider) {
                         }
                     },
                     success: function (data) {
-                        console.log(data)
                         self.title(data[0][1])
                         self.firstname(data[0][2])
                         self.lastname(data[0][3])
@@ -345,7 +341,6 @@ function (oj,ko,$, app, ArrayDataProvider) {
                     let popup = document.getElementById("popup1");
                     popup.open();
                     self.statement(Array.from(self.statement()))
-                    console.log(self.statement());
                     $.ajax({
                         url: BaseURL + "/starterFormSubmit",
                         type: 'POST',
@@ -383,16 +378,105 @@ function (oj,ko,$, app, ArrayDataProvider) {
                 }
                 
             }
-        }     
-        
-        openListener() {
-            let popup = document.getElementById("popup1");
-            popup.open("#btnGo");
-        }
-        cancelListener() {
-            let popup = document.getElementById("popup1");
-            popup.close();
-        }
+
+
+
+
+
+            //Edit starter codeee
+
+            self.editStarter = ()=>{
+                $.ajax({
+                    url: BaseURL + "/starterUserExist",
+                    type: 'POST',
+                    data: JSON.stringify({
+                        userId : sessionStorage.getItem("userId"),
+                    }),
+                    dataType: 'json',
+                    timeout: sessionStorage.getItem("timeInetrval"),
+                    context: self,
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                    },
+                    success: function (data) {
+                        data = JSON.parse(data)
+                        self.nationalInsuranceNo(data[0][4]);
+                        self.employementStartDate(data[0][5]);
+                        const statementArr = data[0][6].split(", ");
+                        statementArr.forEach(statement => {
+                            if(statement=="A"){
+                                self.statement1(["A"]);        
+                            }
+                            else if(statement=="B"){
+                                self.statement2(["B"]);
+                            }
+                            else{
+                                self.statement3(["C"]);
+                            }
+                        });
+                        self.statement(new Set(statementArr));
+                        self.selectStudLoanVal(data[0][7]);
+                        self.selectStudiesVal(data[0][8]);
+                        self.repayStudLoanVal(data[0][9]);
+                        self.typeStudLoanVal(data[0][10]);
+                        self.selectPostGrdVal(data[0][11]);
+                        self.compltPostgrdVal(data[0][12]);
+                        self.repayPostgrdVal(data[0][13]);
+                        self.name(data[0][15]);
+                        self.esignature(data[0][16]);
+                        self.date(data[0][17]);
+                    }
+                })
+                document.getElementById("msg-div").style.display = "none"
+                document.getElementById("inst").style.display = "block"
+            }
+
+            self.formUpdate = ()=>{
+                var validInductionCheck = self._checkValidationGroup("checkListValidation");
+                if(validInductionCheck){
+                    let popup = document.getElementById("popup1");
+                    popup.open();
+                    self.statement(Array.from(self.statement()))
+                    $.ajax({
+                        url: BaseURL + "/starterFormUpdate",
+                        type: 'POST',
+                        data: JSON.stringify({
+                            userId : sessionStorage.getItem("userId"),
+                            p45 : self.selectPs4Val(),
+                            nationalInsuranceNo : self.nationalInsuranceNo(),
+                            employementStartDate : self.employementStartDate(),
+                            statement : self.statement(),
+                            studLoan : self.selectStudLoanVal(),
+                            studies : self.selectStudiesVal(),
+                            repayStudLoan : self.repayStudLoanVal(),
+                            typeStudLoan : self.typeStudLoanVal(),
+                            postGrad : self.selectPostGrdVal(),
+                            completePostgrad : self.compltPostgrdVal(),
+                            repayPostgrd : self.repayPostgrdVal(),
+                            declaration : self.declaration(),
+                            name : self.name(),
+                            esignature : self.esignature(),
+                            date : self.date()
+                        }),
+                        dataType: 'json',
+                        timeout: sessionStorage.getItem("timeInetrval"),
+                        context: self,
+                        error: function (xhr, textStatus, errorThrown) {
+                            let popup = document.getElementById("popup1");
+                            popup.close();
+                            console.log(textStatus);
+                            console.log(errorThrown);
+                        },
+                        success: function (data) {
+                            let popup = document.getElementById("popup1");
+                            popup.close();
+                            location.reload()
+                        }
+                    })
+                }
+            }
+        }    
     }
     return  Induction;
 

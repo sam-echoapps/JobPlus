@@ -10,7 +10,129 @@
                 <i class="bi bi-info-circle-fill" style="color: #002366;font-size: 20px;"></i> &nbsp;&nbsp;In this section, admin can add pay rates and send contract for the selected staff.
               </div>    
             </div>
-                 <div class="oj-panel">
+            <div id="contractStatus">
+              <div class="oj-panel">
+                <oj-list-view id="listviewtwo" aria-label="multicolumn with list item layout" data="[[dataProvider1]]"
+               class="oj-sm-padding-2x-vertical" selection-mode="multiple" selected="{{selectorSelectedItems}}">
+               <template slot="itemTemplate" data-oj-as="item">
+                 <div
+                 class="oj-panel  oj-sm-margin-2x-bottom oj-xl-margin-2x oj-xl-padding-2x oj-lg-margin-2x oj-lg-padding-2x oj-md-margin-2x oj-md-padding-2x oj-sm-margin-1x oj-sm-padding-1x contentStyle">
+                 <li>
+                   <oj-list-item-layout :aria-label="[['Details for ' +item.data.name]]">
+                   
+                     <div class="oj-typography-body-md">
+                       <div class="oj-flex oj-sm-align-items-center">
+                  
+                         <div class="oj-flex-item demo-list-item-layout3 ">
+                           <oj-list-item-layout class="oj-listitemlayout-padding-off"
+                             :aria-label="[['task ' +item.data.taskName]]">
+                             <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
+                               <oj-bind-text value="Name"></oj-bind-text>
+                             </div>
+                             <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.refer_name]]">
+                               <oj-bind-text value="[[item.data.name]]"></oj-bind-text>
+                             </div>
+                             
+                           </oj-list-item-layout>
+                         </div>
+                         
+                         <div class="oj-flex-item  demo-list-item-layout3 oj-md-padding-4x-end">
+                           <oj-list-item-layout class="oj-listitemlayout-padding-off"
+                             :aria-label="[['task ' +item.data.taskName]]">
+                             <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
+                               <oj-bind-text value="Contract Status"></oj-bind-text>
+                             </div>
+                             <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.currentStatus]]">
+                               <oj-bind-text value="[[item.data.currentStatus]]"></oj-bind-text>
+                             </div>
+                             
+                           </oj-list-item-layout>
+                         </div>
+            
+                         <div class="oj-flex-item  demo-list-item-layout3 oj-md-padding-4x-end">
+                            <oj-list-item-layout class="oj-listitemlayout-padding-off"
+                              :aria-label="[['task ' +item.data.taskName]]">
+                              <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
+                                <oj-bind-text value="Contract Send Date"></oj-bind-text>
+                              </div>
+                              <oj-bind-if test="[[item.data.contractSendDate != '1900-01-01']]">
+                              <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.contractSendDate]]">
+                                <oj-bind-text value="[[item.data.contractSendDate]]"></oj-bind-text>
+                              </div>
+                            </oj-bind-if>
+                            <oj-bind-if test="[[item.data.contractSendDate == 1900-01-01]]">
+                                <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.contractSendDate]]">
+                                  <oj-bind-text value="N/A"></oj-bind-text>
+                                </div>
+                              </oj-bind-if>
+                            </oj-list-item-layout>
+                          </div>
+            
+                          <div class="oj-flex-item  demo-list-item-layout3 oj-md-padding-4x-end">
+                            <oj-list-item-layout class="oj-listitemlayout-padding-off"
+                              :aria-label="[['task ' +item.data.taskName]]">
+                              <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
+                                <oj-bind-text value="Contract Send By"></oj-bind-text>
+                              </div>
+                              <oj-bind-if test="[[item.data.contractSendBy != 'null']]">
+                              <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.contractSendDate]]">
+                                <oj-bind-text value="[[item.data.contractSendBy]]"></oj-bind-text>
+                              </div>
+                            </oj-bind-if>
+                            <oj-bind-if test="[[item.data.contractSendBy == null]]">
+                                <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.contractSendDate]]">
+                                  <oj-bind-text value="N/A"></oj-bind-text>
+                                </div>
+                              </oj-bind-if>
+                            </oj-list-item-layout>
+                          </div>
+                 
+            
+                         <div class="oj-flex-item  demo-list-item-layout3 oj-md-padding-4x-end">
+                            <oj-list-item-layout class="oj-listitemlayout-padding-off"
+                              :aria-label="[['task ' +item.data.taskName]]">
+                              <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="[['name ' +item.data.userName]]">
+                                <oj-bind-text value="Audit Status"></oj-bind-text>
+                              </div>
+                              <div slot="tertiary" class="oj-typography-body-lg" :aria-label="[['name ' +item.data.contractStatus]]">
+                                <oj-bind-text value="[[item.data.contractStatus]]"></oj-bind-text>
+                              </div>
+                              
+                            </oj-list-item-layout>
+                          </div>
+            
+                           
+                       </div>
+            
+                       </div>
+                     </div>
+                   
+                   </oj-list-item-layout>
+                 </li>
+               </template>
+             </oj-list-view>
+            </div>
+            
+            </div>
+            <oj-bind-if test="[[RateActionBtn() === 'Update']]">
+            <oj-button chroming="solid" class="oj-xl-margin-4x" on-oj-action="[[editPayRate]]">
+                <span slot="startIcon" class=""> Edit Pay Rates</span>
+              </oj-button>&nbsp;&nbsp;&nbsp;
+              <oj-button chroming="solid" class="oj-xl-margin-4x" on-oj-action="[[viewContractSec]]">
+                <span slot="startIcon" class=""> View Contract</span>
+              </oj-button>&nbsp;&nbsp;&nbsp;
+              <oj-bind-if test="[[contractStatus() === 'Pending']]">
+                <oj-button chroming="solid" class="oj-xl-margin-4x" on-oj-action="[[updateContractStatus]]">
+                     <span slot="startIcon" class=""> Not Audited: Click to mark as audited</span>
+                   </oj-button>
+                  </oj-bind-if>
+                  <oj-bind-if test="[[contractStatus() === 'Audited']]">
+                    <oj-button chroming="solid" class="oj-xl-margin-4x" on-oj-action="[[updateContractStatus]]">
+                         <span slot="startIcon" class=""> Audited: Click to mark as audit pending</span>
+                       </oj-button>
+                      </oj-bind-if>
+            </oj-bind-if></br></br>
+                 <div class="oj-panel" id="payRateSection" style="display:none">
                     <oj-validation-group id="contactSubmitCheck" role="group" valid="{{groupValid}}"
                     aria-labelledby="grouplabelid" disbaled>
                  </br>
@@ -254,12 +376,11 @@
       </oj-button>
     </div>
   </div>
-</br></br>  
-
-<oj-button chroming="solid" class="oj-xl-margin-4x" on-oj-action="[[viewContractSec]]">
-    <span slot="startIcon" class=""> Click To View Contract</span>
-  </oj-button>
-  <div id="contractContent" style="display:none">
+</br></br> 
+</oj-bind-if>
+</div>    
+<!-- <div id="contractContent" style="display:none;">
+ -->  <div id="contractContent" style="display:none;border: 1px solid #80808036; margin: 10px; padding: 10px; border-radius: 3px; height: 500px;overflow-y: auto;">
 <h4 style="display: flex;justify-content: center;">JobsPlus Employee Contract</h4> </br>
 
 Dear <oj-bind-text value='[[staff_name]]'></oj-bind-text>,</br></br>
@@ -297,7 +418,7 @@ Main Post Rate</br>
 
 <oj-bind-if test="[[sub_post() === 'Kitchen Assistant,Domestic Care']]">
     <oj-bind-text value='Sub Post Rate - Kitchen Assistant'></oj-bind-text></br>
-    The pay rates confirmed for you will be a minimum of £<oj-bind-text value='[[domestic_weekday_longday]]'></oj-bind-text> for weekday longday, £<oj-bind-text value='[[domestic_weekday_night]]'></oj-bind-text> for weekday night, £<oj-bind-text value='[[domestic_bank_holiday]]'></oj-bind-text> for bank holiday, £<oj-bind-text value='[[domestic_weekend_longday]]'></oj-bind-text> for weekend longday, £<oj-bind-text value='[[domestic_weekend_night]]'></oj-bind-text> for weekend night.
+    The pay rates confirmed for you will be a minimum of £<oj-bind-text value='[[kitchen_weekday_longday]]'></oj-bind-text> for weekday longday, £<oj-bind-text value='[[kitchen_weekday_night]]'></oj-bind-text> for weekday night, £<oj-bind-text value='[[kitchen_bank_holiday]]'></oj-bind-text> for bank holiday, £<oj-bind-text value='[[kitchen_weekend_longday]]'></oj-bind-text> for weekend longday, £<oj-bind-text value='[[kitchen_weekend_night]]'></oj-bind-text> for weekend night.
 </br></br>
 <oj-bind-text value='Sub Post Rate - Domestic Care'></oj-bind-text></br>
     The pay rates confirmed for you will be a minimum of £<oj-bind-text value='[[domestic_weekday_longday]]'></oj-bind-text> for weekday longday, £<oj-bind-text value='[[domestic_weekday_night]]'></oj-bind-text> for weekday night, £<oj-bind-text value='[[domestic_bank_holiday]]'></oj-bind-text> for bank holiday, £<oj-bind-text value='[[domestic_weekend_longday]]'></oj-bind-text> for weekend longday, £<oj-bind-text value='[[domestic_weekend_night]]'></oj-bind-text> for weekend night.
@@ -360,6 +481,7 @@ If you are in agreement with the above terms and conditions and policies of the 
 Yours sincerely,</br>
 Manager</br>
 Jobs Plus Ltd.</br>
+<oj-bind-if test="[[contractCurrentStatus() === 'Not Sent']]">
 <div style="display: flex;justify-content: center;"
     class="oj-sm-margin-2x-bottom oj-xl-margin-2x oj-xl-padding-2x oj-lg-margin-2x oj-lg-padding-2x oj-md-margin-2x oj-md-padding-2x oj-sm-margin-1x oj-sm-padding-1x">
     <div class="oj-flex-bar">
@@ -367,26 +489,34 @@ Jobs Plus Ltd.</br>
       </oj-button>
     </div>
   </div>
-<div class="oj-panel">
-    <div class="oj-flex">
-      <oj-bind-if test="[[contractStatus() === 'Pending']]">
-    <oj-button chroming="solid" class="oj-xl-margin-4x" on-oj-action="[[updateContractStatus]]">
-         <span slot="startIcon" class=""> Not Audited: Click to mark as audited</span>
-       </oj-button>
-      </oj-bind-if>
-     </div>
-     <div class="oj-flex">
-      <oj-bind-if test="[[contractStatus() === 'Audited']]">
-    <oj-button chroming="solid" class="oj-xl-margin-4x" on-oj-action="[[updateContractStatus]]">
-         <span slot="startIcon" class=""> Audited: Click to mark as audit pending</span>
-       </oj-button>
-      </oj-bind-if>
-     </div>
-    </div>
 </oj-bind-if>
+<oj-bind-if test="[[contractCurrentStatus() === 'Contract Sent']]">
+    <div class="hint" style="border: 1px solid #80808036; margin: 10px;padding: 10px;background-color: #d1ecf1;display: flex;align-items: baseline;">
+        <i class="bi bi-info-circle-fill" style="color: #002366;font-size: 20px;"></i> &nbsp;&nbsp;<oj-bind-text value='[[contractSendBy]]'></oj-bind-text> has sent contract to this staff on <oj-bind-text value='[[contractSendDate]]'></oj-bind-text>.
+      </div>    
+    </oj-bind-if>
+    <oj-bind-if test="[[contractCurrentStatus() === 'Contract Submitted']]">
+      <div class="row"> 
+        <div class="col-sm-3">
+        </div>
+        <div class="col-sm-4">
+          <b> <div style="display: flex;justify-content: center;">DECLARATION</div></b> </br>
+        </div>
+        <div class="col-sm-4">
+    </div>
+     <div class="row"> 
+      <div class="col-sm-4">
+           Name : <oj-bind-text value="[[contractSubmitter]]"></oj-bind-text>        
+      </div>
+      <div class="col-sm-6">
+        E-signature : <span style="font-family: Cedarville Cursive"><oj-bind-text value="[[contractSignature]]"></oj-bind-text></span>                                     
+      </div>
+      <div class="col-sm-2">
+        Date : <oj-bind-text value="[[contractSubmittedDate]]"></oj-bind-text>                                       
+  </div>
+      </oj-bind-if>
 </div>
 
-                </div>    
   
           </div>
     
@@ -394,8 +524,8 @@ Jobs Plus Ltd.</br>
         
     </div>
   </div>
-  
 
+ 
   <oj-dialog id="openAddPayRatesProgress" dialog-title="Saving Staff Pay Rates" modality="modeless"
   style="display:none;width:350px;min-width:240px;max-width:450px;">
   <div slot="body">
@@ -414,5 +544,13 @@ Jobs Plus Ltd.</br>
       </oj-button>
     </div>
   </oj-dialog> 
+
+  <oj-dialog id="openAddEmailProgress" dialog-title="Please wait!Contract Sending...." modality="modeless"
+    style="display:none;width:350px;min-width:240px;max-width:450px;">
+    <div slot="body">
+      <oj-progress-bar id="createbar" class="oj-progress-bar-embedded" value="-1">
+      </oj-progress-bar>
+    </div>
+  </oj-dialog>
         
     

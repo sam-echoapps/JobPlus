@@ -7,7 +7,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
         constructor(args) {
             var self = this
             
-            self.progressValue = ko.observable(30);
+            self.progressValue = ko.observable();
 
             self.DepName = args.routerState.detail.dep_url;
             self.DepType = args.routerState.detail.dep_type;
@@ -23,6 +23,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
             self.trainingStatus = ko.observable('');
             self.rightStatus = ko.observable('');
             self.inductionStatus = ko.observable('');
+            self.contractStatus = ko.observable('');
+            self.starterStatus = ko.observable('');
                 
             self.router = args.parentRouter;
 
@@ -71,12 +73,14 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                     }
                 },
                 success: function (data) {
+                    let audit = 0;
                     if(data[0].length !=0) {
                         if(data[0][0][0] == "Pending") {
                             self.profileStatus('Pending');
                         }
                         else if(data[0][0][0] == "Audited") {
                             self.profileStatus('Audited');
+                            audit++;
                         }
                     }
                     else{
@@ -88,6 +92,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                         }
                         else if(data[1][0][0] == "Audited") {
                             self.referenceStatus('Audited');
+                            audit++;
                         }
                     }
                     else{
@@ -99,6 +104,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                         }
                         else if(data[2][0][0] == "Audited") {
                             self.bankStatus('Audited');
+                            audit++;
                         }
                     }
                     else{
@@ -110,6 +116,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                         }
                         else if(data[3][0][0] == "Audited") {
                             self.relativeStatus('Audited');
+                            audit++;
                         }
                     }
                     else{
@@ -121,6 +128,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                         }
                         else if(data[4][0] == "Audited") {
                             self.educationStatus('Audited');
+                            audit++;
                         }
                     }
                     else{
@@ -132,6 +140,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                         }
                         else if(data[5][0] == "Audited") {
                             self.workStatus('Audited');
+                            audit++;
                         }
                     }
                     else{
@@ -142,6 +151,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                             self.healthStatus('Pending');
                         }else if(data[6][0][0] == "Audited") {
                             self.healthStatus('Audited');
+                            audit++;
                         }
                     }else{
                         self.healthStatus('Pending');
@@ -151,6 +161,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                             self.dbsStatus('Pending');
                         }else if(data[7][0][0] == "Audited") {
                             self.dbsStatus('Audited');
+                            audit++;
                         }
                     }else{
                         self.dbsStatus('Pending');
@@ -160,6 +171,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                             self.trainingStatus('Pending');
                         }else if(data[8][0][0] == "Audited") {
                             self.trainingStatus('Audited');
+                            audit++;
                         }
                     }else{
                         self.trainingStatus('Pending');
@@ -169,6 +181,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                             self.rightStatus('Pending');
                         }else if(data[9][0] == "Audited") {
                             self.rightStatus('Audited');
+                            audit++;
                         }
                     }else{
                         self.rightStatus('Pending');
@@ -178,11 +191,35 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                             self.inductionStatus('Pending');
                         }else if(data[11][0] == "Audited") {
                             self.inductionStatus('Audited');
+                            audit++;
                         }
                     }else{
                         self.inductionStatus('Pending');
                     } 
-                   
+                    
+                    if(data[12].length !=0) {
+                        if(data[12][0] == "Pending") {
+                            self.contractStatus('Pending');
+                        }else if(data[12][0] == "Audited") {
+                            self.contractStatus('Audited');
+                            audit++;
+                        }
+                    }else{
+                        self.contractStatus('Pending');
+                    } 
+
+                    if(data[13].length !=0) {
+                        if(data[13][0] == "Pending") {
+                            self.starterStatus('Pending');
+                        }else if(data[13][0] == "Audited") {
+                            self.starterStatus('Audited');
+                            audit++;
+                        }
+                    }else{
+                        self.starterStatus('Pending');
+                    }
+                    sessionStorage.setItem('progressValue',Math.floor((audit/13)*100));
+
                     if(self.profileStatus() != sessionStorage.getItem('profile_status')){
                         location.reload()
                     }
@@ -215,7 +252,13 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                     }      
                     if(self.inductionStatus() != sessionStorage.getItem('induction_status')){
                         location.reload()
-                    }                     
+                    }        
+                    if(self.contractStatus() != sessionStorage.getItem('contract_status')){
+                        location.reload()
+                    }   
+                    if(self.starterStatus() != sessionStorage.getItem('starter_status')){
+                        location.reload()
+                    }           
 
                     sessionStorage.setItem('profile_status',self.profileStatus()); 
                     sessionStorage.setItem('reference_status',self.referenceStatus()); 
@@ -228,6 +271,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                     sessionStorage.setItem('training_status',self.trainingStatus()); 
                     sessionStorage.setItem('right_status',self.rightStatus()); 
                     sessionStorage.setItem('induction_status',self.inductionStatus()); 
+                    sessionStorage.setItem('contract_status',self.contractStatus()); 
+                    sessionStorage.setItem('starter_status',self.starterStatus()); 
+                    self.progressValue(sessionStorage.getItem("progressValue"));
                 }
             })
 
@@ -243,8 +289,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                     { "path" : "addRightToWork", "label" : "Right To Work", "status" : sessionStorage.getItem('right_status')},
                     { "path" : "addDBS", "label" : "DBS", "status" : sessionStorage.getItem('dbs_status')},
                     { "path" : "addTraining", "label" : "Training", "status" : sessionStorage.getItem('training_status')},
-                    { "path" : "bookInduction", "label" : "Induction", "status" : sessionStorage.getItem('induction_status')},
-                    { "path" : "starterChecklist", "label" : "Starter Checklist", "status" : "Pending"},
+                    { "path" : "starterChecklist", "label" : "Starter Checklist", "status" : sessionStorage.getItem('starter_status')},
+                    { "path" : "bookInduction", "label" : "Book Induction", "status" :sessionStorage.getItem('induction_status')},
+                    { "path" : "contract", "label" : "Contract", "status" :sessionStorage.getItem('contract_status')},
                 ]
             }
 
@@ -287,7 +334,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                 { path: 'addTraining'},
                 { path: 'bookInduction'},
                 { path: 'inductionCheck'},
-                { path: 'starterChecklist'}
+                { path: 'starterChecklist'},
+                { path: 'contract'},
             ]);
 
             self.router.currentState.subscribe((args) => {

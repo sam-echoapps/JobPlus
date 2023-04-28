@@ -17,10 +17,17 @@
         </oj-list-view>
     </div>
     <div class="oj-flex-item oj-panel" style="margin: 0px;">
-        <div class="hint-div" style="border: 1px solid #80808036; margin: 10px;padding: 10px;">
+        <div class="hint-div oj-panel oj-sm-margin-4x demo-mypanel">
             <h2>YOUR APPLICATION</h2>
             <p>Here you can see the progress of your application.</p>
-            <oj-progress-bar id="progressBar" value="{{progressValue}}" style="height: 20px;"></oj-progress-bar>
+            <div class="oj-flex-bar">
+                <div class="oj-flex-bar-start">
+                    <p style="font-weight: bold;"><oj-bind-text value="[[progressValue]]"></oj-bind-text>%</p>
+                </div>
+                <div class="oj-sm-11 oj-flex-item oj-sm-padding-2x-horizontal">
+                    <oj-progress-bar id="progressBar" value="{{progressValue}}" style="height: 20px;"></oj-progress-bar>
+                </div>
+            </div>
             
             <br>
             <i class="bi bi-check-circle-fill status-audit"></i> Approved &nbsp;

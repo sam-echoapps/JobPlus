@@ -45,8 +45,15 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                 self.livingSec = ko.observable(); 
                 self.commencement_date = ko.observable();
                 self.savePayRateMsg = ko.observable();
-                self.RateActionBtn= ko.observable('Add');
+                self.RateActionBtn= ko.observable('Add');   
                 self.contractStatus = ko.observable();
+                self.contractCurrentStatus = ko.observable();   
+                self.selectorSelectedItems = new ojknockout_keyset_1.ObservableKeySet();
+                self.contractSendDate = ko.observable();
+                self.contractSendBy = ko.observable();
+                self.contractSubmitter = ko.observable();
+                self.contractSignature = ko.observable();
+                self.contractSubmittedDate = ko.observable();
 
                 self.connected = function () {
                     if (sessionStorage.getItem("userName") == null) {
@@ -159,17 +166,33 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                                 self.living_bank_holiday(Number(result[25]))
                                 self.living_weekend_longday(Number(result[26]))
                                 self.living_weekend_night(Number(result[27]))
+                                self.contractCurrentStatus(result[28])
                                 if(result[29] == "Pending") {
                                     self.contractStatus('Pending');
                                 }else if(result[29] == "Audited") {
                                     self.contractStatus('Audited');
-                                }   
+                                } 
+                                self.contractSendDate(result[30]) 
+                                self.contractSendBy(result[31]) 
+                                self.contractSubmitter(result[32]) 
+                                self.contractSignature(result[33]) 
+                                self.contractSubmittedDate(result[34]) 
+                                if(result[30] == '1900-01-01'){
+                                self.ContractDet.push({'id': result[0],'name': data[0][0] + " " + data[0][1],'currentStatus': result[28],'contractStatus': result[29],'contractSendDate': "N/A", 'contractSendBy': result[31]});   
+                                }else if(result[30] != '1900-01-01'){
+                                    self.ContractDet.push({'id': result[0],'name': data[0][0] + " " + data[0][1],'currentStatus': result[28],'contractStatus': result[29],'contractSendDate': result[30], 'contractSendBy': result[31]});   
+                                }
+                            }
+                                else{
+                                    document.getElementById('payRateSection').style.display="block";
+                                    document.getElementById('contractStatus').style.display="none";
                                 }
                         }
                         })
                 
                 }
-                
+                this.dataProvider1 = new ArrayDataProvider(this.ContractDet, { keyAttributes: "id"});
+
                 self.payRateSubmit = function (event,data) {
                     var contactSubmitCheck = self._checkValidationGroup("contactSubmitCheck"); 
                     var BaseURL = sessionStorage.getItem("BaseURL")
@@ -420,12 +443,14 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                 }; 
 
                 self.sendContract = function (event,data) {
+                    document.querySelector('#openAddEmailProgress').open();
                     var BaseURL = sessionStorage.getItem("BaseURL")
                     $.ajax({
                         url: BaseURL+ "/jpStaffSendContract",
                         type: 'POST',
                         data: JSON.stringify({
                             staffId : sessionStorage.getItem("staffId"),
+                            contractSender : sessionStorage.getItem("userName")
                         }),
                         dataType: 'json',
                         timeout: sessionStorage.getItem("timeInetrval"),
@@ -438,6 +463,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
                         },
                         success: function (data) {
                            console.log("Success")
+                           document.querySelector('#openAddEmailProgress').close();
                            location.reload();
                         }
                     })  
@@ -474,8 +500,12 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider,  ojknockout_
     
                 }
                 self.viewContractSec = function (event) {
-                    document.getElementById('contractContent').style="block";
+                    document.getElementById('contractContent').style.display="block";
+                    document.getElementById('payRateSection').style.display="none";
                 }; 
+                self.editPayRate = function (event) {
+                    document.getElementById('contractContent').style.display="none";
+                    document.getElementById('payRateSection').style.display="block";                }; 
 
             }
             
