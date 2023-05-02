@@ -491,6 +491,7 @@ function (oj,ko,$, app, ArrayDataProvider) {
                     type: 'POST',
                     data: JSON.stringify({
                         staffId : sessionStorage.getItem("staffId"),
+                        auditerName : sessionStorage.getItem("userName")
                     }),
                     dataType: 'json',
                     timeout: sessionStorage.getItem("timeInetrval"),

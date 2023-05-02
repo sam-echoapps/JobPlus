@@ -225,6 +225,7 @@ function (oj,ko,$, app, ojconverterutils_i18n_1, ArrayDataProvider) {
                     type: 'POST',
                     data: JSON.stringify({
                         staffId : sessionStorage.getItem("staffId"),
+                        auditerName : sessionStorage.getItem("userName")
                     }),
                     dataType: 'json',
                     timeout: sessionStorage.getItem("timeInetrval"),

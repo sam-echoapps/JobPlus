@@ -21,7 +21,7 @@
                       <oj-bind-text value="Section Name"></oj-bind-text>
                     </div>
                     <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-                      <oj-bind-text value="Profile Info"></oj-bind-text>
+                      <a href="?ojr=staffView%2FviewStaff%3Bindex%3D0" style="text-decoration: none;">Profile Info</a>
                     </div>  
                     </div>
                   <div class="col-sm-4">
@@ -34,10 +34,10 @@
                   </div>
                   <div class="col-sm-4">
                     <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="">
-                      <oj-bind-text value="Go to section"></oj-bind-text>
+                      <oj-bind-text value="Audited By"></oj-bind-text>
                     </div>
                     <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-                      <a href="?ojr=staffView%2FviewStaff%3Bindex%3D0" style="text-decoration: none;">Click Here</a>
+                      <oj-bind-text value="[[profileAuditer]]"></oj-bind-text>
                     </div>                      
                   </div>
               </div>
@@ -58,7 +58,8 @@
                       <oj-bind-text value="Section Name"></oj-bind-text>
                     </div>
                     <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-                      <oj-bind-text value="References"></oj-bind-text>
+                      <a href="?ojr=staffView%2FaddReference%3Bindex%3D1" style="text-decoration: none;">References</a>
+
                     </div>                    
                   </div>
                   <div class="col-sm-4">
@@ -73,10 +74,10 @@
 
                   <div class="col-sm-4">
                     <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="">
-                      <oj-bind-text value="Go to section"></oj-bind-text>
+                      <oj-bind-text value="Audited By"></oj-bind-text>
                     </div> 
                     <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-                      <a href="?ojr=staffView%2FaddReference%3Bindex%3D1" style="text-decoration: none;">Click Here</a>
+                      <oj-bind-text value="[[referenceAuditer]]"></oj-bind-text>
                     </div>                      
                   </div>
               </div>
@@ -97,7 +98,7 @@
                   <oj-bind-text value="Section Name"></oj-bind-text>
                 </div>
                 <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-                  <oj-bind-text value="Bank"></oj-bind-text>
+                  <a href="?ojr=staffView%2FaddBank%3Bindex%3D2" style="text-decoration: none;">Bank</a>
                 </div>                    
               </div>
               <div class="col-sm-4">
@@ -111,10 +112,10 @@
               </div>
               <div class="col-sm-4">
                 <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="">
-                  <oj-bind-text value="Go to section"></oj-bind-text>
+                  <oj-bind-text value="Audited By"></oj-bind-text>
                 </div> 
                 <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-                  <a href="?ojr=staffView%2FaddBank%3Bindex%3D2" style="text-decoration: none;">Click Here</a>
+                  <oj-bind-text value="[[bankAuditer]]"></oj-bind-text>
                 </div>                        
               </div>
           </div>
@@ -135,7 +136,7 @@
           <oj-bind-text value="Section Name"></oj-bind-text>
         </div>
         <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-          <oj-bind-text value="Next Of Kin"></oj-bind-text>
+          <a href="?ojr=staffView%2FaddNextOfKin%3Bindex%3D3" style="text-decoration: none;">Next Of Kin</a>
         </div>                    
       </div>
       <div class="col-sm-4">
@@ -149,10 +150,10 @@
       </div>
       <div class="col-sm-4">
         <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="">
-          <oj-bind-text value="Go to section"></oj-bind-text>
+          <oj-bind-text value="Audited By"></oj-bind-text>
         </div> 
         <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-          <a href="?ojr=staffView%2FaddNextOfKin%3Bindex%3D3" style="text-decoration: none;">Click Here</a>
+          <oj-bind-text value="[[relativeAuditer]]"></oj-bind-text>
         </div>                      
       </div>
   </div>
@@ -173,7 +174,7 @@
         <oj-bind-text value="Section Name"></oj-bind-text>
       </div>
       <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-        <oj-bind-text value="Education"></oj-bind-text>
+        <a href="?ojr=staffView%2FaddEducation%3Bindex%3D4" style="text-decoration: none;">Education</a>
       </div>                    
     </div>
     <div class="col-sm-4">
@@ -187,10 +188,10 @@
     </div>
     <div class="col-sm-4">
       <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="">
-        <oj-bind-text value="Go to section"></oj-bind-text>
+        <oj-bind-text value="Audited By"></oj-bind-text>
       </div> 
       <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-        <a href="?ojr=staffView%2FaddEducation%3Bindex%3D4" style="text-decoration: none;">Click Here</a>
+        <oj-bind-text value="[[educationAuditer]]"></oj-bind-text>
       </div>                      
     </div>
 </div>
@@ -211,7 +212,7 @@
         <oj-bind-text value="Section Name"></oj-bind-text>
       </div>
       <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-        <oj-bind-text value="Work History"></oj-bind-text>
+        <a href="?ojr=staffView%2FaddWork%3Bindex%3D5" style="text-decoration: none;">Work History</a>
       </div>                    
     </div>
     <div class="col-sm-4">
@@ -225,10 +226,10 @@
     </div>
     <div class="col-sm-4">
       <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="">
-        <oj-bind-text value="Go to section"></oj-bind-text>
+        <oj-bind-text value="Audited By"></oj-bind-text>
       </div> 
       <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-        <a href="?ojr=staffView%2FaddWork%3Bindex%3D5" style="text-decoration: none;">Click Here</a>
+        <oj-bind-text value="[[workAuditer]]"></oj-bind-text>
       </div>                      
     </div>
 </div>
@@ -249,7 +250,7 @@
         <oj-bind-text value="Section Name"></oj-bind-text>
       </div>
       <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-        <oj-bind-text value="Health"></oj-bind-text>
+        <a href="?ojr=staffView%2FaddHealth%3Bindex%3D6" style="text-decoration: none;">Health</a>
       </div>                    
     </div>
     <div class="col-sm-4">
@@ -263,10 +264,10 @@
     </div>
     <div class="col-sm-4">
       <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="">
-        <oj-bind-text value="Go to section"></oj-bind-text>
+        <oj-bind-text value="Audited By"></oj-bind-text>
       </div> 
       <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-        <a href="?ojr=staffView%2FaddHealth%3Bindex%3D6" style="text-decoration: none;">Click Here</a>
+        <oj-bind-text value="[[healthAuditer]]"></oj-bind-text>
       </div>                      
     </div>
 </div>
@@ -287,7 +288,7 @@
         <oj-bind-text value="Section Name"></oj-bind-text>
       </div>
       <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-        <oj-bind-text value="DBS"></oj-bind-text>
+        <a href="?ojr=staffView%2FaddDBS%3Bindex%3D7" style="text-decoration: none;">DBS</a>
       </div>                    
     </div>
     <div class="col-sm-4">
@@ -301,10 +302,10 @@
     </div>
     <div class="col-sm-4">
       <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="">
-        <oj-bind-text value="Go to section"></oj-bind-text>
+        <oj-bind-text value="Audited By"></oj-bind-text>
       </div> 
       <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-        <a href="?ojr=staffView%2FaddDBS%3Bindex%3D7" style="text-decoration: none;">Click Here</a>
+        <oj-bind-text value="[[dbsAuditer]]"></oj-bind-text>
       </div>                      
     </div>
 </div>
@@ -326,7 +327,7 @@
         <oj-bind-text value="Section Name"></oj-bind-text>
       </div>
       <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-        <oj-bind-text value="Right To Work"></oj-bind-text>
+        <a href="?ojr=staffView%2FaddRightToWork%3Bindex%3D8" style="text-decoration: none;">Right To Work</a>
       </div>                    
     </div>
     <div class="col-sm-4">
@@ -340,10 +341,10 @@
     </div>
     <div class="col-sm-4">
       <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="">
-        <oj-bind-text value="Go to section"></oj-bind-text>
+        <oj-bind-text value="Audited By"></oj-bind-text>
       </div> 
       <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-        <a href="?ojr=staffView%2FaddRightToWork%3Bindex%3D8" style="text-decoration: none;">Click Here</a>
+        <oj-bind-text value="[[rightAuditer]]"></oj-bind-text>
       </div>                      
     </div>
 </div>
@@ -364,7 +365,7 @@
         <oj-bind-text value="Section Name"></oj-bind-text>
       </div>
       <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-        <oj-bind-text value="Training"></oj-bind-text>
+        <a href="?ojr=staffView%2FaddTraining%3Bindex%3D9" style="text-decoration: none;">Training</a>
       </div>                    
     </div>
     <div class="col-sm-4">
@@ -378,10 +379,10 @@
     </div>
     <div class="col-sm-4">
       <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="">
-        <oj-bind-text value="Go to section"></oj-bind-text>
+        <oj-bind-text value="Audited By"></oj-bind-text>
       </div> 
       <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-        <a href="?ojr=staffView%2FaddTraining%3Bindex%3D9" style="text-decoration: none;">Click Here</a>
+        <oj-bind-text value="[[trainingAuditer]]"></oj-bind-text>
       </div>                      
     </div>
 </div>
@@ -402,7 +403,7 @@
         <oj-bind-text value="Section Name"></oj-bind-text>
       </div>
       <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-        <oj-bind-text value="Starter Checklist"></oj-bind-text>
+        <a href="?ojr=staffView%2FstarterChecklist%3Bindex%3D10" style="text-decoration: none;">Starter Checklist</a>
       </div>                    
     </div>
     <div class="col-sm-4">
@@ -416,10 +417,10 @@
     </div>
     <div class="col-sm-4">
       <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="">
-        <oj-bind-text value="Go to section"></oj-bind-text>
+        <oj-bind-text value="Audited By"></oj-bind-text>
       </div> 
       <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-        <a href="?ojr=staffView%2FstarterChecklist%3Bindex%3D10" style="text-decoration: none;">Click Here</a>
+        <oj-bind-text value="[[starterAuditer]]"></oj-bind-text>
       </div>                      
     </div>
 </div>
@@ -440,7 +441,7 @@
         <oj-bind-text value="Section Name"></oj-bind-text>
       </div>
       <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-        <oj-bind-text value="Induction"></oj-bind-text>
+        <a href="?ojr=staffView%2FbookInduction%3Bindex%3D11" style="text-decoration: none;">Induction</a>
       </div>                    
     </div>
     <div class="col-sm-4">
@@ -454,10 +455,10 @@
     </div>
     <div class="col-sm-4">
       <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="">
-        <oj-bind-text value="Go to section"></oj-bind-text>
+        <oj-bind-text value="Audited By"></oj-bind-text>
       </div> 
       <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-        <a href="?ojr=staffView%2FbookInduction%3Bindex%3D11" style="text-decoration: none;">Click Here</a>
+        <oj-bind-text value="[[inductionAuditer]]"></oj-bind-text>
       </div>                      
     </div>
 </div>
@@ -478,7 +479,8 @@
         <oj-bind-text value="Section Name"></oj-bind-text>
       </div>
       <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-        <oj-bind-text value="Contract"></oj-bind-text>
+        <a href="?ojr=staffView%2Fcontract%3Bindex%3D12" style="text-decoration: none;">Contract</a>
+
       </div>                    
     </div>
     <div class="col-sm-4">
@@ -492,10 +494,10 @@
     </div>
     <div class="col-sm-4">
       <div slot="secondary" class="oj-typography-body-lg oj-text-color-secondary" :aria-label="">
-        <oj-bind-text value="Go to section"></oj-bind-text>
+        <oj-bind-text value="Audited By"></oj-bind-text>
       </div> 
       <div slot="tertiary" class="oj-typography-body-lg" :aria-label="">
-        <a href="?ojr=staffView%2Fcontract%3Bindex%3D12" style="text-decoration: none;">Click Here</a>
+        <oj-bind-text value="[[contractAuditer]]"></oj-bind-text>
       </div>                      
     </div>
 </div>

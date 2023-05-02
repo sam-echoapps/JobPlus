@@ -5,6 +5,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
     class ViewModel {
         constructor(args) {
             var self = this
+            self.progressValue = ko.observable();
 
             self.DepName = args.routerState.detail.dep_url;
             self.DepType = args.routerState.detail.dep_type;
@@ -25,7 +26,6 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
             self.contractStatus = ko.observable('');
             self.starterStatus = ko.observable('');
 
-            self.progressValue = ko.observable(30);
 
             self.router = args.parentRouter;
 
@@ -55,61 +55,68 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                         }
                     },
                     success: function (data) {
+                        let audit = 0;
                         console.log(data)
                         if(data[0].length !=0) {
                             if(data[0][0][0] == "Pending") {
                                 self.profileStatus('Pending');
                             }else if(data[0][0][0] == "Audited") {
                                 self.profileStatus('Audited');
+                                audit++;
                             }
                         }
                         else{
-                            self.profileStatus('Pending');
+                            self.profileStatus('Not Submitted');
                         }
                         if(data[1].length !=0) {  
                             if(data[1][0][0] == "Pending") {
                                 self.referenceStatus('Pending');
                             }else if(data[1][0][0] == "Audited") {
                                 self.referenceStatus('Audited');
+                                audit++;
                             }
                         }else{
-                            self.referenceStatus('Pending');
+                            self.referenceStatus('Not Submitted');
                         } 
                         if(data[2].length !=0) {
                             if(data[2][0][0] == "Pending") {
                                 self.bankStatus('Pending');
                             }else if(data[2][0][0] == "Audited") {
                                 self.bankStatus('Audited');
+                                audit++;
                             }
                         }else{
-                            self.bankStatus('Pending');
+                            self.bankStatus('Not Submitted');
                         }
                         if(data[3].length !=0) {
                             if(data[3][0][0] == "Pending") {
                                 self.relativeStatus('Pending');
                             }else if(data[3][0][0] == "Audited") {
                                 self.relativeStatus('Audited');
+                                audit++;
                             }
                         }else{
-                            self.relativeStatus('Pending');
+                            self.relativeStatus('Not Submitted');
                         }  
                         if(data[4].length !=0) {
-                            if(data[4][0] == "Pending") {
+                            if(data[4][0][0] == "Pending") {
                                 self.educationStatus('Pending');
-                            }else if(data[4][0] == "Audited") {
+                            }else if(data[4][0][0] == "Audited") {
                                 self.educationStatus('Audited');
+                                audit++;
                             }
                         }else{
-                            self.educationStatus('Pending');
+                            self.educationStatus('Not Submitted');
                         } 
                         if(data[5].length !=0) {
-                            if(data[5][0] == "Pending") {
+                            if(data[5][0][0] == "Pending") {
                                 self.workStatus('Pending');
-                            }else if(data[5][0] == "Audited") {
+                            }else if(data[5][0][0] == "Audited") {
                                 self.workStatus('Audited');
+                                audit++;
                             }
                         }else{
-                            self.workStatus('Pending');
+                            self.workStatus('Not Submitted');
                         } 
 
                         if(data[6].length !=0) {
@@ -117,9 +124,10 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                                 self.healthStatus('Pending');
                             }else if(data[6][0][0] == "Audited") {
                                 self.healthStatus('Audited');
+                                audit++;
                             }
                         }else{
-                            self.healthStatus('Pending');
+                            self.healthStatus('Not Submitted');
                         } 
 
                         if(data[7].length !=0) {
@@ -127,9 +135,10 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                                 self.dbsStatus('Pending');
                             }else if(data[7][0][0] == "Audited") {
                                 self.dbsStatus('Audited');
+                                audit++;
                             }
                         }else{
-                            self.dbsStatus('Pending');
+                            self.dbsStatus('Not Submitted');
                         } 
 
                         if(data[8].length !=0) {
@@ -137,53 +146,59 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                                 self.trainingStatus('Pending');
                             }else if(data[8][0][0] == "Audited") {
                                 self.trainingStatus('Audited');
+                                audit++;
                             }
                         }else{
-                            self.trainingStatus('Pending');
+                            self.trainingStatus('Not Submitted');
                         } 
 
                         if(data[9].length !=0) {
-                            if(data[9][0] == "Pending") {
+                            if(data[9][0][0] == "Pending") {
                                 self.rightStatus('Pending');
-                            }else if(data[9][0] == "Audited") {
+                            }else if(data[9][0][0] == "Audited") {
                                 self.rightStatus('Audited');
+                                audit++;
                             }
                         }else{
-                            self.rightStatus('Pending');
+                            self.rightStatus('Not Submitted');
                         } 
 
                         self.staffName(data[10][0][0] + " " + data[10][0][1])
                         self.staffNameCap(self.staffName().toUpperCase());
 
                         if(data[11].length !=0) {
-                            if(data[11][0] == "Pending") {
+                            if(data[11][0][0] == "Pending") {
                                 self.inductionStatus('Pending');
-                            }else if(data[11][0] == "Audited") {
+                            }else if(data[11][0][0] == "Audited") {
                                 self.inductionStatus('Audited');
+                                audit++;
                             }
                         }else{
-                            self.inductionStatus('Pending');
+                            self.inductionStatus('Not Submitted');
                         } 
 
                         if(data[12].length !=0) {
-                            if(data[12][0] == "Pending") {
+                            if(data[12][0][0] == "Pending") {
                                 self.contractStatus('Pending');
-                            }else if(data[12][0] == "Audited") {
+                            }else if(data[12][0][0] == "Audited") {
                                 self.contractStatus('Audited');
+                                audit++;
                             }
                         }else{
-                            self.contractStatus('Pending');
+                            self.contractStatus('Not Submitted');
                         } 
 
                         if(data[13].length !=0) {
-                            if(data[13][0] == "Pending") {
+                            if(data[13][0][0] == "Pending") {
                                 self.starterStatus('Pending');
-                            }else if(data[13][0] == "Audited") {
+                            }else if(data[13][0][0] == "Audited") {
                                 self.starterStatus('Audited');
+                                audit++;
                             }
                         }else{
-                            self.starterStatus('Pending');
+                            self.starterStatus('Not Submitted');
                         } 
+                        sessionStorage.setItem('progressValue',Math.floor((audit/13)*100));
 
                         console.log(self.profileStatus())
                         if(self.profileStatus() != sessionStorage.getItem('profile_status')){
@@ -239,6 +254,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', "ojs/ojmodulerouter
                         sessionStorage.setItem('induction_status',self.inductionStatus()); 
                         sessionStorage.setItem('contract_status',self.contractStatus()); 
                         sessionStorage.setItem('starter_status',self.starterStatus()); 
+                        self.progressValue(sessionStorage.getItem("progressValue"));
 
 
                 }

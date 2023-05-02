@@ -1404,7 +1404,9 @@ max-width: 20rem;
   justify-content: center;
   font-size: 15px;
 }
-
+.status-not-submitted{
+  color: gray;
+}
 .status-pending{
   color: orange;
 }
